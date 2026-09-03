@@ -5,21 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Watchlist | IDXNOVA</title>
+
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+  <!-- NAVBAR -->
   <header class="navbar">
+
     <a href="index.html" class="brand">
       <span class="brand-mark">N</span>
+
       <span>
         <strong>IDXNOVA</strong>
         <small>INDONESIAN STOCK INTELLIGENCE</small>
       </span>
     </a>
 
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">
+    <button
+      class="menu-btn"
+      onclick="toggleMenu()"
+      aria-label="Buka menu"
+    >
       ☰
     </button>
 
@@ -30,7 +38,9 @@
       <a href="investing.html">Investing</a>
       <a href="screener.html">Screener</a>
       <a href="watchlist.html">Watchlist</a>
+      <a href="search.html">🔎 Search</a>
     </nav>
+
   </header>
 
 
@@ -38,23 +48,27 @@
 
     <!-- HERO -->
     <section class="hero">
+
       <div class="hero-content">
 
-        <div class="badge">⭐ PERSONAL STOCK WATCHLIST</div>
+        <div class="badge">
+          ⭐ PERSONAL STOCK WATCHLIST
+        </div>
 
         <h1>
-          Pantau Saham
-          <span>Pilihanmu.</span>
+          Pantau Saham Pilihan
+          <span>Dalam Satu Tempat.</span>
         </h1>
 
         <p>
-          Simpan saham pilihanmu dan pantau langsung dari satu database
-          pusat IDXNOVA. Watchlist tersimpan di browser perangkatmu.
+          Simpan saham yang ingin kamu pantau. Data harga, perubahan,
+          dan NOVA Score akan otomatis diambil dari database pusat IDXNOVA.
         </p>
 
       </div>
 
 
+      <!-- HERO PANEL -->
       <div class="hero-panel">
 
         <div class="panel-top">
@@ -62,17 +76,14 @@
           <strong>LOCAL MODE</strong>
         </div>
 
-
         <div class="sentiment-value">
           <h2 id="watchlistCount">0<span> Saham</span></h2>
-          <p>Saham tersimpan</p>
+          <p>Saham sedang dipantau</p>
         </div>
-
 
         <div class="sentiment-bar">
           <span id="watchlistBar" style="width: 0%"></span>
         </div>
-
 
         <div class="sentiment-info">
 
@@ -83,14 +94,13 @@
 
           <div>
             <small>Data</small>
-            <strong>Terpusat</strong>
+            <strong>Central Demo</strong>
           </div>
 
         </div>
 
-
         <p class="demo-note">
-          Watchlist tersimpan pada browser dan perangkat yang digunakan.
+          Watchlist tersimpan di browser perangkat ini.
         </p>
 
       </div>
@@ -104,36 +114,42 @@
       <div class="section-heading">
 
         <div>
-          <span class="eyebrow">ADD STOCK</span>
-          <h2>Tambah ke Watchlist</h2>
+          <span class="eyebrow">
+            ADD TO WATCHLIST
+          </span>
+
+          <h2>
+            Tambah Saham
+          </h2>
         </div>
 
-        <span class="demo-label">CENTRAL DATABASE</span>
+        <span class="demo-label">
+          CENTRAL DATABASE
+        </span>
 
       </div>
 
 
-      <div class="watchlist-add">
+      <div class="search-box">
 
         <input
-          id="tickerInput"
           type="text"
-          placeholder="Contoh: BBRI"
-          maxlength="10"
+          id="watchlistInput"
+          placeholder="Masukkan ticker... contoh: BBRI"
           autocomplete="off"
         >
 
-        <button onclick="addStock()">
-          + Tambah Saham
+        <button onclick="addToWatchlist()">
+          Tambah
         </button>
 
       </div>
 
 
-      <p class="watchlist-help">
-        Masukkan ticker saham yang tersedia di database IDXNOVA,
-        contoh: BBRI, BBCA, ANTM, ELSA, PWON, UNTR, PGAS, ASII, atau ICBP.
-      </p>
+      <p
+        id="watchlistMessage"
+        class="section-description"
+      ></p>
 
     </section>
 
@@ -144,25 +160,45 @@
       <div class="section-heading">
 
         <div>
-          <span class="eyebrow">MY STOCKS</span>
-          <h2>Watchlist Saya</h2>
+          <span class="eyebrow">
+            MY STOCKS
+          </span>
+
+          <h2>
+            Saham yang Dipantau
+          </h2>
         </div>
 
-        <button class="clear-watchlist" onclick="clearWatchlist()">
-          Hapus Semua
-        </button>
+        <span
+          id="watchlistLabel"
+          class="demo-label"
+        >
+          0 SAHAM
+        </span>
 
       </div>
 
 
-      <div id="watchlistResults" class="stock-grid"></div>
+      <!-- WATCHLIST DATA -->
+      <div
+        id="watchlistStocks"
+        class="stock-grid"
+      ></div>
 
 
-      <div id="emptyWatchlist" class="empty-watchlist">
+      <!-- EMPTY STATE -->
+      <div
+        id="emptyWatchlist"
+        class="empty-watchlist"
+      >
 
-        <div class="empty-icon">⭐</div>
+        <div class="empty-icon">
+          ⭐
+        </div>
 
-        <h3>Watchlist masih kosong</h3>
+        <h3>
+          Watchlist masih kosong
+        </h3>
 
         <p>
           Tambahkan ticker saham di atas untuk mulai memantau saham pilihanmu.
@@ -173,75 +209,26 @@
     </section>
 
 
-    <!-- HOW IT WORKS -->
-    <section class="section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">HOW IT WORKS</span>
-          <h2>Watchlist IDXNOVA</h2>
-        </div>
-
-      </div>
-
-
-      <div class="feature-grid">
-
-        <article>
-          <span>01</span>
-          <h3>➕ Tambahkan</h3>
-          <p>
-            Masukkan ticker saham yang ingin kamu pantau.
-          </p>
-        </article>
-
-
-        <article>
-          <span>02</span>
-          <h3>💾 Tersimpan</h3>
-          <p>
-            Watchlist disimpan secara lokal di browser perangkatmu.
-          </p>
-        </article>
-
-
-        <article>
-          <span>03</span>
-          <h3>🔎 Analisis</h3>
-          <p>
-            Buka Stock Detail untuk melihat data dan analisis saham.
-          </p>
-        </article>
-
-
-        <article>
-          <span>04</span>
-          <h3>🗑️ Kelola</h3>
-          <p>
-            Hapus saham satu per satu atau kosongkan seluruh watchlist.
-          </p>
-        </article>
-
-      </div>
-
-    </section>
-
-
     <!-- CTA -->
     <section class="cta">
 
-      <span class="eyebrow">COMING NEXT</span>
+      <span class="eyebrow">
+        IDXNOVA WATCHLIST
+      </span>
 
-      <h2>Watchlist Dengan Sistem Lebih Pintar.</h2>
+      <h2>
+        Track. Analyze. Decide.
+      </h2>
 
       <p>
-        Ke depan, IDXNOVA dapat menambahkan harga aktual,
-        perubahan harian, alert, dan NOVA Score otomatis.
+        Pantau saham pilihan dan buka Stock Detail untuk melihat
+        analisis IDXNOVA secara lebih lengkap.
       </p>
 
-      <a href="screener.html">
-        <button>Cari Saham</button>
+      <a href="search.html">
+        <button>
+          Cari Saham
+        </button>
       </a>
 
     </section>
@@ -249,122 +236,230 @@
   </main>
 
 
+  <!-- FOOTER -->
   <footer>
 
     <div class="footer-brand">
-      <strong>IDXNOVA</strong>
-      <span>Indonesian Stock Intelligence</span>
+
+      <strong>
+        IDXNOVA
+      </strong>
+
+      <span>
+        Indonesian Stock Intelligence
+      </span>
+
     </div>
 
+
     <p>
-      Watchlist saat ini menggunakan penyimpanan lokal browser
-      dan belum menggunakan data pasar real-time.
+      Watchlist IDXNOVA menggunakan data demonstrasi dan bukan
+      rekomendasi membeli atau menjual saham.
     </p>
 
-    <small>© 2026 IDXNOVA. All rights reserved.</small>
+
+    <small>
+      © 2026 IDXNOVA. All rights reserved.
+    </small>
 
   </footer>
 
 
   <!-- DATABASE PUSAT -->
-  <script src="stocks.js"></script>
+  <script src="./stocks.js"></script>
 
 
+  <!-- JAVASCRIPT -->
   <script>
 
-    const watchlistKey = "idxnovaWatchlist";
+    const WATCHLIST_KEY = "idxnova_watchlist";
 
 
     function toggleMenu() {
-      document.getElementById("navMenu").classList.toggle("active");
+
+      document
+        .getElementById("navMenu")
+        .classList
+        .toggle("active");
+
     }
 
 
     function getWatchlist() {
 
-      const saved =
-        localStorage.getItem(watchlistKey);
-
-
-      if (!saved) {
-        return [];
-      }
-
-
       try {
-        return JSON.parse(saved);
+
+        const saved =
+          localStorage.getItem(WATCHLIST_KEY);
+
+        const watchlist =
+          saved ? JSON.parse(saved) : [];
+
+        return Array.isArray(watchlist)
+          ? watchlist
+          : [];
+
       } catch (error) {
+
         return [];
+
       }
 
     }
 
 
-    function saveWatchlist(list) {
+    function saveWatchlist(watchlist) {
 
       localStorage.setItem(
-        watchlistKey,
-        JSON.stringify(list)
+        WATCHLIST_KEY,
+        JSON.stringify(watchlist)
       );
 
     }
 
 
-    function updateWatchlist() {
+    function formatPrice(price) {
 
-      const list =
-        getWatchlist();
+      return "Rp" +
+        Number(price).toLocaleString("id-ID");
 
+    }
+
+
+    function openStock(ticker) {
+
+      window.location.href =
+        "stock.html?ticker=" +
+        encodeURIComponent(ticker);
+
+    }
+
+
+    function updateWatchlistInfo(count) {
+
+      document
+        .getElementById("watchlistCount")
+        .innerHTML =
+        count + "<span> Saham</span>";
+
+
+      document
+        .getElementById("watchlistLabel")
+        .textContent =
+        count + " SAHAM";
+
+
+      document
+        .getElementById("watchlistBar")
+        .style.width =
+        Math.min(100, count * 15) + "%";
+
+    }
+
+
+    function showMessage(message) {
+
+      document
+        .getElementById("watchlistMessage")
+        .textContent =
+        message;
+
+    }
+
+
+    function renderWatchlist() {
 
       const container =
-        document.getElementById("watchlistResults");
-
+        document.getElementById("watchlistStocks");
 
       const emptyState =
         document.getElementById("emptyWatchlist");
 
 
-      container.innerHTML = "";
+      /*
+        CEK DATABASE
+      */
+      if (typeof STOCKS === "undefined") {
 
+        container.innerHTML = "";
 
-      document.getElementById("watchlistCount").innerHTML =
-        list.length + "<span> Saham</span>";
+        emptyState.style.display =
+          "block";
 
+        emptyState.innerHTML = `
+          <div class="empty-icon">⚠️</div>
+          <h3>Database belum terbaca</h3>
+          <p>
+            Pastikan file stocks.js berada di folder yang sama
+            dengan watchlist.html.
+          </p>
+        `;
 
-      document.getElementById("watchlistBar").style.width =
-        list.length === 0
-          ? "0%"
-          : Math.min(100, list.length * 15) + "%";
-
-
-      if (list.length === 0) {
-
-        emptyState.style.display = "block";
+        updateWatchlistInfo(0);
 
         return;
 
       }
 
 
-      emptyState.style.display = "none";
+      const watchlist =
+        getWatchlist();
 
 
-      list.forEach(function(ticker) {
+      /*
+        HAPUS TICKER YANG SUDAH TIDAK ADA
+        DI DATABASE PUSAT
+      */
+      const validWatchlist =
+        watchlist.filter(function(ticker) {
 
-        /*
-          AMBIL DATA DARI DATABASE PUSAT
-        */
+          return STOCKS[ticker];
+
+        });
+
+
+      if (
+        validWatchlist.length !==
+        watchlist.length
+      ) {
+
+        saveWatchlist(validWatchlist);
+
+      }
+
+
+      container.innerHTML = "";
+
+
+      updateWatchlistInfo(
+        validWatchlist.length
+      );
+
+
+      /*
+        JIKA KOSONG
+      */
+      if (validWatchlist.length === 0) {
+
+        emptyState.style.display =
+          "block";
+
+        return;
+
+      }
+
+
+      emptyState.style.display =
+        "none";
+
+
+      /*
+        RENDER SAHAM
+      */
+      validWatchlist.forEach(function(ticker) {
+
         const stock =
           STOCKS[ticker];
-
-
-        /*
-          JIKA SAHAM SUDAH TIDAK ADA
-          DI DATABASE
-        */
-        if (!stock) {
-          return;
-        }
 
 
         const card =
@@ -372,17 +467,25 @@
 
 
         card.className =
-          "stock-card watchlist-card";
+          "stock-card";
+
+
+        card.style.cursor =
+          "pointer";
+
+
+        const change =
+          Number(stock.change) || 0;
 
 
         const changeSymbol =
-          stock.change >= 0
+          change >= 0
             ? "▲ +"
             : "▼ ";
 
 
         const changeClass =
-          stock.change >= 0
+          change >= 0
             ? "positive"
             : "negative";
 
@@ -393,51 +496,58 @@
 
             <div>
               <h3>${stock.ticker}</h3>
-              <p>${stock.name}</p>
+
+              <p>
+                ${stock.name}
+              </p>
             </div>
 
-            <span class="${changeClass}">
-              ${changeSymbol}${Math.abs(stock.change).toFixed(2)}%
-            </span>
+
+            <button
+              class="remove-watchlist"
+              onclick="removeFromWatchlist('${stock.ticker}', event)"
+              title="Hapus dari Watchlist"
+            >
+              ✕
+            </button>
 
           </div>
 
 
           <div class="stock-price">
-            Score ${stock.overall}
+
+            ${formatPrice(stock.price)}
+
           </div>
 
 
           <div class="stock-footer">
 
-            <span>Best For</span>
-
-            <strong>${stock.bestFit}</strong>
-
-          </div>
+            <span class="${changeClass}">
+              ${changeSymbol}${Math.abs(change).toFixed(2)}%
+            </span>
 
 
-          <div class="watchlist-outlook">
-            ${stock.label}
-          </div>
-
-
-          <div class="watchlist-actions">
-
-            <button onclick="openAnalysis('${stock.ticker}')">
-              🔎 Analisis
-            </button>
-
-            <button
-              onclick="removeStock('${stock.ticker}')"
-              class="remove-stock"
-            >
-              Hapus
-            </button>
+            <strong>
+              NOVA ${stock.overall}/100
+            </strong>
 
           </div>
 
         `;
+
+
+        /*
+          KLIK KARTU → STOCK DETAIL
+        */
+        card.addEventListener(
+          "click",
+          function() {
+
+            openStock(stock.ticker);
+
+          }
+        );
 
 
         container.appendChild(card);
@@ -447,19 +557,28 @@
     }
 
 
-    function addStock() {
+    function addToWatchlist() {
 
       const input =
-        document.getElementById("tickerInput");
+        document.getElementById("watchlistInput");
 
 
       const ticker =
-        input.value.trim().toUpperCase();
+        input.value
+          .trim()
+          .toUpperCase();
 
 
+      /*
+        INPUT KOSONG
+      */
       if (!ticker) {
 
-        alert("Masukkan ticker saham terlebih dahulu.");
+        showMessage(
+          "Masukkan ticker saham terlebih dahulu."
+        );
+
+        input.focus();
 
         return;
 
@@ -467,11 +586,13 @@
 
 
       /*
-        VALIDASI FORMAT
+        CEK DATABASE
       */
-      if (!/^[A-Z0-9]+$/.test(ticker)) {
+      if (typeof STOCKS === "undefined") {
 
-        alert("Ticker hanya boleh berisi huruf dan angka.");
+        showMessage(
+          "Database IDXNOVA belum terbaca."
+        );
 
         return;
 
@@ -479,11 +600,12 @@
 
 
       /*
-        VALIDASI DATABASE
+        TICKER TIDAK DITEMUKAN
       */
       if (!STOCKS[ticker]) {
 
-        alert(
+        showMessage(
+          "Ticker " +
           ticker +
           " belum tersedia di database IDXNOVA."
         );
@@ -493,112 +615,109 @@
       }
 
 
-      const list =
+      const watchlist =
         getWatchlist();
 
 
       /*
-        CEGAH DUPLIKAT
+        SUDAH ADA
       */
-      if (list.includes(ticker)) {
+      if (
+        watchlist.includes(ticker)
+      ) {
 
-        alert(
+        showMessage(
           ticker +
           " sudah ada di Watchlist."
         );
 
+        input.value = "";
+
         return;
 
       }
 
 
-      list.push(ticker);
+      /*
+        TAMBAHKAN
+      */
+      watchlist.push(ticker);
 
 
-      saveWatchlist(list);
+      saveWatchlist(
+        watchlist
+      );
 
 
-      input.value = "";
+      input.value =
+        "";
 
 
-      updateWatchlist();
+      showMessage(
+        ticker +
+        " berhasil ditambahkan ke Watchlist."
+      );
+
+
+      renderWatchlist();
 
     }
 
 
-    function removeStock(ticker) {
+    function removeFromWatchlist(
+      ticker,
+      event
+    ) {
 
-      const list =
+      /*
+        AGAR KLIK X TIDAK MEMBUKA STOCK DETAIL
+      */
+      event.stopPropagation();
+
+
+      let watchlist =
         getWatchlist();
 
 
-      const newList =
-        list.filter(function(item) {
+      watchlist =
+        watchlist.filter(
+          function(item) {
 
-          return item !== ticker;
+            return item !== ticker;
 
-        });
-
-
-      saveWatchlist(newList);
-
-
-      updateWatchlist();
-
-    }
-
-
-    function clearWatchlist() {
-
-      const list =
-        getWatchlist();
-
-
-      if (list.length === 0) {
-        return;
-      }
-
-
-      const confirmDelete =
-        confirm(
-          "Yakin ingin menghapus seluruh Watchlist?"
+          }
         );
 
 
-      if (confirmDelete) {
-
-        localStorage.removeItem(
-          watchlistKey
-        );
+      saveWatchlist(
+        watchlist
+      );
 
 
-        updateWatchlist();
+      showMessage(
+        ticker +
+        " dihapus dari Watchlist."
+      );
 
-      }
 
-    }
-
-
-    function openAnalysis(ticker) {
-
-      window.location.href =
-        "stock.html?ticker=" +
-        encodeURIComponent(ticker);
+      renderWatchlist();
 
     }
 
 
     /*
-      ENTER UNTUK TAMBAH SAHAM
+      ENTER UNTUK TAMBAH
     */
     document
-      .getElementById("tickerInput")
+      .getElementById("watchlistInput")
       .addEventListener(
         "keydown",
         function(event) {
 
           if (event.key === "Enter") {
-            addStock();
+
+            addToWatchlist();
+
           }
 
         }
@@ -608,7 +727,7 @@
     /*
       JALANKAN SAAT HALAMAN DIBUKA
     */
-    updateWatchlist();
+    renderWatchlist();
 
   </script>
 
