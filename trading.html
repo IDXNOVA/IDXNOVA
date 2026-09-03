@@ -5,33 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Trading Radar | IDXNOVA</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
   <header class="navbar">
-
     <a href="index.html" class="brand">
       <span class="brand-mark">N</span>
-
       <span>
         <strong>IDXNOVA</strong>
         <small>INDONESIAN STOCK INTELLIGENCE</small>
       </span>
     </a>
 
-
-    <button
-      class="menu-btn"
-      onclick="toggleMenu()"
-      aria-label="Buka menu"
-    >
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">
       ☰
     </button>
-
 
     <nav id="navMenu">
       <a href="index.html">Home</a>
@@ -42,7 +32,6 @@
       <a href="watchlist.html">Watchlist</a>
       <a href="search.html">🔎 Search</a>
     </nav>
-
   </header>
 
 
@@ -52,7 +41,6 @@
     <section class="hero">
 
       <div class="hero-content">
-
         <div class="badge">⚡ DAILY TRADING SCANNER</div>
 
         <h1>
@@ -61,10 +49,9 @@
         </h1>
 
         <p>
-          Trading Radar membantu memantau saham Indonesia berdasarkan
-          momentum, volume, volatilitas, dan peluang breakout.
+          Trading Radar IDXNOVA menampilkan saham berdasarkan
+          Trading Score tertinggi dari database pusat IDXNOVA.
         </p>
-
       </div>
 
 
@@ -75,38 +62,29 @@
           <strong>DEMO MODE</strong>
         </div>
 
-
         <div class="sentiment-value">
-          <h2 id="radarCount">
-            0<span> Saham</span>
-          </h2>
-
-          <p>Radar aktif</p>
+          <h2 id="radarCount">0<span> Saham</span></h2>
+          <p id="radarStatus">Memuat data...</p>
         </div>
-
 
         <div class="sentiment-bar">
           <span id="radarBar" style="width: 0%"></span>
         </div>
 
-
         <div class="sentiment-info">
-
           <div>
             <small>Strategy</small>
             <strong>Trading</strong>
           </div>
 
           <div>
-            <small>Data</small>
-            <strong>Central</strong>
+            <small>Sort</small>
+            <strong>Highest Score</strong>
           </div>
-
         </div>
 
-
         <p class="demo-note">
-          Scanner masih menggunakan data demonstrasi.
+          Data demonstrasi — bukan data pasar real-time.
         </p>
 
       </div>
@@ -114,104 +92,80 @@
     </section>
 
 
-    <!-- TRADING FILTER -->
+    <!-- RESULTS -->
     <section class="section">
 
       <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">TRADING FILTER</span>
-          <h2>Radar Scanner</h2>
-        </div>
-
-        <span class="demo-label">DEMO DATA</span>
-
-      </div>
-
-
-      <div class="feature-grid">
-
-        <article>
-          <span>01</span>
-          <h3>⚡ Momentum</h3>
-          <p>
-            Saham dengan kekuatan pergerakan harga yang meningkat.
-          </p>
-        </article>
-
-
-        <article>
-          <span>02</span>
-          <h3>📊 Volume Spike</h3>
-          <p>
-            Mendeteksi aktivitas volume yang lebih tinggi dari biasanya.
-          </p>
-        </article>
-
-
-        <article>
-          <span>03</span>
-          <h3>🚀 Breakout</h3>
-          <p>
-            Memantau saham yang mendekati atau menembus level penting.
-          </p>
-        </article>
-
-
-        <article>
-          <span>04</span>
-          <h3>🔥 High Score</h3>
-          <p>
-            Menampilkan saham dengan Trading Score tertinggi.
-          </p>
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- TRADING OPPORTUNITIES -->
-    <section class="section">
-
-      <div class="section-heading">
-
         <div>
           <span class="eyebrow">TRADING RADAR</span>
           <h2>Top Trading Opportunities</h2>
         </div>
 
-        <span
-          id="radarLabel"
-          class="demo-label"
-        >
-          LOADING...
-        </span>
-
+        <span id="radarLabel" class="demo-label">MEMUAT...</span>
       </div>
 
 
-      <!-- DIISI OTOMATIS OLEH JAVASCRIPT -->
-      <div
-        id="tradingStocks"
-        class="stock-grid"
-      ></div>
+      <div id="tradingStocks" class="stock-grid"></div>
 
 
-      <!-- JIKA TIDAK ADA DATA -->
       <div
         id="noTradingResult"
         class="empty-watchlist"
         style="display: none;"
       >
-
-        <div class="empty-icon">⚡</div>
-
-        <h3>Belum ada saham Trading</h3>
-
+        <div class="empty-icon">⚠️</div>
+        <h3>Data saham belum tersedia</h3>
         <p>
-          Tambahkan kategori Trading pada database pusat.
+          Database IDXNOVA tidak menemukan saham untuk ditampilkan.
         </p>
+      </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+    <section class="section">
+
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">TRADING CRITERIA</span>
+          <h2>Cara Radar Menyusun Data</h2>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+
+        <article>
+          <span>⚡</span>
+          <h3>Trading Score</h3>
+          <p>
+            Saham diprioritaskan berdasarkan skor trading tertinggi.
+          </p>
+        </article>
+
+        <article>
+          <span>📊</span>
+          <h3>Momentum</h3>
+          <p>
+            Menggunakan karakter momentum dari data analisis IDXNOVA.
+          </p>
+        </article>
+
+        <article>
+          <span>📈</span>
+          <h3>Price Movement</h3>
+          <p>
+            Menampilkan perubahan harga yang tersimpan pada database demo.
+          </p>
+        </article>
+
+        <article>
+          <span>🎯</span>
+          <h3>Opportunity</h3>
+          <p>
+            Membantu melihat saham dengan karakter trading yang menarik.
+          </p>
+        </article>
 
       </div>
 
@@ -226,15 +180,12 @@
       <h2>Find Momentum. Manage Risk.</h2>
 
       <p>
-        Gunakan Trading Radar untuk melihat saham yang sesuai
-        dengan kategori dan strategi trading IDXNOVA.
+        Gunakan Trading Radar sebagai alat bantu analisis, bukan sebagai
+        jaminan atau rekomendasi membeli dan menjual saham.
       </p>
 
-
       <a href="screener.html">
-        <button>
-          Buka Stock Screener
-        </button>
+        <button>Buka Stock Screener</button>
       </a>
 
     </section>
@@ -242,7 +193,6 @@
   </main>
 
 
-  <!-- FOOTER -->
   <footer>
 
     <div class="footer-brand">
@@ -250,16 +200,12 @@
       <span>Indonesian Stock Intelligence</span>
     </div>
 
-
     <p>
-      Trading Radar saat ini menggunakan data demonstrasi dan bukan
-      rekomendasi untuk membeli atau menjual saham.
+      IDXNOVA menyediakan informasi untuk edukasi dan analisis.
+      Investasi dan trading memiliki risiko.
     </p>
 
-
-    <small>
-      © 2026 IDXNOVA. All rights reserved.
-    </small>
+    <small>© 2026 IDXNOVA. All rights reserved.</small>
 
   </footer>
 
@@ -268,227 +214,135 @@
   <script src="stocks.js"></script>
 
 
+  <!-- TRADING RADAR -->
   <script>
 
-    /*
-      MOBILE MENU
-    */
     function toggleMenu() {
-
-      document
-        .getElementById("navMenu")
-        .classList
-        .toggle("active");
-
+      document.getElementById("navMenu").classList.toggle("active");
     }
 
 
-    /*
-      BUKA DETAIL SAHAM
-    */
-    function openStock(ticker) {
+    document.addEventListener("DOMContentLoaded", function () {
 
-      window.location.href =
-        "stock.html?ticker=" +
-        encodeURIComponent(ticker);
-
-    }
+      const container = document.getElementById("tradingStocks");
+      const radarCount = document.getElementById("radarCount");
+      const radarStatus = document.getElementById("radarStatus");
+      const radarLabel = document.getElementById("radarLabel");
+      const radarBar = document.getElementById("radarBar");
+      const emptyState = document.getElementById("noTradingResult");
 
 
-    /*
-      AMBIL SAHAM TRADING
-      DARI DATABASE PUSAT
-    */
-    function getTradingStocks() {
+      // Ambil seluruh saham dari database pusat
+      const stockList = [];
 
-      return Object
-        .values(STOCKS)
-        .filter(function(stock) {
+      if (typeof STOCKS !== "undefined") {
 
-          /*
-            Cari kategori trading
-          */
-          return stock.categories &&
-            stock.categories.includes("trading");
-
-        })
-        .sort(function(a, b) {
-
-          /*
-            Urutkan berdasarkan Trading Score
-          */
-          return b.trade - a.trade;
-
-        });
-
-    }
-
-
-    /*
-      TAMPILKAN TRADING RADAR
-    */
-    function renderTradingStocks() {
-
-      const container =
-        document.getElementById("tradingStocks");
-
-
-      const emptyState =
-        document.getElementById("noTradingResult");
-
-
-      const stocks =
-        getTradingStocks();
-
-
-      /*
-        RESET
-      */
-      container.innerHTML =
-        "";
-
-
-      /*
-        UPDATE JUMLAH
-      */
-      document
-        .getElementById("radarCount")
-        .innerHTML =
-        stocks.length +
-        "<span> Saham</span>";
-
-
-      document
-        .getElementById("radarLabel")
-        .textContent =
-        stocks.length +
-        " SAHAM";
-
-
-      document
-        .getElementById("radarBar")
-        .style
-        .width =
-        Math.min(
-          100,
-          stocks.length * 12
-        ) + "%";
-
-
-      /*
-        JIKA BELUM ADA DATA
-      */
-      if (stocks.length === 0) {
-
-        emptyState.style.display =
-          "block";
-
-        return;
+        for (let ticker in STOCKS) {
+          stockList.push(STOCKS[ticker]);
+        }
 
       }
 
 
-      emptyState.style.display =
-        "none";
+      // Urutkan Trading Score tertinggi
+      stockList.sort(function (a, b) {
+        return Number(b.trading) - Number(a.trading);
+      });
 
 
-      /*
-        BUAT KARTU SAHAM
-      */
-      stocks.forEach(function(stock) {
+      // Update jumlah saham
+      radarCount.innerHTML =
+        stockList.length + "<span> Saham</span>";
 
-        const card =
-          document.createElement("article");
-
-
-        card.className =
-          "stock-card";
+      radarLabel.textContent =
+        stockList.length + " SAHAM";
 
 
-        card.style.cursor =
-          "pointer";
+      radarStatus.textContent =
+        stockList.length > 0
+          ? "Trading Radar aktif"
+          : "Tidak ada data tersedia";
 
 
-        /*
-          STATUS PERUBAHAN
-        */
-        const changeSymbol =
-          stock.change >= 0
-            ? "▲ +"
-            : "▼ ";
+      radarBar.style.width =
+        Math.min(100, stockList.length * 12) + "%";
+
+
+      // Kosongkan area hasil
+      container.innerHTML = "";
+
+
+      // Jika database kosong
+      if (stockList.length === 0) {
+
+        emptyState.style.display = "block";
+
+        return;
+      }
+
+
+      // Sembunyikan pesan kosong
+      emptyState.style.display = "none";
+
+
+      // Tampilkan seluruh saham
+      stockList.forEach(function (stock) {
+
+        const card = document.createElement("article");
+
+        card.className = "stock-card";
+        card.style.cursor = "pointer";
+
+
+        const change =
+          Number(stock.change) || 0;
 
 
         const changeClass =
-          stock.change >= 0
-            ? "positive"
-            : "negative";
+          change >= 0 ? "positive" : "negative";
 
 
-        /*
-          TAMPILAN KARTU
-        */
+        const changeIcon =
+          change >= 0 ? "▲ +" : "▼ ";
+
+
         card.innerHTML = `
-
           <div class="stock-header">
 
             <div>
               <h3>${stock.ticker}</h3>
-
-              <p>
-                ${stock.bestFit || "Trading Opportunity"}
-              </p>
+              <p>${stock.tradingOutlook}</p>
             </div>
 
-
             <span class="${changeClass}">
-              ${changeSymbol}${Math.abs(stock.change).toFixed(2)}%
+              ${changeIcon}${Math.abs(change).toFixed(2)}%
             </span>
 
           </div>
 
-
           <div class="stock-price">
-            Score ${stock.trade}
+            Rp${Number(stock.price).toLocaleString("id-ID")}
           </div>
-
 
           <div class="stock-footer">
-
             <span>Trading Score</span>
-
-            <strong>
-              ${stock.trade}/100
-            </strong>
-
+            <strong>${stock.trading}/100</strong>
           </div>
-
         `;
 
 
-        /*
-          KLIK → DETAIL SAHAM
-        */
-        card.addEventListener(
-          "click",
-          function() {
-
-            openStock(stock.ticker);
-
-          }
-        );
+        card.addEventListener("click", function () {
+          window.location.href =
+            "stock.html?ticker=" +
+            encodeURIComponent(stock.ticker);
+        });
 
 
         container.appendChild(card);
 
       });
 
-    }
-
-
-    /*
-      JALANKAN SAAT HALAMAN DIBUKA
-    */
-    renderTradingStocks();
+    });
 
   </script>
 
