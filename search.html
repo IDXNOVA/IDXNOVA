@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cari Saham | IDXNOVA</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">N</span>
+      <span>
+        <strong>IDXNOVA</strong>
+        <small>INDONESIAN STOCK INTELLIGENCE</small>
+      </span>
+    </a>
+
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">
+      ☰
+    </button>
+
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="trading.html">Trading</a>
+      <a href="swing.html">Swing</a>
+      <a href="investing.html">Investing</a>
+      <a href="screener.html">Screener</a>
+      <a href="watchlist.html">Watchlist</a>
+      <a href="search.html">Search</a>
+    </nav>
+  </header>
+
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <div class="badge">🔎 IDXNOVA STOCK SEARCH</div>
+
+        <h1>
+          Cari Saham
+          <span>Dengan Cepat.</span>
+        </h1>
+
+        <p>
+          Cari saham berdasarkan ticker atau nama perusahaan.
+          IDXNOVA akan mencari data langsung dari database pusat.
+        </p>
+
+      </div>
+
+
+      <div class="hero-panel">
+
+        <div class="panel-top">
+          <span>STOCK DATABASE</span>
+          <strong>CENTRAL DATA</strong>
+        </div>
+
+        <div class="sentiment-value">
+          <h2 id="databaseCount">0<span> Saham</span></h2>
+          <p>Tersedia di database</p>
+        </div>
+
+        <div class="sentiment-bar">
+          <span id="databaseBar" style="width: 0%"></span>
+        </div>
+
+        <div class="sentiment-info">
+          <div>
+            <small>Market</small>
+            <strong>Indonesia</strong>
+          </div>
+
+          <div>
+            <small>Status</small>
+            <strong>Demo</strong>
+          </div>
+        </div>
+
+        <p class="demo-note">
+          Database saat ini masih dalam tahap pengembangan.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- SEARCH -->
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="eyebrow">SEARCH DATABASE</span>
+          <h2>Temukan Saham</h2>
+        </div>
+
+        <span class="demo-label">SMART SEARCH</span>
+
+      </div>
+
+
+      <div class="watchlist-add">
+
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Contoh: BBRI atau Bank Rakyat Indonesia"
+          autocomplete="off"
+        >
+
+        <button onclick="searchStocks()">
+          🔎 Cari
+        </button>
+
+      </div>
+
+
+      <p class="watchlist-help">
+        Ketik ticker atau nama perusahaan. Contoh: ANTM, BBCA,
+        Bank Central Asia, United Tractors.
+      </p>
+
+    </section>
+
+
+    <!-- RESULTS -->
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="eyebrow">SEARCH RESULTS</span>
+          <h2 id="searchTitle">Semua Saham</h2>
+        </div>
+
+        <span id="resultCountLabel" class="demo-label">
+          0 HASIL
+        </span>
+
+      </div>
+
+
+      <div
+        id="searchResults"
+        class="stock-grid"
+      ></div>
+
+
+      <div
+        id="noSearchResult"
+        class="empty-watchlist"
+        style="display: none;"
+      >
+
+        <div class="empty-icon">🔎</div>
+
+        <h3>Saham tidak ditemukan</h3>
+
+        <p>
+          Coba gunakan ticker atau nama perusahaan yang berbeda.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- HOW TO SEARCH -->
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div>
+          <span class="eyebrow">HOW TO SEARCH</span>
+          <h2>Cara Mencari</h2>
+        </div>
+
+      </div>
+
+
+      <div class="feature-grid">
+
+        <article>
+          <span>01</span>
+          <h3>Ticker</h3>
+          <p>
+            Cari menggunakan kode saham, misalnya BBRI atau ANTM.
+          </p>
+        </article>
+
+
+        <article>
+          <span>02</span>
+          <h3>Nama Perusahaan</h3>
+          <p>
+            Cari menggunakan seluruh atau sebagian nama perusahaan.
+          </p>
+        </article>
+
+
+        <article>
+          <span>03</span>
+          <h3>Klik Hasil</h3>
+          <p>
+            Tekan kartu saham untuk membuka Stock Detail IDXNOVA.
+          </p>
+        </article>
+
+
+        <article>
+          <span>04</span>
+          <h3>Database Terpusat</h3>
+          <p>
+            Semua hasil dibaca langsung dari satu database pusat.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta">
+
+      <span class="eyebrow">EXPLORE MARKET</span>
+
+      <h2>Find The Right Opportunity.</h2>
+
+      <p>
+        Gunakan Screener untuk menemukan saham berdasarkan strategi
+        atau gunakan Search untuk mencari saham tertentu.
+      </p>
+
+      <a href="screener.html">
+        <button>Buka Screener</button>
+      </a>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <div class="footer-brand">
+      <strong>IDXNOVA</strong>
+      <span>Indonesian Stock Intelligence</span>
+    </div>
+
+    <p>
+      Database saham IDXNOVA saat ini menggunakan data demonstrasi.
+      Bukan rekomendasi membeli atau menjual saham.
+    </p>
+
+    <small>© 2026 IDXNOVA. All rights reserved.</small>
+
+  </footer>
+
+
+  <!-- DATABASE PUSAT -->
+  <script src="stocks.js"></script>
+
+
+  <script>
+
+    function toggleMenu() {
+      document
+        .getElementById("navMenu")
+        .classList
+        .toggle("active");
+    }
+
+
+    /*
+      AMBIL SEMUA SAHAM
+    */
+    function getAllStocks() {
+
+      return Object
+        .values(STOCKS)
+        .sort(function(a, b) {
+
+          return a.ticker.localeCompare(b.ticker);
+
+        });
+
+    }
+
+
+    /*
+      TAMPILKAN HASIL
+    */
+    function renderResults(stockList, query = "") {
+
+      const container =
+        document.getElementById("searchResults");
+
+      const emptyState =
+        document.getElementById("noSearchResult");
+
+      const title =
+        document.getElementById("searchTitle");
+
+      const resultCount =
+        document.getElementById("resultCountLabel");
+
+
+      container.innerHTML = "";
+
+
+      if (query) {
+
+        title.textContent =
+          'Hasil Pencarian "' + query + '"';
+
+      } else {
+
+        title.textContent =
+          "Semua Saham";
+
+      }
+
+
+      resultCount.textContent =
+        stockList.length + " HASIL";
+
+
+      if (stockList.length === 0) {
+
+        emptyState.style.display =
+          "block";
+
+        return;
+
+      }
+
+
+      emptyState.style.display =
+        "none";
+
+
+      stockList.forEach(function(stock) {
+
+        const card =
+          document.createElement("article");
+
+
+        card.className =
+          "stock-card screener-stock";
+
+
+        card.style.cursor =
+          "pointer";
+
+
+        const changeSymbol =
+          stock.change >= 0
+            ? "▲ +"
+            : "▼ ";
+
+
+        const changeClass =
+          stock.change >= 0
+            ? "positive"
+            : "negative";
+
+
+        card.innerHTML = `
+
+          <div class="stock-header">
+
+            <div>
+              <h3>${stock.ticker}</h3>
+              <p>${stock.name}</p>
+            </div>
+
+            <span class="${changeClass}">
+              ${changeSymbol}${Math.abs(stock.change).toFixed(2)}%
+            </span>
+
+          </div>
+
+
+          <div class="stock-price">
+            Score ${stock.overall}
+          </div>
+
+
+          <div class="stock-footer">
+
+            <span>Best For</span>
+
+            <strong>${stock.bestFit}</strong>
+
+          </div>
+
+        `;
+
+
+        card.addEventListener(
+          "click",
+          function() {
+
+            window.location.href =
+              "stock.html?ticker=" +
+              encodeURIComponent(stock.ticker);
+
+          }
+        );
+
+
+        container.appendChild(card);
+
+      });
+
+    }
+
+
+    /*
+      JALANKAN PENCARIAN
+    */
+    function searchStocks() {
+
+      const input =
+        document.getElementById("searchInput");
+
+
+      const query =
+        input.value
+          .trim()
+          .toLowerCase();
+
+
+      const allStocks =
+        getAllStocks();
+
+
+      if (!query) {
+
+        renderResults(
+          allStocks,
+          ""
+        );
+
+        return;
+
+      }
+
+
+      const results =
+        allStocks.filter(function(stock) {
+
+          return (
+
+            stock.ticker
+              .toLowerCase()
+              .includes(query)
+
+            ||
+
+            stock.name
+              .toLowerCase()
+              .includes(query)
+
+          );
+
+        });
+
+
+      renderResults(
+        results,
+        input.value.trim()
+      );
+
+    }
+
+
+    /*
+      LIVE SEARCH SAAT MENGETIK
+    */
+    document
+      .getElementById("searchInput")
+      .addEventListener(
+        "input",
+        function() {
+
+          searchStocks();
+
+        }
+      );
+
+
+    /*
+      ENTER UNTUK CARI
+    */
+    document
+      .getElementById("searchInput")
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (event.key === "Enter") {
+
+            searchStocks();
+
+          }
+
+        }
+      );
+
+
+    /*
+      HITUNG DATABASE
+    */
+    const allStocks =
+      getAllStocks();
+
+
+    document
+      .getElementById("databaseCount")
+      .innerHTML =
+      allStocks.length +
+      "<span> Saham</span>";
+
+
+    document
+      .getElementById("databaseBar")
+      .style
+      .width =
+      Math.min(
+        100,
+        allStocks.length * 12
+      ) + "%";
+
+
+    /*
+      TAMPILKAN SEMUA SAHAM
+    */
+    renderResults(allStocks);
+
+  </script>
+
+</body>
+</html>
