@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Stock Analysis | IDXNOVA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">N</span>
+      <span>
+        <strong>IDXNOVA</strong>
+        <small>INDONESIAN STOCK INTELLIGENCE</small>
+      </span>
+    </a>
+
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">☰</button>
+
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="trading.html">Trading</a>
+      <a href="swing.html">Swing</a>
+      <a href="investing.html">Investing</a>
+      <a href="screener.html">Screener</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- STOCK HEADER -->
+    <section class="stock-detail-hero">
+      <div class="stock-identity">
+        <a href="index.html" class="back-link">← Kembali ke Home</a>
+
+        <div class="ticker-row">
+          <div class="ticker-logo" id="tickerLogo">B</div>
+
+          <div>
+            <h1 id="ticker">BBRI</h1>
+            <p id="companyName">Bank Rakyat Indonesia (Persero) Tbk</p>
+          </div>
+        </div>
+
+        <span class="demo-label">DEMO DATA</span>
+      </div>
+
+      <div class="stock-main-price">
+        <small>LAST PRICE</small>
+        <h2 id="stockPrice">Rp4.120</h2>
+        <p class="positive" id="stockChange">▲ +1.24%</p>
+        <small id="stockDate">Contoh data IDXNOVA</small>
+      </div>
+    </section>
+
+
+    <!-- OVERALL SCORE -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">IDXNOVA ANALYSIS</span>
+          <h2>Overall NOVA Score</h2>
+        </div>
+
+        <span class="demo-label">SAMPLE SCORE</span>
+      </div>
+
+      <div class="overall-score-card">
+        <div class="overall-score-number">
+          <strong id="overallScore">88</strong>
+          <span>/100</span>
+        </div>
+
+        <div class="overall-score-info">
+          <h3 id="scoreLabel">Strong Opportunity</h3>
+          <p>
+            Skor keseluruhan menggabungkan berbagai faktor analisis.
+            Ini bukan rekomendasi beli atau jaminan keuntungan.
+          </p>
+        </div>
+
+        <div class="overall-score-bar">
+          <span id="overallBar" style="width: 88%"></span>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- MULTI STRATEGY SCORE -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">MULTI-STRATEGY ANALYSIS</span>
+          <h2>Score Berdasarkan Strategi</h2>
+        </div>
+      </div>
+
+      <div class="score-grid">
+
+        <article class="score-card">
+          <div class="score-icon">⚡</div>
+          <h3>Trading</h3>
+          <p>Momentum, volume, volatilitas, likuiditas, dan struktur harga.</p>
+          <div class="score-line">
+            <span id="tradingBar" style="width: 79%"></span>
+          </div>
+          <strong id="tradingScore">79 / 100</strong>
+        </article>
+
+        <article class="score-card">
+          <div class="score-icon">📈</div>
+          <h3>Swing</h3>
+          <p>Trend, momentum, support-resistance, dan konfirmasi volume.</p>
+          <div class="score-line">
+            <span id="swingBar" style="width: 84%"></span>
+          </div>
+          <strong id="swingScore">84 / 100</strong>
+        </article>
+
+        <article class="score-card">
+          <div class="score-icon">📊</div>
+          <h3>Medium Term</h3>
+          <p>Pertumbuhan, tren bisnis, valuasi, dan prospek jangka menengah.</p>
+          <div class="score-line">
+            <span id="mediumBar" style="width: 86%"></span>
+          </div>
+          <strong id="mediumScore">86 / 100</strong>
+        </article>
+
+        <article class="score-card">
+          <div class="score-icon">💎</div>
+          <h3>Long Term</h3>
+          <p>Fundamental, kualitas bisnis, pertumbuhan, utang, dan valuasi.</p>
+          <div class="score-line">
+            <span id="longBar" style="width: 90%"></span>
+          </div>
+          <strong id="longScore">90 / 100</strong>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- OVERVIEW -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">STOCK OVERVIEW</span>
+          <h2>Ringkasan Analisis</h2>
+        </div>
+      </div>
+
+      <div class="analysis-grid">
+
+        <article class="analysis-card">
+          <span class="analysis-icon">⚡</span>
+          <div>
+            <small>TRADING OUTLOOK</small>
+            <h3 id="tradingOutlook">Bullish Momentum</h3>
+            <p>Analisis berdasarkan momentum dan kondisi teknikal.</p>
+          </div>
+        </article>
+
+        <article class="analysis-card">
+          <span class="analysis-icon">📈</span>
+          <div>
+            <small>SWING OUTLOOK</small>
+            <h3 id="swingOutlook">Positive Trend</h3>
+            <p>Analisis berdasarkan struktur harga dan arah tren.</p>
+          </div>
+        </article>
+
+        <article class="analysis-card">
+          <span class="analysis-icon">🏦</span>
+          <div>
+            <small>FUNDAMENTAL</small>
+            <h3 id="fundamentalOutlook">Strong</h3>
+            <p>Gambaran kualitas bisnis dan kesehatan fundamental.</p>
+          </div>
+        </article>
+
+        <article class="analysis-card">
+          <span class="analysis-icon">⚖️</span>
+          <div>
+            <small>VALUATION</small>
+            <h3 id="valuationOutlook">Fair</h3>
+            <p>Penilaian relatif berdasarkan konsep valuasi IDXNOVA.</p>
+          </div>
+        </article>
+
+        <article class="analysis-card">
+          <span class="analysis-icon">🛡️</span>
+          <div>
+            <small>RISK LEVEL</small>
+            <h3 id="riskLevel">Moderate</h3>
+            <p>Risiko tetap harus dipertimbangkan sebelum mengambil keputusan.</p>
+          </div>
+        </article>
+
+        <article class="analysis-card">
+          <span class="analysis-icon">🎯</span>
+          <div>
+            <small>BEST FIT</small>
+            <h3 id="bestFit">Medium & Long Term</h3>
+            <p>Strategi yang paling sesuai berdasarkan data demonstrasi.</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- FUNDAMENTAL METRICS -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">FUNDAMENTAL SNAPSHOT</span>
+          <h2>Key Metrics</h2>
+        </div>
+
+        <span class="demo-label">DEMO DATA</span>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric-card">
+          <small>Revenue Growth</small>
+          <strong id="revenueGrowth">+8.4%</strong>
+        </div>
+
+        <div class="metric-card">
+          <small>Profit Growth</small>
+          <strong id="profitGrowth">+10.2%</strong>
+        </div>
+
+        <div class="metric-card">
+          <small>ROE</small>
+          <strong id="roe">18.6%</strong>
+        </div>
+
+        <div class="metric-card">
+          <small>Debt Level</small>
+          <strong id="debtLevel">Healthy</strong>
+        </div>
+
+        <div class="metric-card">
+          <small>Dividend</small>
+          <strong id="dividend">Attractive</strong>
+        </div>
+
+        <div class="metric-card">
+          <small>Business Quality</small>
+          <strong id="businessQuality">Strong</strong>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- CONCLUSION -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">IDXNOVA CONCLUSION</span>
+          <h2>Kesimpulan Berdasarkan Horizon</h2>
+        </div>
+      </div>
+
+      <div class="horizon-grid">
+
+        <article class="horizon-card">
+          <span>⚡</span>
+          <div>
+            <small>HARIAN</small>
+            <h3 id="dailyConclusion">Perlu Konfirmasi</h3>
+            <p>Fokus pada momentum, volume, dan manajemen risiko.</p>
+          </div>
+        </article>
+
+        <article class="horizon-card">
+          <span>📈</span>
+          <div>
+            <small>BEBERAPA HARI / MINGGU</small>
+            <h3 id="shortConclusion">Menarik Dipantau</h3>
+            <p>Evaluasi tren dan area support-resistance.</p>
+          </div>
+        </article>
+
+        <article class="horizon-card">
+          <span>📊</span>
+          <div>
+            <small>BEBERAPA BULAN</small>
+            <h3 id="mediumConclusion">Positive</h3>
+            <p>Perhatikan pertumbuhan dan perubahan fundamental.</p>
+          </div>
+        </article>
+
+        <article class="horizon-card">
+          <span>💎</span>
+          <div>
+            <small>JANGKA PANJANG</small>
+            <h3 id="longConclusion">Strong Candidate</h3>
+            <p>Fokus pada kualitas bisnis dan valuasi jangka panjang.</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta">
+      <span class="eyebrow">SEARCH ANOTHER STOCK</span>
+      <h2>Analisis Saham Indonesia Lainnya</h2>
+
+      <p>
+        Masukkan ticker untuk mencoba template analisis IDXNOVA.
+      </p>
+
+      <div class="stock-search-detail">
+        <input id="newTicker" type="text" placeholder="Contoh: ANTM">
+        <button onclick="changeStock()">Analisis</button>
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <div class="footer-brand">
+      <strong>IDXNOVA</strong>
+      <span>Indonesian Stock Intelligence</span>
+    </div>
+
+    <p>
+      Data pada halaman ini saat ini merupakan demonstrasi. IDXNOVA bukan
+      penasihat investasi dan informasi yang tersedia bukan rekomendasi
+      untuk membeli atau menjual saham.
+    </p>
+
+    <small>© 2026 IDXNOVA. All rights reserved.</small>
+  </footer>
+
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("navMenu").classList.toggle("active");
+    }
+
+    const stockData = {
+      BBRI: {
+        name: "Bank Rakyat Indonesia (Persero) Tbk",
+        price: "Rp4.120",
+        change: "▲ +1.24%",
+        overall: 88,
+        label: "Strong Opportunity",
+        trading: 79,
+        swing: 84,
+        medium: 86,
+        long: 90,
+        tradingOutlook: "Bullish Momentum",
+        swingOutlook: "Positive Trend",
+        fundamental: "Strong",
+        valuation: "Fair",
+        risk: "Moderate",
+        bestFit: "Medium & Long Term"
+      },
+
+      BBCA: {
+        name: "Bank Central Asia Tbk",
+        price: "Rp9.425",
+        change: "▲ +0.86%",
+        overall: 92,
+        label: "High Quality",
+        trading: 72,
+        swing: 80,
+        medium: 89,
+        long: 94,
+        tradingOutlook: "Stable",
+        swingOutlook: "Positive",
+        fundamental: "Very Strong",
+        valuation: "Premium",
+        risk: "Low - Moderate",
+        bestFit: "Long Term"
+      },
+
+      ANTM: {
+        name: "Aneka Tambang Tbk",
+        price: "Rp1.840",
+        change: "▲ +4.25%",
+        overall: 90,
+        label: "Strong Momentum",
+        trading: 91,
+        swing: 90,
+        medium: 84,
+        long: 82,
+        tradingOutlook: "Strong Bullish",
+        swingOutlook: "Strong Trend",
+        fundamental: "Positive",
+        valuation: "Variable",
+        risk: "High",
+        bestFit: "Trading & Swing"
+      },
+
+      ELSA: {
+        name: "Elnusa Tbk",
+        price: "Rp690",
+        change: "▲ +2.10%",
+        overall: 82,
+        label: "Positive Opportunity",
+        trading: 86,
+        swing: 86,
+        medium: 80,
+        long: 76,
+        tradingOutlook: "Positive Momentum",
+        swingOutlook: "Breakout Watch",
+        fundamental: "Healthy",
+        valuation: "Interesting",
+        risk: "Moderate - High",
+        bestFit: "Trading & Swing"
+      },
+
+      PWON: {
+        name: "Pakuwon Jati Tbk",
+        price: "Rp272",
+        change: "▲ +1.15%",
+        overall: 79,
+        label: "Watchlist Candidate",
+        trading: 70,
+        swing: 81,
+        medium: 82,
+        long: 84,
+        tradingOutlook: "Neutral",
+        swingOutlook: "Support Watch",
+        fundamental: "Healthy",
+        valuation: "Interesting",
+        risk: "Moderate",
+        bestFit: "Medium & Long Term"
+      }
+    };
+
+    function setText(id, value) {
+      document.getElementById(id).textContent = value;
+    }
+
+    function setScore(id, score) {
+      document.getElementById(id).textContent = score + " / 100";
+    }
+
+    function setBar(id, score) {
+      document.getElementById(id).style.width = score + "%";
+    }
+
+    function loadStock(ticker) {
+      const stock = stockData[ticker];
+
+      if (!stock) {
+        alert(
+          "Ticker " + ticker + " belum tersedia pada demo IDXNOVA.\n\n" +
+          "Coba: BBRI, BBCA, ANTM, ELSA, atau PWON."
+        );
+        return;
+      }
+
+      setText("ticker", ticker);
+      setText("tickerLogo", ticker.charAt(0));
+      setText("companyName", stock.name);
+      setText("stockPrice", stock.price);
+      setText("stockChange", stock.change);
+
+      setText("overallScore", stock.overall);
+      setText("scoreLabel", stock.label);
+      setBar("overallBar", stock.overall);
+
+      setScore("tradingScore", stock.trading);
+      setScore("swingScore", stock.swing);
+      setScore("mediumScore", stock.medium);
+      setScore("longScore", stock.long);
+
+      setBar("tradingBar", stock.trading);
+      setBar("swingBar", stock.swing);
+      setBar("mediumBar", stock.medium);
+      setBar("longBar", stock.long);
+
+      setText("tradingOutlook", stock.tradingOutlook);
+      setText("swingOutlook", stock.swingOutlook);
+      setText("fundamentalOutlook", stock.fundamental);
+      setText("valuationOutlook", stock.valuation);
+      setText("riskLevel", stock.risk);
+      setText("bestFit", stock.bestFit);
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    function changeStock() {
+      const input = document.getElementById("newTicker");
+      const ticker = input.value.trim().toUpperCase();
+
+      if (!ticker) {
+        alert("Masukkan ticker saham terlebih dahulu.");
+        return;
+      }
+
+      loadStock(ticker);
+      input.value = "";
+    }
+
+    document.getElementById("newTicker").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        changeStock();
+      }
+    });
+  </script>
+
+</body>
+</html>
