@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Stock Screener | IDXNOVA</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">N</span>
+      <span>
+        <strong>IDXNOVA</strong>
+        <small>INDONESIAN STOCK INTELLIGENCE</small>
+      </span>
+    </a>
+
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">
+      ☰
+    </button>
+
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="trading.html">Trading</a>
+      <a href="swing.html">Swing</a>
+      <a href="investing.html">Investing</a>
+      <a href="screener.html">Screener</a>
+    </nav>
+  </header>
+
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">🔎 IDXNOVA STOCK SCREENER</div>
+
+        <h1>
+          Temukan Saham Sesuai
+          <span>Strategimu.</span>
+        </h1>
+
+        <p>
+          Filter saham Indonesia berdasarkan gaya trading atau investasi.
+          Pilih strategi, lalu IDXNOVA akan menampilkan contoh saham yang
+          sesuai dengan kriteria scanner.
+        </p>
+      </div>
+
+      <div class="hero-panel">
+        <div class="panel-top">
+          <span>SCREENER STATUS</span>
+          <strong>DEMO MODE</strong>
+        </div>
+
+        <div class="sentiment-value">
+          <h2 id="stockCount">8<span> Saham</span></h2>
+          <p id="screenerStatus">Semua strategi aktif</p>
+        </div>
+
+        <div class="sentiment-bar">
+          <span id="screenerBar" style="width: 80%"></span>
+        </div>
+
+        <div class="sentiment-info">
+          <div>
+            <small>Market</small>
+            <strong>Indonesia</strong>
+          </div>
+
+          <div>
+            <small>Data</small>
+            <strong>Demo</strong>
+          </div>
+        </div>
+
+        <p class="demo-note">
+          Hasil saat ini menggunakan data demonstrasi, bukan data pasar real-time.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- FILTER -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">STRATEGY FILTER</span>
+          <h2>Pilih Strategi</h2>
+        </div>
+
+        <span class="demo-label">INTERACTIVE DEMO</span>
+      </div>
+
+      <div class="screener-filters">
+
+        <button class="filter-btn active" onclick="filterStocks('all', this)">
+          Semua
+        </button>
+
+        <button class="filter-btn" onclick="filterStocks('trading', this)">
+          ⚡ Trading
+        </button>
+
+        <button class="filter-btn" onclick="filterStocks('swing', this)">
+          📈 Swing
+        </button>
+
+        <button class="filter-btn" onclick="filterStocks('medium', this)">
+          📊 Medium Term
+        </button>
+
+        <button class="filter-btn" onclick="filterStocks('longterm', this)">
+          💎 Long Term
+        </button>
+
+      </div>
+    </section>
+
+
+    <!-- RESULTS -->
+    <section class="section">
+
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">SCAN RESULTS</span>
+          <h2 id="resultTitle">Semua Peluang Saham</h2>
+        </div>
+
+        <span class="demo-label">SAMPLE DATA</span>
+      </div>
+
+
+      <div class="stock-grid" id="stockResults">
+
+        <article class="stock-card screener-stock" data-category="trading swing medium">
+          <div class="stock-header">
+            <div>
+              <h3>ANTM</h3>
+              <p>Momentum & Commodity Growth</p>
+            </div>
+            <span class="positive">▲ +4.25%</span>
+          </div>
+
+          <div class="stock-price">Score 90</div>
+
+          <div class="stock-footer">
+            <span>Best For</span>
+            <strong>Trading / Swing</strong>
+          </div>
+        </article>
+
+
+        <article class="stock-card screener-stock" data-category="trading swing">
+          <div class="stock-header">
+            <div>
+              <h3>ELSA</h3>
+              <p>Volume & Momentum</p>
+            </div>
+            <span class="positive">▲ +2.10%</span>
+          </div>
+
+          <div class="stock-price">Score 86</div>
+
+          <div class="stock-footer">
+            <span>Best For</span>
+            <strong>Trading / Swing</strong>
+          </div>
+        </article>
+
+
+        <article class="stock-card screener-stock" data-category="swing medium longterm">
+          <div class="stock-header">
+            <div>
+              <h3>BBRI</h3>
+              <p>Growth & Dividend</p>
+            </div>
+            <span class="positive">Positive</span>
+          </div>
+
+          <div class="stock-price">Score 88</div>
+
+          <div class="stock-footer">
+            <span>Best For</span>
+            <strong>Medium / Long Term</strong>
+          </div>
+        </article>
+
+
+        <article class="stock-card screener-stock" data-category="medium longterm">
+          <div class="stock-header">
+            <div>
+              <h3>BBCA</h3>
+              <p>Quality & Stability</p>
+            </div>
+            <span class="positive">Strong</span>
+          </div>
+
+          <div class="stock-price">Score 92</div>
+
+          <div class="stock-footer">
+            <span>Best For</span>
+            <strong>Long Term</strong>
+          </div>
+        </article>
+
+
+        <article class="stock-card screener-stock" data-category="swing medium longterm">
+          <div class="stock-header">
+            <div>
+              <h3>UNTR</h3>
+              <p>Value & Dividend</p>
+            </div>
+            <span class="positive">Stable</span>
+          </div>
+
+          <div class="stock-price">Score 84</div>
+
+          <div class="stock-footer">
+            <span>Best For</span>
+            <strong>Medium / Long Term</strong>
+          </div>
+        </article>
+
+
+        <article class="stock-card screener-stock" data-category="trading swing">
+          <div class="stock-header">
+            <div>
+              <h3>PGAS</h3>
+              <p>Volume Activity</p>
+            </div>
+            <span class="positive">▲ +1.85%</span>
+          </div>
+
+          <div class="stock-price">Score 83</div>
+
+          <div class="stock-footer">
+            <span>Best For</span>
+            <strong>Trading / Swing</strong>
+          </div>
+        </article>
+
+
+        <article class="stock-card screener-stock" data-category="medium longterm">
+          <div class="stock-header">
+            <div>
+              <h3>ASII</h3>
+              <p>Diversified Business</p>
+            </div>
+            <span class="positive">Stable</span>
+          </div>
+
+          <div class="stock-price">Score 80</div>
+
+          <div class="stock-footer">
+            <span>Best For</span>
+            <strong>Medium / Long Term</strong>
+          </div>
+        </article>
+
+
+        <article class="stock-card screener-stock" data-category="medium longterm">
+          <div class="stock-header">
+            <div>
+              <h3>ICBP</h3>
+              <p>Defensive Growth</p>
+            </div>
+            <span class="positive">Strong</span>
+          </div>
+
+          <div class="stock-price">Score 85</div>
+
+          <div class="stock-footer">
+            <span>Best For</span>
+            <strong>Medium / Long Term</strong>
+          </div>
+        </article>
+
+      </div>
+
+      <div id="noResult" class="no-result" style="display: none;">
+        Tidak ada saham demo yang sesuai dengan filter ini.
+      </div>
+
+    </section>
+
+
+    <!-- CRITERIA -->
+    <section class="section">
+
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">HOW IDXNOVA SCREENS</span>
+          <h2>Kriteria Scanner</h2>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+
+        <article>
+          <span>⚡</span>
+          <h3>Trading</h3>
+          <p>
+            Momentum, volume, volatilitas, likuiditas,
+            dan peluang breakout.
+          </p>
+        </article>
+
+        <article>
+          <span>📈</span>
+          <h3>Swing</h3>
+          <p>
+            Trend, struktur harga, momentum, support-resistance,
+            dan konfirmasi volume.
+          </p>
+        </article>
+
+        <article>
+          <span>📊</span>
+          <h3>Medium Term</h3>
+          <p>
+            Pertumbuhan bisnis, tren keuangan,
+            valuasi, dan prospek beberapa bulan.
+          </p>
+        </article>
+
+        <article>
+          <span>💎</span>
+          <h3>Long Term</h3>
+          <p>
+            Fundamental, profitabilitas, utang,
+            pertumbuhan, valuasi, dan dividen.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta">
+      <span class="eyebrow">IDXNOVA SCREENER</span>
+
+      <h2>One Market. Multiple Strategies.</h2>
+
+      <p>
+        Ke depan, Stock Screener IDXNOVA akan dikembangkan dengan
+        filter yang lebih detail dan data pasar yang diperbarui.
+      </p>
+
+      <button onclick="filterStocks('all', document.querySelector('.filter-btn'))">
+        Reset Scanner
+      </button>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <div class="footer-brand">
+      <strong>IDXNOVA</strong>
+      <span>Indonesian Stock Intelligence</span>
+    </div>
+
+    <p>
+      Stock Screener saat ini menggunakan data demonstrasi.
+      Bukan rekomendasi membeli atau menjual saham.
+      Investasi dan trading memiliki risiko.
+    </p>
+
+    <small>© 2026 IDXNOVA. All rights reserved.</small>
+  </footer>
+
+
+  <script>
+
+    function toggleMenu() {
+      document.getElementById("navMenu").classList.toggle("active");
+    }
+
+
+    function filterStocks(category, button) {
+
+      const stocks = document.querySelectorAll(".screener-stock");
+      const buttons = document.querySelectorAll(".filter-btn");
+
+      const titles = {
+        all: "Semua Peluang Saham",
+        trading: "Trading Opportunities",
+        swing: "Swing Opportunities",
+        medium: "Medium-Term Opportunities",
+        longterm: "Long-Term Opportunities"
+      };
+
+      const descriptions = {
+        all: "Semua strategi aktif",
+        trading: "Filter Trading aktif",
+        swing: "Filter Swing aktif",
+        medium: "Filter Medium Term aktif",
+        longterm: "Filter Long-Term aktif"
+      };
+
+      buttons.forEach(btn => btn.classList.remove("active"));
+      button.classList.add("active");
+
+      let visibleCount = 0;
+
+      stocks.forEach(stock => {
+
+        const categories = stock.dataset.category.split(" ");
+
+        if (category === "all" || categories.includes(category)) {
+          stock.style.display = "block";
+          visibleCount++;
+        } else {
+          stock.style.display = "none";
+        }
+
+      });
+
+      document.getElementById("resultTitle").textContent = titles[category];
+      document.getElementById("screenerStatus").textContent = descriptions[category];
+      document.getElementById("stockCount").innerHTML =
+        visibleCount + "<span> Saham</span>";
+
+      document.getElementById("screenerBar").style.width =
+        Math.max(25, visibleCount * 10) + "%";
+
+      document.getElementById("noResult").style.display =
+        visibleCount === 0 ? "block" : "none";
+    }
+
+  </script>
+
+</body>
+</html>
