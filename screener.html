@@ -49,7 +49,7 @@
 
         <p>
           Filter saham Indonesia berdasarkan gaya trading atau investasi.
-          Data saham ditampilkan otomatis dari database IDXNOVA.
+          Saham dan hasil scanner dibaca otomatis dari database pusat IDXNOVA.
         </p>
       </div>
 
@@ -81,7 +81,7 @@
         </div>
 
         <p class="demo-note">
-          Hasil saat ini masih menggunakan data demonstrasi, bukan data pasar real-time.
+          Hasil saat ini menggunakan data demonstrasi dan bukan data pasar real-time.
         </p>
       </div>
     </section>
@@ -89,6 +89,7 @@
 
     <!-- FILTER -->
     <section class="section">
+
       <div class="section-heading">
         <div>
           <span class="eyebrow">STRATEGY FILTER</span>
@@ -121,6 +122,7 @@
         </button>
 
       </div>
+
     </section>
 
 
@@ -136,11 +138,11 @@
         <span class="demo-label">CENTRAL DATABASE</span>
       </div>
 
-      <!-- KARTU SAHAM DIBUAT OTOMATIS -->
+      <!-- SAHAM DIBUAT OTOMATIS DARI stocks.js -->
       <div class="stock-grid" id="stockResults"></div>
 
       <div id="noResult" class="no-result" style="display: none;">
-        Tidak ada saham yang sesuai dengan filter ini.
+        Tidak ada saham yang memenuhi kriteria strategi ini.
       </div>
 
     </section>
@@ -161,25 +163,37 @@
         <article>
           <span>⚡</span>
           <h3>Trading</h3>
-          <p>Momentum, volume, volatilitas, likuiditas, dan peluang breakout.</p>
+          <p>
+            Momentum, volume, volatilitas, likuiditas,
+            dan peluang breakout.
+          </p>
         </article>
 
         <article>
           <span>📈</span>
           <h3>Swing</h3>
-          <p>Trend, struktur harga, momentum, support-resistance, dan konfirmasi volume.</p>
+          <p>
+            Trend, struktur harga, momentum, support-resistance,
+            dan konfirmasi volume.
+          </p>
         </article>
 
         <article>
           <span>📊</span>
           <h3>Medium Term</h3>
-          <p>Pertumbuhan bisnis, tren keuangan, valuasi, dan prospek beberapa bulan.</p>
+          <p>
+            Pertumbuhan bisnis, tren keuangan,
+            valuasi, dan prospek beberapa bulan.
+          </p>
         </article>
 
         <article>
           <span>💎</span>
           <h3>Long Term</h3>
-          <p>Fundamental, profitabilitas, utang, pertumbuhan, valuasi, dan dividen.</p>
+          <p>
+            Fundamental, profitabilitas, utang,
+            pertumbuhan, valuasi, dan dividen.
+          </p>
         </article>
 
       </div>
@@ -189,24 +203,28 @@
 
     <!-- CTA -->
     <section class="cta">
+
       <span class="eyebrow">IDXNOVA SCREENER</span>
 
       <h2>One Market. Multiple Strategies.</h2>
 
       <p>
-        Tambahkan saham ke database pusat IDXNOVA dan sistem Screener
-        akan membacanya secara otomatis.
+        Satu database saham dapat digunakan untuk berbagai strategi.
+        Tambahkan saham baru ke database pusat dan Screener akan
+        menampilkannya secara otomatis.
       </p>
 
       <button onclick="resetScanner()">
         Reset Scanner
       </button>
+
     </section>
 
   </main>
 
 
   <footer>
+
     <div class="footer-brand">
       <strong>IDXNOVA</strong>
       <span>Indonesian Stock Intelligence</span>
@@ -219,11 +237,13 @@
     </p>
 
     <small>© 2026 IDXNOVA. All rights reserved.</small>
+
   </footer>
 
 
   <!-- DATABASE PUSAT -->
   <script src="stocks.js"></script>
+
 
   <script>
 
@@ -235,86 +255,197 @@
     }
 
 
-    function getCategoryList(stock) {
+    /*
+      MENGAMBIL SCORE SESUAI STRATEGI
+    */
+    function getStrategyScore(stock, category) {
 
-      const categories = [];
-
-      /* Score 70+ = lolos kategori */
-
-      if (stock.trading >= 70) {
-        categories.push("trading");
+      if (category === "trading") {
+        return stock.trading;
       }
 
-      if (stock.swing >= 70) {
-        categories.push("swing");
+      if (category === "swing") {
+        return stock.swing;
       }
 
-      if (stock.medium >= 70) {
-        categories.push("medium");
+      if (category === "medium") {
+        return stock.medium;
       }
 
-      if (stock.long >= 70) {
-        categories.push("longterm");
+      if (category === "longterm") {
+        return stock.long;
       }
 
-      return categories;
+      return stock.overall;
     }
 
 
-    function getBestScore(stock) {
-      return Math.max(
-        stock.overall,
+    /*
+      MENENTUKAN STRATEGI TERBAIK SAHAM
+    */
+    function getBestFit(stock) {
+
+      const strategies = [
+        {
+          name: "Trading",
+          score: stock.trading
+        },
+        {
+          name: "Swing",
+          score: stock.swing
+        },
+        {
+          name: "Medium Term",
+          score: stock.medium
+        },
+        {
+          name: "Long Term",
+          score: stock.long
+        }
+      ];
+
+
+      strategies.sort(function(a, b) {
+        return b.score - a.score;
+      });
+
+
+      return strategies[0].name;
+    }
+
+
+    /*
+      CEK APAKAH SAHAM MASUK FILTER
+
+      Minimal score 75.
+      Selain itu, score strategi tersebut harus
+      cukup kuat dibanding strategi terbaik saham.
+    */
+    function passesFilter(stock, category) {
+
+      if (category === "all") {
+        return true;
+      }
+
+
+      const selectedScore =
+        getStrategyScore(stock, category);
+
+
+      const highestScore = Math.max(
         stock.trading,
         stock.swing,
         stock.medium,
         stock.long
       );
+
+
+      return (
+        selectedScore >= 75 &&
+        selectedScore >= highestScore - 5
+      );
     }
 
 
+    /*
+      MEMBUAT KARTU SAHAM OTOMATIS
+    */
     function renderStocks() {
 
-      const container = document.getElementById("stockResults");
+      const container =
+        document.getElementById("stockResults");
+
 
       container.innerHTML = "";
 
-      const stockList = Object.values(STOCKS);
 
-      let visibleStocks = stockList;
-
-
-      if (currentCategory !== "all") {
-
-        visibleStocks = stockList.filter(function(stock) {
-          return getCategoryList(stock).includes(currentCategory);
-        });
-
-      }
+      let stockList =
+        Object.values(STOCKS);
 
 
-      /* Urutkan berdasarkan Overall Score tertinggi */
-
-      visibleStocks.sort(function(a, b) {
-        return b.overall - a.overall;
+      /*
+        FILTER SAHAM SESUAI STRATEGI
+      */
+      stockList = stockList.filter(function(stock) {
+        return passesFilter(stock, currentCategory);
       });
 
 
-      visibleStocks.forEach(function(stock) {
+      /*
+        URUTKAN BERDASARKAN FILTER YANG DIPILIH
 
-        const card = document.createElement("article");
+        Contoh:
+        Trading = Trading Score tertinggi
+        Swing = Swing Score tertinggi
+        Long Term = Long Score tertinggi
+      */
+      stockList.sort(function(a, b) {
 
-        card.className = "stock-card screener-stock";
-        card.style.cursor = "pointer";
+        const scoreA =
+          getStrategyScore(a, currentCategory);
+
+        const scoreB =
+          getStrategyScore(b, currentCategory);
+
+        return scoreB - scoreA;
+
+      });
+
+
+      /*
+        TAMPILKAN KARTU
+      */
+      stockList.forEach(function(stock) {
+
+        const card =
+          document.createElement("article");
+
+
+        card.className =
+          "stock-card screener-stock";
+
+
+        card.style.cursor =
+          "pointer";
+
+
+        const strategyScore =
+          getStrategyScore(stock, currentCategory);
+
+
+        const displayedScore =
+          currentCategory === "all"
+            ? stock.overall
+            : strategyScore;
+
+
+        const displayedLabel =
+          currentCategory === "all"
+            ? "Overall Score"
+            : currentCategory === "trading"
+            ? "Trading Score"
+            : currentCategory === "swing"
+            ? "Swing Score"
+            : currentCategory === "medium"
+            ? "Medium Score"
+            : "Long Term Score";
+
 
         const changeSymbol =
-          stock.change >= 0 ? "▲ +" : "▼ ";
+          stock.change >= 0
+            ? "▲ +"
+            : "▼ ";
+
 
         const changeClass =
-          stock.change >= 0 ? "positive" : "negative";
+          stock.change >= 0
+            ? "positive"
+            : "negative";
 
 
         card.innerHTML = `
           <div class="stock-header">
+
             <div>
               <h3>${stock.ticker}</h3>
               <p>${stock.name}</p>
@@ -323,22 +454,29 @@
             <span class="${changeClass}">
               ${changeSymbol}${Math.abs(stock.change).toFixed(2)}%
             </span>
+
           </div>
 
           <div class="stock-price">
-            Score ${stock.overall}
+            ${displayedLabel}: ${displayedScore}
           </div>
 
           <div class="stock-footer">
             <span>Best For</span>
-            <strong>${stock.bestFit}</strong>
+            <strong>${getBestFit(stock)}</strong>
           </div>
         `;
 
 
+        /*
+          KLIK KARTU → STOCK DETAIL
+        */
         card.addEventListener("click", function() {
+
           window.location.href =
-            "stock.html?ticker=" + encodeURIComponent(stock.ticker);
+            "stock.html?ticker=" +
+            encodeURIComponent(stock.ticker);
+
         });
 
 
@@ -347,75 +485,123 @@
       });
 
 
-      updateScreenerInfo(visibleStocks.length);
+      updateScreenerInfo(stockList.length);
 
     }
 
 
+    /*
+      UPDATE INFORMASI BAGIAN ATAS
+    */
     function updateScreenerInfo(count) {
 
       const titles = {
+
         all: "Semua Peluang Saham",
+
         trading: "Trading Opportunities",
+
         swing: "Swing Opportunities",
+
         medium: "Medium-Term Opportunities",
+
         longterm: "Long-Term Opportunities"
+
       };
 
 
       const descriptions = {
+
         all: "Semua strategi aktif",
-        trading: "Filter Trading aktif",
-        swing: "Filter Swing aktif",
-        medium: "Filter Medium Term aktif",
-        longterm: "Filter Long-Term aktif"
+
+        trading: "Menampilkan saham dengan Trading Score kuat",
+
+        swing: "Menampilkan saham dengan Swing Score kuat",
+
+        medium: "Menampilkan saham untuk Medium Term",
+
+        longterm: "Menampilkan saham untuk Long Term"
+
       };
 
 
       document.getElementById("resultTitle").textContent =
         titles[currentCategory];
 
+
       document.getElementById("screenerStatus").textContent =
         descriptions[currentCategory];
+
 
       document.getElementById("stockCount").innerHTML =
         count + "<span> Saham</span>";
 
+
       document.getElementById("screenerBar").style.width =
-        count === 0 ? "0%" : Math.min(100, count * 12) + "%";
+        count === 0
+          ? "0%"
+          : Math.min(100, count * 15) + "%";
+
 
       document.getElementById("noResult").style.display =
-        count === 0 ? "block" : "none";
+        count === 0
+          ? "block"
+          : "none";
 
     }
 
 
+    /*
+      SAAT FILTER DIKLIK
+    */
     function filterStocks(category, button) {
 
-      currentCategory = category;
+      currentCategory =
+        category;
 
-      document.querySelectorAll(".filter-btn").forEach(function(btn) {
-        btn.classList.remove("active");
-      });
+
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach(function(btn) {
+
+          btn.classList.remove("active");
+
+        });
+
 
       button.classList.add("active");
 
+
       renderStocks();
 
     }
 
 
+    /*
+      RESET KE SEMUA SAHAM
+    */
     function resetScanner() {
 
-      currentCategory = "all";
+      currentCategory =
+        "all";
 
-      document.querySelectorAll(".filter-btn").forEach(function(btn) {
-        btn.classList.remove("active");
-      });
 
-      document.querySelector(".filter-btn").classList.add("active");
+      document
+        .querySelectorAll(".filter-btn")
+        .forEach(function(btn) {
+
+          btn.classList.remove("active");
+
+        });
+
+
+      document
+        .querySelector(".filter-btn")
+        .classList.add("active");
+
 
       renderStocks();
+
 
       window.scrollTo({
         top: 0,
@@ -425,8 +611,9 @@
     }
 
 
-    /* MULAI SCREENER */
-
+    /*
+      JALANKAN SAAT HALAMAN DIBUKA
+    */
     renderStocks();
 
   </script>
