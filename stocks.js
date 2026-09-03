@@ -1,207 +1,235 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+const STOCKS = {
+  BBRI: {
+    ticker: "BBRI",
+    name: "Bank Rakyat Indonesia (Persero) Tbk",
+    sector: "Financials",
+    price: 4120,
+    change: 1.24,
+    overall: 88,
+    trading: 79,
+    swing: 84,
+    medium: 86,
+    long: 90,
+    label: "Strong Opportunity",
+    tradingOutlook: "Bullish Momentum",
+    swingOutlook: "Positive Trend",
+    fundamental: "Strong",
+    valuation: "Fair",
+    risk: "Moderate",
+    bestFit: "Medium & Long Term",
+    revenueGrowth: 8.4,
+    profitGrowth: 10.2,
+    roe: 18.6,
+    debtLevel: "Healthy",
+    dividend: "Attractive",
+    businessQuality: "Strong"
+  },
 
-  <title>Trading Radar | IDXNOVA</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+  BBCA: {
+    ticker: "BBCA",
+    name: "Bank Central Asia Tbk",
+    sector: "Financials",
+    price: 9425,
+    change: 0.86,
+    overall: 92,
+    trading: 72,
+    swing: 80,
+    medium: 89,
+    long: 94,
+    label: "High Quality",
+    tradingOutlook: "Stable",
+    swingOutlook: "Positive",
+    fundamental: "Very Strong",
+    valuation: "Premium",
+    risk: "Low - Moderate",
+    bestFit: "Long Term",
+    revenueGrowth: 9.2,
+    profitGrowth: 11.5,
+    roe: 22.1,
+    debtLevel: "Healthy",
+    dividend: "Attractive",
+    businessQuality: "Very Strong"
+  },
 
-<body>
+  ANTM: {
+    ticker: "ANTM",
+    name: "Aneka Tambang Tbk",
+    sector: "Basic Materials",
+    price: 1840,
+    change: 4.25,
+    overall: 90,
+    trading: 91,
+    swing: 90,
+    medium: 84,
+    long: 82,
+    label: "Strong Momentum",
+    tradingOutlook: "Strong Bullish",
+    swingOutlook: "Strong Trend",
+    fundamental: "Positive",
+    valuation: "Variable",
+    risk: "High",
+    bestFit: "Trading & Swing",
+    revenueGrowth: 12.8,
+    profitGrowth: 15.4,
+    roe: 14.2,
+    debtLevel: "Healthy",
+    dividend: "Moderate",
+    businessQuality: "Strong"
+  },
 
-<header class="navbar">
-  <a href="index.html" class="brand">
-    <span class="brand-mark">N</span>
-    <span>
-      <strong>IDXNOVA</strong>
-      <small>INDONESIAN STOCK INTELLIGENCE</small>
-    </span>
-  </a>
+  ELSA: {
+    ticker: "ELSA",
+    name: "Elnusa Tbk",
+    sector: "Energy",
+    price: 690,
+    change: 2.10,
+    overall: 82,
+    trading: 86,
+    swing: 86,
+    medium: 80,
+    long: 76,
+    label: "Positive Opportunity",
+    tradingOutlook: "Positive Momentum",
+    swingOutlook: "Breakout Watch",
+    fundamental: "Healthy",
+    valuation: "Interesting",
+    risk: "Moderate - High",
+    bestFit: "Trading & Swing",
+    revenueGrowth: 7.5,
+    profitGrowth: 8.8,
+    roe: 11.4,
+    debtLevel: "Healthy",
+    dividend: "Moderate",
+    businessQuality: "Healthy"
+  },
 
-  <button class="menu-btn" onclick="toggleMenu()">☰</button>
+  PWON: {
+    ticker: "PWON",
+    name: "Pakuwon Jati Tbk",
+    sector: "Properties & Real Estate",
+    price: 272,
+    change: 1.15,
+    overall: 79,
+    trading: 70,
+    swing: 81,
+    medium: 82,
+    long: 84,
+    label: "Watchlist Candidate",
+    tradingOutlook: "Neutral",
+    swingOutlook: "Support Watch",
+    fundamental: "Healthy",
+    valuation: "Interesting",
+    risk: "Moderate",
+    bestFit: "Medium & Long Term",
+    revenueGrowth: 6.9,
+    profitGrowth: 9.1,
+    roe: 8.7,
+    debtLevel: "Healthy",
+    dividend: "Moderate",
+    businessQuality: "Strong"
+  },
 
-  <nav id="navMenu">
-    <a href="index.html">Home</a>
-    <a href="trading.html">Trading</a>
-    <a href="swing.html">Swing</a>
-    <a href="investing.html">Investing</a>
-    <a href="screener.html">Screener</a>
-    <a href="watchlist.html">Watchlist</a>
-    <a href="search.html">🔎 Search</a>
-  </nav>
-</header>
+  UNTR: {
+    ticker: "UNTR",
+    name: "United Tractors Tbk",
+    sector: "Industrials",
+    price: 25000,
+    change: 0.72,
+    overall: 84,
+    trading: 74,
+    swing: 82,
+    medium: 86,
+    long: 88,
+    label: "Stable Opportunity",
+    tradingOutlook: "Stable Momentum",
+    swingOutlook: "Positive Trend",
+    fundamental: "Strong",
+    valuation: "Fair",
+    risk: "Moderate",
+    bestFit: "Medium & Long Term",
+    revenueGrowth: 5.8,
+    profitGrowth: 7.4,
+    roe: 15.2,
+    debtLevel: "Healthy",
+    dividend: "Attractive",
+    businessQuality: "Strong"
+  },
 
-<main>
+  PGAS: {
+    ticker: "PGAS",
+    name: "Perusahaan Gas Negara Tbk",
+    sector: "Energy",
+    price: 1580,
+    change: 1.85,
+    overall: 83,
+    trading: 84,
+    swing: 83,
+    medium: 80,
+    long: 78,
+    label: "Positive Watch",
+    tradingOutlook: "Active Momentum",
+    swingOutlook: "Positive",
+    fundamental: "Healthy",
+    valuation: "Interesting",
+    risk: "Moderate - High",
+    bestFit: "Trading & Swing",
+    revenueGrowth: 6.4,
+    profitGrowth: 7.1,
+    roe: 10.5,
+    debtLevel: "Moderate",
+    dividend: "Moderate",
+    businessQuality: "Healthy"
+  },
 
-  <section class="hero">
+  ASII: {
+    ticker: "ASII",
+    name: "Astra International Tbk",
+    sector: "Industrials",
+    price: 5200,
+    change: 0.55,
+    overall: 80,
+    trading: 68,
+    swing: 76,
+    medium: 84,
+    long: 88,
+    label: "Stable",
+    tradingOutlook: "Neutral",
+    swingOutlook: "Positive",
+    fundamental: "Strong",
+    valuation: "Fair",
+    risk: "Moderate",
+    bestFit: "Medium & Long Term",
+    revenueGrowth: 5.2,
+    profitGrowth: 6.8,
+    roe: 12.6,
+    debtLevel: "Healthy",
+    dividend: "Attractive",
+    businessQuality: "Strong"
+  },
 
-    <div class="hero-content">
-      <div class="badge">⚡ DAILY TRADING SCANNER</div>
-
-      <h1>
-        Temukan Momentum
-        <span>Lebih Cepat.</span>
-      </h1>
-
-      <p>
-        Saham diurutkan berdasarkan Trading Score dari database IDXNOVA.
-      </p>
-    </div>
-
-    <div class="hero-panel">
-
-      <div class="panel-top">
-        <span>TRADING RADAR</span>
-        <strong>DEMO MODE</strong>
-      </div>
-
-      <div class="sentiment-value">
-        <h2 id="radarCount">Memuat...</h2>
-        <p id="radarStatus">Menghubungkan database</p>
-      </div>
-
-      <div class="sentiment-info">
-        <div>
-          <small>Strategy</small>
-          <strong>Trading</strong>
-        </div>
-
-        <div>
-          <small>Data</small>
-          <strong>IDXNOVA</strong>
-        </div>
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <section class="section">
-
-    <div class="section-heading">
-      <div>
-        <span class="eyebrow">TRADING RADAR</span>
-        <h2>Top Trading Opportunities</h2>
-      </div>
-
-      <span id="radarLabel" class="demo-label">MEMUAT...</span>
-    </div>
-
-
-    <div id="tradingStocks" class="stock-grid"></div>
-
-  </section>
-
-</main>
-
-
-<footer>
-  <div class="footer-brand">
-    <strong>IDXNOVA</strong>
-    <span>Indonesian Stock Intelligence</span>
-  </div>
-
-  <p>
-    Data demonstrasi — bukan rekomendasi membeli atau menjual saham.
-  </p>
-
-  <small>© 2026 IDXNOVA. All rights reserved.</small>
-</footer>
-
-
-<!-- PANGGIL DATABASE -->
-<script src="stocks.js"></script>
-
-
-<script>
-
-function toggleMenu() {
-  document.getElementById("navMenu").classList.toggle("active");
-}
-
-
-const container = document.getElementById("tradingStocks");
-const radarCount = document.getElementById("radarCount");
-const radarStatus = document.getElementById("radarStatus");
-const radarLabel = document.getElementById("radarLabel");
-
-
-if (typeof STOCKS !== "undefined") {
-
-  const stocks = [];
-
-  for (const key in STOCKS) {
-    stocks.push(STOCKS[key]);
+  ICBP: {
+    ticker: "ICBP",
+    name: "Indofood CBP Sukses Makmur Tbk",
+    sector: "Consumer Non-Cyclicals",
+    price: 10500,
+    change: 0.42,
+    overall: 85,
+    trading: 70,
+    swing: 78,
+    medium: 87,
+    long: 91,
+    label: "Defensive Growth",
+    tradingOutlook: "Stable",
+    swingOutlook: "Positive",
+    fundamental: "Very Strong",
+    valuation: "Fair",
+    risk: "Low - Moderate",
+    bestFit: "Medium & Long Term",
+    revenueGrowth: 8.1,
+    profitGrowth: 9.6,
+    roe: 18.2,
+    debtLevel: "Healthy",
+    dividend: "Attractive",
+    businessQuality: "Very Strong"
   }
-
-
-  stocks.sort(function(a, b) {
-    return b.trading - a.trading;
-  });
-
-
-  radarCount.innerHTML =
-    stocks.length + "<span> Saham</span>";
-
-  radarStatus.textContent =
-    "Database berhasil terhubung";
-
-  radarLabel.textContent =
-    stocks.length + " SAHAM";
-
-
-  stocks.forEach(function(stock) {
-
-    const card = document.createElement("article");
-
-    card.className = "stock-card";
-
-
-    card.innerHTML = `
-      <div class="stock-header">
-
-        <div>
-          <h3>${stock.ticker}</h3>
-          <p>${stock.tradingOutlook}</p>
-        </div>
-
-        <span class="positive">
-          ▲ +${Number(stock.change).toFixed(2)}%
-        </span>
-
-      </div>
-
-      <div class="stock-price">
-        Rp${Number(stock.price).toLocaleString("id-ID")}
-      </div>
-
-      <div class="stock-footer">
-        <span>Trading Score</span>
-        <strong>${stock.trading}/100</strong>
-      </div>
-    `;
-
-
-    container.appendChild(card);
-
-  });
-
-
-} else {
-
-  radarCount.innerHTML = "ERROR";
-
-  radarStatus.textContent =
-    "stocks.js tidak terbaca";
-
-  radarLabel.textContent =
-    "DATA ERROR";
-
-}
-
-</script>
-
-</body>
-</html>
+};
