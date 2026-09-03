@@ -8,98 +8,378 @@
 </head>
 
 <body>
-  <header>
-    <h1>IDXNOVA</h1>
-    <p>Indonesian Stock Intelligence</p>
+
+  <header class="navbar">
+    <a href="#" class="brand">
+      <span class="brand-mark">N</span>
+      <span>
+        <strong>IDXNOVA</strong>
+        <small>INDONESIAN STOCK INTELLIGENCE</small>
+      </span>
+    </a>
+
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">
+      ☰
+    </button>
+
+    <nav id="navMenu">
+      <a href="#market">Market</a>
+      <a href="#stocks">Stocks</a>
+      <a href="#scores">NOVA Score</a>
+      <a href="#features">Features</a>
+    </nav>
   </header>
 
+
   <main>
-    <section>
-      <h2>Analisis Saham Indonesia Lebih Cerdas</h2>
-      <p>
-        Satu platform untuk trading harian, investasi jangka pendek,
-        menengah, dan jangka panjang.
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">● INDONESIA STOCK MARKET PLATFORM</div>
+
+        <h1>
+          Analisis Saham Indonesia
+          <span>Lebih Cerdas.</span>
+        </h1>
+
+        <p>
+          IDXNOVA membantu trader dan investor menganalisis saham Indonesia
+          untuk trading harian, investasi jangka pendek, menengah,
+          hingga jangka panjang.
+        </p>
+
+        <div class="search-box">
+          <input
+            type="text"
+            id="stockSearch"
+            placeholder="Cari ticker... contoh: BBRI"
+            autocomplete="off"
+          >
+          <button onclick="searchStock()">Cari</button>
+        </div>
+
+        <div class="popular">
+          <span>Populer:</span>
+          <button onclick="quickSearch('BBRI')">BBRI</button>
+          <button onclick="quickSearch('BBCA')">BBCA</button>
+          <button onclick="quickSearch('ANTM')">ANTM</button>
+          <button onclick="quickSearch('ELSA')">ELSA</button>
+          <button onclick="quickSearch('PWON')">PWON</button>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="panel-top">
+          <span>MARKET SENTIMENT</span>
+          <strong>DEMO</strong>
+        </div>
+
+        <div class="sentiment-value">
+          <h2>62<span>/100</span></h2>
+          <p>Netral Positif</p>
+        </div>
+
+        <div class="sentiment-bar">
+          <span></span>
+        </div>
+
+        <div class="sentiment-info">
+          <div>
+            <small>Risk Level</small>
+            <strong>Moderate</strong>
+          </div>
+          <div>
+            <small>Market Trend</small>
+            <strong>Bullish</strong>
+          </div>
+        </div>
+
+        <p class="demo-note">
+          Data demonstrasi — bukan data pasar real-time.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- MARKET -->
+    <section id="market" class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">MARKET PULSE</span>
+          <h2>Market Overview</h2>
+        </div>
+        <span class="demo-label">DEMO DATA</span>
+      </div>
+
+      <div class="market-grid">
+        <article class="market-card featured">
+          <div class="card-label">IHSG</div>
+          <h3>7,250.42</h3>
+          <p class="positive">▲ +0.82%</p>
+          <small>Pergerakan pasar contoh</small>
+        </article>
+
+        <article class="market-card">
+          <div class="card-label">TOP GAINER</div>
+          <h3>ANTM</h3>
+          <p class="positive">▲ +4.25%</p>
+          <small>Demo</small>
+        </article>
+
+        <article class="market-card">
+          <div class="card-label">TOP LOSER</div>
+          <h3>PWON</h3>
+          <p class="negative">▼ -2.18%</p>
+          <small>Demo</small>
+        </article>
+
+        <article class="market-card">
+          <div class="card-label">MOST ACTIVE</div>
+          <h3>BBRI</h3>
+          <p>Volume tinggi</p>
+          <small>Demo</small>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- STOCKS -->
+    <section id="stocks" class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">STOCK RADAR</span>
+          <h2>Featured Stocks</h2>
+        </div>
+        <span class="demo-label">SAMPLE DATA</span>
+      </div>
+
+      <div class="stock-grid">
+
+        <article class="stock-card">
+          <div class="stock-header">
+            <div>
+              <h3>BBRI</h3>
+              <p>Bank Rakyat Indonesia</p>
+            </div>
+            <span class="positive">+1.24%</span>
+          </div>
+          <div class="stock-price">Rp4.120</div>
+          <div class="stock-footer">
+            <span>Overall NOVA</span>
+            <strong>78/100</strong>
+          </div>
+        </article>
+
+        <article class="stock-card">
+          <div class="stock-header">
+            <div>
+              <h3>BBCA</h3>
+              <p>Bank Central Asia</p>
+            </div>
+            <span class="positive">+0.86%</span>
+          </div>
+          <div class="stock-price">Rp9.425</div>
+          <div class="stock-footer">
+            <span>Overall NOVA</span>
+            <strong>84/100</strong>
+          </div>
+        </article>
+
+        <article class="stock-card">
+          <div class="stock-header">
+            <div>
+              <h3>ANTM</h3>
+              <p>Aneka Tambang</p>
+            </div>
+            <span class="positive">+4.25%</span>
+          </div>
+          <div class="stock-price">Rp1.840</div>
+          <div class="stock-footer">
+            <span>Overall NOVA</span>
+            <strong>81/100</strong>
+          </div>
+        </article>
+
+        <article class="stock-card">
+          <div class="stock-header">
+            <div>
+              <h3>ELSA</h3>
+              <p>Elnusa</p>
+            </div>
+            <span class="positive">+2.10%</span>
+          </div>
+          <div class="stock-price">Rp690</div>
+          <div class="stock-footer">
+            <span>Overall NOVA</span>
+            <strong>76/100</strong>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- NOVA SCORE -->
+    <section id="scores" class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">IDXNOVA INTELLIGENCE</span>
+          <h2>NOVA Score</h2>
+        </div>
+      </div>
+
+      <p class="section-description">
+        Sistem indikator analitis untuk membantu melihat karakteristik saham
+        dari berbagai sudut pandang. Skor bukan jaminan pergerakan harga.
       </p>
 
-      <input
-        type="text"
-        id="stockSearch"
-        placeholder="Cari ticker saham, contoh: BBRI"
-      >
+      <div class="score-grid">
 
-      <button onclick="searchStock()">Cari Saham</button>
+        <article class="score-card">
+          <div class="score-icon">⚡</div>
+          <h3>NOVA Trade</h3>
+          <p>Momentum, volume, volatilitas, dan struktur harga untuk analisis trading.</p>
+          <div class="score-line"><span style="width: 78%"></span></div>
+          <strong>78 / 100</strong>
+        </article>
+
+        <article class="score-card">
+          <div class="score-icon">📈</div>
+          <h3>NOVA Swing</h3>
+          <p>Trend, momentum, support-resistance, dan peluang pergerakan beberapa hari.</p>
+          <div class="score-line"><span style="width: 82%"></span></div>
+          <strong>82 / 100</strong>
+        </article>
+
+        <article class="score-card">
+          <div class="score-icon">🏦</div>
+          <h3>NOVA Growth</h3>
+          <p>Analisis pertumbuhan pendapatan, laba, kualitas bisnis, dan prospek.</p>
+          <div class="score-line"><span style="width: 74%"></span></div>
+          <strong>74 / 100</strong>
+        </article>
+
+        <article class="score-card">
+          <div class="score-icon">💎</div>
+          <h3>NOVA Long-Term</h3>
+          <p>Fundamental, valuasi, kesehatan keuangan, dan potensi jangka panjang.</p>
+          <div class="score-line"><span style="width: 88%"></span></div>
+          <strong>88 / 100</strong>
+        </article>
+
+      </div>
     </section>
 
-    <section>
-      <h2>Market Overview</h2>
 
-      <div>
-        <h3>IHSG</h3>
-        <p>Demo Data</p>
-        <strong>7.250</strong>
+    <!-- FEATURES -->
+    <section id="features" class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">ONE PLATFORM</span>
+          <h2>Semua yang Kamu Butuhkan</h2>
+        </div>
       </div>
 
-      <div>
-        <h3>Top Gainers</h3>
-        <p>ANTM</p>
-        <p>ELSA</p>
-        <p>PWON</p>
+      <div class="feature-grid">
+        <article>
+          <span>01</span>
+          <h3>Trading Radar</h3>
+          <p>Temukan saham dengan aktivitas, momentum, dan volume menarik.</p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>Stock Screener</h3>
+          <p>Filter saham berdasarkan fundamental, valuasi, pertumbuhan, dan lainnya.</p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Stock Analysis</h3>
+          <p>Gabungkan fundamental, teknikal, valuasi, dan NOVA Score.</p>
+        </article>
+
+        <article>
+          <span>04</span>
+          <h3>Watchlist</h3>
+          <p>Simpan saham yang ingin dipantau dalam satu dashboard.</p>
+        </article>
       </div>
-
-      <div>
-        <h3>Most Active</h3>
-        <p>BBRI</p>
-        <p>BMRI</p>
-        <p>TLKM</p>
-      </div>
     </section>
 
-    <section>
-      <h2>IDXNOVA Scores</h2>
-      <p>⚡ NOVA Trade Score</p>
-      <p>📈 NOVA Swing Score</p>
-      <p>🏦 NOVA Growth Score</p>
-      <p>💎 NOVA Long-Term Score</p>
+
+    <!-- CTA -->
+    <section class="cta">
+      <span class="eyebrow">IDXNOVA</span>
+      <h2>Build Your Market Intelligence.</h2>
+      <p>
+        Satu tempat untuk memantau, menyaring, dan menganalisis saham Indonesia.
+      </p>
+      <button onclick="document.getElementById('stockSearch').focus()">
+        Mulai Cari Saham
+      </button>
     </section>
 
-    <section>
-      <h2>Fitur IDXNOVA</h2>
-      <ul>
-        <li>Stock Screener</li>
-        <li>Day Trading Scanner</li>
-        <li>Swing Trading Scanner</li>
-        <li>Fundamental Analysis</li>
-        <li>Technical Analysis</li>
-        <li>Watchlist</li>
-        <li>AI Stock Analysis</li>
-      </ul>
-    </section>
   </main>
 
+
   <footer>
-    <p>© 2026 IDXNOVA</p>
+    <div class="footer-brand">
+      <strong>IDXNOVA</strong>
+      <span>Indonesian Stock Intelligence</span>
+    </div>
+
     <p>
       IDXNOVA adalah platform informasi dan analisis independen.
-      Informasi yang tersedia hanya untuk tujuan edukasi dan informasi,
-      bukan merupakan nasihat keuangan atau rekomendasi membeli maupun menjual saham.
+      Seluruh informasi disediakan untuk tujuan edukasi dan informasi,
+      bukan merupakan nasihat keuangan atau rekomendasi untuk membeli
+      maupun menjual efek.
     </p>
+
+    <small>© 2026 IDXNOVA. All rights reserved.</small>
   </footer>
 
-  <script>
-    function searchStock() {
-      const stock = document
-        .getElementById("stockSearch")
-        .value
-        .trim()
-        .toUpperCase();
 
-      if (!stock) {
+  <script>
+    const availableStocks = [
+      "BBRI", "BBCA", "BMRI", "TLKM", "ANTM",
+      "ELSA", "PWON", "ASII", "UNTR", "ICBP",
+      "INDF", "PGAS", "MEDC", "SIMP", "MIDI"
+    ];
+
+    function searchStock() {
+      const input = document.getElementById("stockSearch");
+      const ticker = input.value.trim().toUpperCase();
+
+      if (!ticker) {
         alert("Masukkan ticker saham terlebih dahulu.");
+        input.focus();
         return;
       }
 
-      alert("Mencari data untuk saham: " + stock + "\n\nFitur data saham akan ditambahkan pada tahap berikutnya.");
+      if (availableStocks.includes(ticker)) {
+        alert(
+          ticker + " ditemukan!\n\n" +
+          "Halaman detail saham akan ditambahkan pada tahap berikutnya.\n" +
+          "Saat ini IDXNOVA masih menggunakan data demonstrasi."
+        );
+      } else {
+        alert(
+          "Ticker " + ticker + " belum tersedia dalam data demo IDXNOVA."
+        );
+      }
+    }
+
+    function quickSearch(ticker) {
+      document.getElementById("stockSearch").value = ticker;
+      searchStock();
+    }
+
+    function toggleMenu() {
+      document.getElementById("navMenu").classList.toggle("active");
     }
   </script>
+
 </body>
 </html>
