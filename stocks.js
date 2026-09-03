@@ -156,152 +156,97 @@
 
 
   <!-- DATABASE PUSAT -->
-  <script src="./stocks.js"></script>
+<script src="stocks.js"></script>
 
+<script>
+  function toggleMenu() {
+    document.getElementById("navMenu").classList.toggle("active");
+  }
 
-  <script>
+  window.onload = function () {
 
-    function toggleMenu() {
-      document.getElementById("navMenu").classList.toggle("active");
+    const container = document.getElementById("tradingStocks");
+    const radarCount = document.getElementById("radarCount");
+    const radarLabel = document.getElementById("radarLabel");
+    const radarBar = document.getElementById("radarBar");
+    const emptyState = document.getElementById("noTradingResult");
+
+    // TES 1: Apakah stocks.js terbaca?
+    if (typeof STOCKS === "undefined") {
+      radarLabel.textContent = "STOCKS.JS TIDAK TERBACA";
+      emptyState.style.display = "block";
+      return;
     }
 
+    // TES 2: Ambil semua data
+    const stocks = Object.keys(STOCKS).map(function(key) {
+      return STOCKS[key];
+    });
 
-    function openStock(ticker) {
-      window.location.href =
-        "stock.html?ticker=" + encodeURIComponent(ticker);
+    // TES 3: Urutkan berdasarkan Trading Score
+    stocks.sort(function(a, b) {
+      return Number(b.trading) - Number(a.trading);
+    });
+
+    // Update jumlah
+    radarCount.innerHTML = stocks.length + "<span> Saham</span>";
+    radarLabel.textContent = stocks.length + " SAHAM";
+    radarBar.style.width = Math.min(100, stocks.length * 12) + "%";
+
+    // Kosongkan container
+    container.innerHTML = "";
+
+    // Jika benar-benar tidak ada data
+    if (stocks.length === 0) {
+      emptyState.style.display = "block";
+      radarLabel.textContent = "DATABASE KOSONG";
+      return;
     }
 
+    emptyState.style.display = "none";
 
-    function formatPrice(price) {
-      return "Rp" + Number(price).toLocaleString("id-ID");
-    }
+    // Tampilkan saham
+    stocks.forEach(function(stock) {
 
+      const card = document.createElement("article");
+      card.className = "stock-card";
 
-    function renderTradingStocks() {
+      const change = Number(stock.change) || 0;
 
-      const container = document.getElementById("tradingStocks");
-      const emptyState = document.getElementById("noTradingResult");
+      card.innerHTML =
+        '<div class="stock-header">' +
+          '<div>' +
+            '<h3>' + stock.ticker + '</h3>' +
+            '<p>' + stock.tradingOutlook + '</p>' +
+          '</div>' +
+          '<span class="' + (change >= 0 ? 'positive' : 'negative') + '">' +
+            (change >= 0 ? '▲ +' : '▼ ') +
+            Math.abs(change).toFixed(2) + '%' +
+          '</span>' +
+        '</div>' +
 
-      /*
-        CEK APAKAH STOCKS.JS BERHASIL DIMUAT
-      */
-      if (typeof STOCKS === "undefined") {
+        '<div class="stock-price">' +
+          'Rp' + Number(stock.price).toLocaleString("id-ID") +
+        '</div>' +
 
-        console.error("STOCKS tidak ditemukan");
+        '<div class="stock-footer">' +
+          '<span>Trading Score</span>' +
+          '<strong>' + stock.trading + '/100</strong>' +
+        '</div>';
 
-        emptyState.style.display = "block";
+      card.onclick = function() {
+        window.location.href =
+          "stock.html?ticker=" + encodeURIComponent(stock.ticker);
+      };
 
-        document.getElementById("radarLabel").textContent =
-          "DATA ERROR";
+      card.style.cursor = "pointer";
 
-        return;
-      }
+      container.appendChild(card);
 
+    });
 
-      /*
-        AMBIL SEMUA SAHAM DARI DATABASE
-        YANG MEMILIKI TRADING SCORE
-      */
-      const stocks = Object.values(STOCKS)
-        .filter(function(stock) {
-          return typeof stock.trading === "number";
-        })
-        .sort(function(a, b) {
-          return b.trading - a.trading;
-        });
-
-
-      container.innerHTML = "";
-
-
-      /*
-        UPDATE JUMLAH
-      */
-      document.getElementById("radarCount").innerHTML =
-        stocks.length + "<span> Saham</span>";
-
-
-      document.getElementById("radarLabel").textContent =
-        stocks.length + " SAHAM";
-
-
-      document.getElementById("radarBar").style.width =
-        Math.min(100, stocks.length * 12) + "%";
-
-
-      /*
-        JIKA DATA KOSONG
-      */
-      if (stocks.length === 0) {
-
-        emptyState.style.display = "block";
-
-        return;
-      }
-
-
-      emptyState.style.display = "none";
-
-
-      /*
-        BUAT KARTU
-      */
-      stocks.forEach(function(stock) {
-
-        const card = document.createElement("article");
-
-        card.className = "stock-card";
-        card.style.cursor = "pointer";
-
-
-        const changeSymbol =
-          stock.change >= 0 ? "▲ +" : "▼ ";
-
-
-        const changeClass =
-          stock.change >= 0 ? "positive" : "negative";
-
-
-        card.innerHTML = `
-          <div class="stock-header">
-
-            <div>
-              <h3>${stock.ticker}</h3>
-              <p>${stock.tradingOutlook || stock.name}</p>
-            </div>
-
-            <span class="${changeClass}">
-              ${changeSymbol}${Math.abs(stock.change).toFixed(2)}%
-            </span>
-
-          </div>
-
-          <div class="stock-price">
-            ${formatPrice(stock.price)}
-          </div>
-
-          <div class="stock-footer">
-            <span>Trading Score</span>
-            <strong>${stock.trading}/100</strong>
-          </div>
-        `;
-
-
-        card.addEventListener("click", function() {
-          openStock(stock.ticker);
-        });
-
-
-        container.appendChild(card);
-
-      });
-
-    }
-
-
-    renderTradingStocks();
-
-  </script>
+  };
+</script>
 
 </body>
 </html>
