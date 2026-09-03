@@ -75,7 +75,6 @@
             id="stockSearch"
             placeholder="Cari ticker... contoh: BBRI"
             autocomplete="off"
-            onkeydown="handleSearchEnter(event)"
           >
 
           <button onclick="searchStock()">
@@ -85,7 +84,6 @@
         </div>
 
 
-        <!-- POPULAR -->
         <div class="popular">
 
           <span>Populer:</span>
@@ -124,30 +122,45 @@
         </div>
 
         <div class="sentiment-value">
-          <h2>
-            62<span>/100</span>
+
+          <h2 id="sentimentScore">
+            0<span>/100</span>
           </h2>
 
-          <p>Netral Positif</p>
+          <p id="sentimentText">
+            Loading...
+          </p>
+
         </div>
 
+
         <div class="sentiment-bar">
-          <span></span>
+          <span
+            id="sentimentBar"
+            style="width: 0%"
+          ></span>
         </div>
+
 
         <div class="sentiment-info">
 
           <div>
             <small>Risk Level</small>
-            <strong>Moderate</strong>
+            <strong id="marketRisk">
+              Loading
+            </strong>
           </div>
+
 
           <div>
             <small>Market Trend</small>
-            <strong>Bullish</strong>
+            <strong id="marketTrend">
+              Loading
+            </strong>
           </div>
 
         </div>
+
 
         <p class="demo-note">
           Data demonstrasi — bukan data pasar real-time.
@@ -159,11 +172,15 @@
 
 
     <!-- MARKET -->
-    <section id="market" class="section">
+    <section
+      id="market"
+      class="section"
+    >
 
       <div class="section-heading">
 
         <div>
+
           <span class="eyebrow">
             MARKET PULSE
           </span>
@@ -171,10 +188,14 @@
           <h2>
             Market Overview
           </h2>
+
         </div>
 
-        <span class="demo-label">
-          DEMO DATA
+        <span
+          id="marketStatus"
+          class="demo-label"
+        >
+          LOADING...
         </span>
 
       </div>
@@ -182,97 +203,110 @@
 
       <div class="market-grid">
 
+        <!-- MARKET AVERAGE -->
         <article class="market-card featured">
 
           <div class="card-label">
-            IHSG
+            MARKET AVG
           </div>
 
-          <h3>
-            7,250.42
+          <h3 id="marketAverage">
+            Loading...
           </h3>
 
-          <p class="positive">
-            ▲ +0.82%
+          <p
+            id="marketAverageChange"
+            class="positive"
+          >
+            Calculating...
           </p>
 
           <small>
-            Pergerakan pasar contoh
+            Rata-rata perubahan database IDXNOVA
           </small>
 
         </article>
 
 
+        <!-- TOP GAINER -->
         <article
           class="market-card"
+          id="topGainerCard"
           style="cursor: pointer;"
-          onclick="openStock('ANTM')"
         >
 
           <div class="card-label">
             TOP GAINER
           </div>
 
-          <h3>
-            ANTM
+          <h3 id="topGainer">
+            Loading...
           </h3>
 
-          <p class="positive">
-            ▲ +4.25%
+          <p
+            id="topGainerChange"
+            class="positive"
+          >
+            Loading...
           </p>
 
           <small>
-            Klik untuk analisis
+            Perubahan tertinggi
           </small>
 
         </article>
 
 
+        <!-- TOP LOSER -->
         <article
           class="market-card"
+          id="topLoserCard"
           style="cursor: pointer;"
-          onclick="openStock('PWON')"
         >
 
           <div class="card-label">
             TOP LOSER
           </div>
 
-          <h3>
-            PWON
+          <h3 id="topLoser">
+            Loading...
           </h3>
 
-          <p class="negative">
-            ▼ -2.18%
+          <p
+            id="topLoserChange"
+            class="negative"
+          >
+            Loading...
           </p>
 
           <small>
-            Klik untuk analisis
+            Perubahan terendah
           </small>
 
         </article>
 
 
+        <!-- HIGHEST SCORE -->
         <article
           class="market-card"
+          id="topScoreCard"
           style="cursor: pointer;"
-          onclick="openStock('BBRI')"
         >
 
           <div class="card-label">
-            MOST ACTIVE
+            HIGHEST NOVA
           </div>
 
-          <h3>
-            BBRI
+          <h3 id="topScore">
+            Loading...
           </h3>
 
-          <p>
-            Volume tinggi
+          <p id="topScoreValue">
+            Loading...
           </p>
 
           <small>
-            Klik untuk analisis
+            Overall NOVA tertinggi
           </small>
 
         </article>
@@ -283,11 +317,15 @@
 
 
     <!-- STOCKS -->
-    <section id="stocks" class="section">
+    <section
+      id="stocks"
+      class="section"
+    >
 
       <div class="section-heading">
 
         <div>
+
           <span class="eyebrow">
             STOCK RADAR
           </span>
@@ -295,6 +333,7 @@
           <h2>
             Featured Stocks
           </h2>
+
         </div>
 
         <span
@@ -307,16 +346,15 @@
       </div>
 
 
-      <!-- DATA OTOMATIS DARI STOCKS.JS -->
+      <!-- AUTO FROM STOCKS.JS -->
       <div
         id="featuredStocks"
         class="stock-grid"
       ></div>
 
 
-      <!-- ERROR / EMPTY -->
       <div
-        id="featuredError"
+        id="featuredEmpty"
         class="empty-watchlist"
         style="display: none;"
       >
@@ -330,8 +368,7 @@
         </h3>
 
         <p>
-          Pastikan file stocks.js berada di folder yang sama
-          dengan index.html.
+          Pastikan stocks.js berada di folder yang sama dengan index.html.
         </p>
 
       </div>
@@ -340,11 +377,15 @@
 
 
     <!-- NOVA SCORE -->
-    <section id="scores" class="section">
+    <section
+      id="scores"
+      class="section"
+    >
 
       <div class="section-heading">
 
         <div>
+
           <span class="eyebrow">
             IDXNOVA INTELLIGENCE
           </span>
@@ -352,6 +393,7 @@
           <h2>
             NOVA Score
           </h2>
+
         </div>
 
       </div>
@@ -376,16 +418,15 @@
           </h3>
 
           <p>
-            Momentum, volume, volatilitas,
-            dan struktur harga untuk analisis trading.
+            Momentum, volume, volatilitas, dan struktur harga untuk analisis trading.
           </p>
 
           <div class="score-line">
-            <span style="width: 78%"></span>
+            <span id="avgTradingBar" style="width: 0%"></span>
           </div>
 
-          <strong>
-            78 / 100
+          <strong id="avgTradingScore">
+            Loading...
           </strong>
 
         </article>
@@ -402,16 +443,15 @@
           </h3>
 
           <p>
-            Trend, momentum, support-resistance,
-            dan peluang pergerakan beberapa hari.
+            Trend, momentum, support-resistance, dan peluang pergerakan beberapa hari.
           </p>
 
           <div class="score-line">
-            <span style="width: 82%"></span>
+            <span id="avgSwingBar" style="width: 0%"></span>
           </div>
 
-          <strong>
-            82 / 100
+          <strong id="avgSwingScore">
+            Loading...
           </strong>
 
         </article>
@@ -424,20 +464,19 @@
           </div>
 
           <h3>
-            NOVA Growth
+            NOVA Medium
           </h3>
 
           <p>
-            Analisis pertumbuhan pendapatan,
-            laba, kualitas bisnis, dan prospek.
+            Analisis pertumbuhan bisnis, tren keuangan, valuasi, dan prospek.
           </p>
 
           <div class="score-line">
-            <span style="width: 74%"></span>
+            <span id="avgMediumBar" style="width: 0%"></span>
           </div>
 
-          <strong>
-            74 / 100
+          <strong id="avgMediumScore">
+            Loading...
           </strong>
 
         </article>
@@ -454,16 +493,15 @@
           </h3>
 
           <p>
-            Fundamental, valuasi,
-            kesehatan keuangan, dan potensi jangka panjang.
+            Fundamental, valuasi, kesehatan keuangan, dan potensi jangka panjang.
           </p>
 
           <div class="score-line">
-            <span style="width: 88%"></span>
+            <span id="avgLongBar" style="width: 0%"></span>
           </div>
 
-          <strong>
-            88 / 100
+          <strong id="avgLongScore">
+            Loading...
           </strong>
 
         </article>
@@ -474,11 +512,15 @@
 
 
     <!-- FEATURES -->
-    <section id="features" class="section">
+    <section
+      id="features"
+      class="section"
+    >
 
       <div class="section-heading">
 
         <div>
+
           <span class="eyebrow">
             ONE PLATFORM
           </span>
@@ -486,6 +528,7 @@
           <h2>
             Semua yang Kamu Butuhkan
           </h2>
+
         </div>
 
       </div>
@@ -497,18 +540,11 @@
           style="cursor: pointer;"
           onclick="window.location.href='trading.html'"
         >
-
           <span>01</span>
-
-          <h3>
-            Trading Radar
-          </h3>
-
+          <h3>Trading Radar</h3>
           <p>
-            Temukan saham dengan aktivitas,
-            momentum, dan volume menarik.
+            Temukan saham dengan aktivitas, momentum, dan volume menarik.
           </p>
-
         </article>
 
 
@@ -516,18 +552,11 @@
           style="cursor: pointer;"
           onclick="window.location.href='screener.html'"
         >
-
           <span>02</span>
-
-          <h3>
-            Stock Screener
-          </h3>
-
+          <h3>Stock Screener</h3>
           <p>
-            Filter saham berdasarkan fundamental,
-            valuasi, pertumbuhan, dan lainnya.
+            Filter saham berdasarkan strategi dan karakteristik saham.
           </p>
-
         </article>
 
 
@@ -535,18 +564,11 @@
           style="cursor: pointer;"
           onclick="window.location.href='search.html'"
         >
-
           <span>03</span>
-
-          <h3>
-            Stock Analysis
-          </h3>
-
+          <h3>Stock Analysis</h3>
           <p>
-            Gabungkan fundamental,
-            teknikal, valuasi, dan NOVA Score.
+            Cari saham dan lihat fundamental, skor, dan karakteristiknya.
           </p>
-
         </article>
 
 
@@ -554,18 +576,11 @@
           style="cursor: pointer;"
           onclick="window.location.href='watchlist.html'"
         >
-
           <span>04</span>
-
-          <h3>
-            Watchlist
-          </h3>
-
+          <h3>Watchlist</h3>
           <p>
-            Simpan saham yang ingin dipantau
-            dalam satu dashboard.
+            Simpan saham yang ingin dipantau dalam satu dashboard.
           </p>
-
         </article>
 
       </div>
@@ -585,11 +600,12 @@
       </h2>
 
       <p>
-        Satu tempat untuk memantau,
-        menyaring, dan menganalisis saham Indonesia.
+        Satu tempat untuk memantau, menyaring, dan menganalisis saham Indonesia.
       </p>
 
-      <button onclick="focusSearch()">
+      <button
+        onclick="document.getElementById('stockSearch').focus()"
+      >
         Mulai Cari Saham
       </button>
 
@@ -617,8 +633,7 @@
     <p>
       IDXNOVA adalah platform informasi dan analisis independen.
       Seluruh informasi disediakan untuk tujuan edukasi dan informasi,
-      bukan merupakan nasihat keuangan atau rekomendasi untuk membeli
-      maupun menjual efek.
+      bukan merupakan nasihat keuangan atau rekomendasi membeli maupun menjual efek.
     </p>
 
 
@@ -633,162 +648,59 @@
   <script src="./stocks.js"></script>
 
 
-  <!-- JAVASCRIPT -->
+  <!-- HOME SYSTEM -->
   <script>
 
     function toggleMenu() {
+
       document
         .getElementById("navMenu")
         .classList
         .toggle("active");
-    }
 
-
-    function openStock(ticker) {
-      window.location.href =
-        "stock.html?ticker=" + encodeURIComponent(ticker);
     }
 
 
     function formatPrice(price) {
+
       return "Rp" +
         Number(price).toLocaleString("id-ID");
-    }
-
-
-    /* =========================
-       FEATURED STOCKS
-    ========================== */
-
-    function renderFeaturedStocks() {
-
-      const container =
-        document.getElementById("featuredStocks");
-
-      const error =
-        document.getElementById("featuredError");
-
-      const label =
-        document.getElementById("featuredLabel");
-
-
-      if (typeof STOCKS === "undefined") {
-
-        console.error(
-          "STOCKS database tidak ditemukan"
-        );
-
-        error.style.display = "block";
-
-        label.textContent =
-          "DATA ERROR";
-
-        return;
-      }
-
-
-      const stocks =
-        Object.values(STOCKS)
-          .sort(function(a, b) {
-            return b.overall - a.overall;
-          })
-          .slice(0, 4);
-
-
-      container.innerHTML = "";
-
-
-      if (stocks.length === 0) {
-
-        error.style.display = "block";
-
-        label.textContent =
-          "0 SAHAM";
-
-        return;
-      }
-
-
-      error.style.display = "none";
-
-      label.textContent =
-        stocks.length + " SAHAM";
-
-
-      stocks.forEach(function(stock) {
-
-        const card =
-          document.createElement("article");
-
-
-        card.className =
-          "stock-card";
-
-
-        card.style.cursor =
-          "pointer";
-
-
-        const changeSymbol =
-          stock.change >= 0
-            ? "▲ +"
-            : "▼ ";
-
-
-        const changeClass =
-          stock.change >= 0
-            ? "positive"
-            : "negative";
-
-
-        card.innerHTML = `
-          <div class="stock-header">
-
-            <div>
-              <h3>${stock.ticker}</h3>
-              <p>${stock.name}</p>
-            </div>
-
-            <span class="${changeClass}">
-              ${changeSymbol}${Math.abs(stock.change).toFixed(2)}%
-            </span>
-
-          </div>
-
-          <div class="stock-price">
-            ${formatPrice(stock.price)}
-          </div>
-
-          <div class="stock-footer">
-            <span>Overall NOVA</span>
-            <strong>${stock.overall}/100</strong>
-          </div>
-        `;
-
-
-        card.addEventListener(
-          "click",
-          function() {
-            openStock(stock.ticker);
-          }
-        );
-
-
-        container.appendChild(card);
-
-      });
 
     }
 
 
-    /* =========================
-       SEARCH
-    ========================== */
+    function openStock(ticker) {
 
+      window.location.href =
+        "stock.html?ticker=" +
+        encodeURIComponent(ticker);
+
+    }
+
+
+    function setText(id, value) {
+
+      const element =
+        document.getElementById(id);
+
+      if (element) {
+
+        element.textContent =
+          value;
+
+      }
+
+    }
+
+
+    /*
+      SEARCH HOME
+    */
     function searchStock() {
 
       const input =
         document.getElementById("stockSearch");
+
 
       const ticker =
         input.value
@@ -798,13 +710,11 @@
 
       if (!ticker) {
 
-        alert(
-          "Masukkan ticker saham terlebih dahulu."
-        );
-
-        input.focus();
+        window.location.href =
+          "search.html";
 
         return;
+
       }
 
 
@@ -817,11 +727,11 @@
 
       } else {
 
-        alert(
-          "Ticker " +
-          ticker +
-          " belum tersedia dalam database IDXNOVA."
-        );
+        window.location.href =
+          "search.html?q=" +
+          encodeURIComponent(
+            input.value.trim()
+          );
 
       }
 
@@ -832,7 +742,8 @@
 
       document
         .getElementById("stockSearch")
-        .value = ticker;
+        .value =
+        ticker;
 
 
       searchStock();
@@ -840,41 +751,634 @@
     }
 
 
-    function handleSearchEnter(event) {
+    /*
+      MARKET OVERVIEW
+    */
+    function renderMarketOverview(stocks) {
 
-      if (event.key === "Enter") {
+      const changes =
+        stocks.map(function(stock) {
 
-        searchStock();
+          return Number(stock.change) || 0;
+
+        });
+
+
+      const averageChange =
+        changes.reduce(function(sum, value) {
+
+          return sum + value;
+
+        }, 0) / changes.length;
+
+
+      const topGainer =
+        stocks.reduce(function(best, stock) {
+
+          return stock.change > best.change
+            ? stock
+            : best;
+
+        });
+
+
+      const topLoser =
+        stocks.reduce(function(worst, stock) {
+
+          return stock.change < worst.change
+            ? stock
+            : worst;
+
+        });
+
+
+      const highestScore =
+        stocks.reduce(function(best, stock) {
+
+          return stock.overall > best.overall
+            ? stock
+            : best;
+
+        });
+
+
+      setText(
+        "marketAverage",
+        stocks.length + " Saham"
+      );
+
+
+      const averageElement =
+        document.getElementById(
+          "marketAverageChange"
+        );
+
+
+      averageElement.textContent =
+        (averageChange >= 0 ? "▲ +" : "▼ ") +
+        Math.abs(averageChange).toFixed(2) +
+        "%";
+
+
+      averageElement.className =
+        averageChange >= 0
+          ? "positive"
+          : "negative";
+
+
+      setText(
+        "topGainer",
+        topGainer.ticker
+      );
+
+
+      setText(
+        "topGainerChange",
+        "▲ +" +
+        Number(topGainer.change).toFixed(2) +
+        "%"
+      );
+
+
+      setText(
+        "topLoser",
+        topLoser.ticker
+      );
+
+
+      const loserChange =
+        Number(topLoser.change) || 0;
+
+
+      setText(
+        "topLoserChange",
+        (loserChange >= 0 ? "▲ +" : "▼ ") +
+        Math.abs(loserChange).toFixed(2) +
+        "%"
+      );
+
+
+      document
+        .getElementById("topLoserChange")
+        .className =
+        loserChange >= 0
+          ? "positive"
+          : "negative";
+
+
+      setText(
+        "topScore",
+        highestScore.ticker
+      );
+
+
+      setText(
+        "topScoreValue",
+        "NOVA " +
+        highestScore.overall +
+        "/100"
+      );
+
+
+      /*
+        CLICK MARKET CARDS
+      */
+      document
+        .getElementById("topGainerCard")
+        .onclick =
+        function() {
+
+          openStock(topGainer.ticker);
+
+        };
+
+
+      document
+        .getElementById("topLoserCard")
+        .onclick =
+        function() {
+
+          openStock(topLoser.ticker);
+
+        };
+
+
+      document
+        .getElementById("topScoreCard")
+        .onclick =
+        function() {
+
+          openStock(highestScore.ticker);
+
+        };
+
+    }
+
+
+    /*
+      MARKET SENTIMENT
+    */
+    function renderMarketSentiment(stocks) {
+
+      const averageOverall =
+        stocks.reduce(
+          function(sum, stock) {
+
+            return sum +
+              (Number(stock.overall) || 0);
+
+          },
+          0
+        ) / stocks.length;
+
+
+      const averageChange =
+        stocks.reduce(
+          function(sum, stock) {
+
+            return sum +
+              (Number(stock.change) || 0);
+
+          },
+          0
+        ) / stocks.length;
+
+
+      const score =
+        Math.round(averageOverall);
+
+
+      setText(
+        "sentimentScore",
+        score
+      );
+
+
+      document
+        .getElementById(
+          "sentimentScore"
+        ).innerHTML =
+        score + "<span>/100</span>";
+
+
+      document
+        .getElementById(
+          "sentimentBar"
+        ).style.width =
+        score + "%";
+
+
+      let sentiment =
+        "Netral";
+
+
+      if (averageChange > 1) {
+
+        sentiment =
+          "Positif";
+
+      } else if (averageChange < -1) {
+
+        sentiment =
+          "Negatif";
+
+      } else if (averageChange > 0) {
+
+        sentiment =
+          "Netral Positif";
+
+      } else if (averageChange < 0) {
+
+        sentiment =
+          "Netral Negatif";
 
       }
 
+
+      setText(
+        "sentimentText",
+        sentiment
+      );
+
+
+      let trend =
+        "Neutral";
+
+
+      if (averageChange > 0.5) {
+
+        trend =
+          "Bullish";
+
+      } else if (averageChange < -0.5) {
+
+        trend =
+          "Bearish";
+
+      }
+
+
+      setText(
+        "marketTrend",
+        trend
+      );
+
+
+      let risk =
+        "Moderate";
+
+
+      if (score >= 88) {
+
+        risk =
+          "Low - Moderate";
+
+      } else if (score < 75) {
+
+        risk =
+          "Moderate - High";
+
+      }
+
+
+      setText(
+        "marketRisk",
+        risk
+      );
+
     }
 
 
-    function focusSearch() {
+    /*
+      FEATURED STOCKS
+      TOP 4 OVERALL SCORE
+    */
+    function renderFeaturedStocks(stocks) {
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+      const container =
+        document.getElementById(
+          "featuredStocks"
+        );
+
+
+      const emptyState =
+        document.getElementById(
+          "featuredEmpty"
+        );
+
+
+      const featured =
+        stocks
+          .slice()
+          .sort(function(a, b) {
+
+            return b.overall -
+              a.overall;
+
+          })
+          .slice(0, 4);
+
+
+      container.innerHTML =
+        "";
+
+
+      featured.forEach(function(stock) {
+
+        const card =
+          document.createElement(
+            "article"
+          );
+
+
+        card.className =
+          "stock-card";
+
+
+        card.style.cursor =
+          "pointer";
+
+
+        const change =
+          Number(stock.change) || 0;
+
+
+        const changeSymbol =
+          change >= 0
+            ? "▲ +"
+            : "▼ ";
+
+
+        const changeClass =
+          change >= 0
+            ? "positive"
+            : "negative";
+
+
+        card.innerHTML = `
+
+          <div class="stock-header">
+
+            <div>
+
+              <h3>
+                ${stock.ticker}
+              </h3>
+
+              <p>
+                ${stock.name}
+              </p>
+
+            </div>
+
+
+            <span class="${changeClass}">
+
+              ${changeSymbol}${Math.abs(change).toFixed(2)}%
+
+            </span>
+
+          </div>
+
+
+          <div class="stock-price">
+
+            ${formatPrice(stock.price)}
+
+          </div>
+
+
+          <div class="stock-footer">
+
+            <span>
+              Overall NOVA
+            </span>
+
+            <strong>
+              ${stock.overall}/100
+            </strong>
+
+          </div>
+
+        `;
+
+
+        card.addEventListener(
+          "click",
+          function() {
+
+            openStock(stock.ticker);
+
+          }
+        );
+
+
+        container.appendChild(card);
+
       });
 
 
-      setTimeout(function() {
+      emptyState.style.display =
+        featured.length === 0
+          ? "block"
+          : "none";
 
-        document
-          .getElementById("stockSearch")
-          .focus();
 
-      }, 500);
+      setText(
+        "featuredLabel",
+        featured.length +
+        " SAHAM"
+      );
 
     }
 
 
-    /* =========================
-       START
-    ========================== */
+    /*
+      NOVA SCORE AVERAGES
+    */
+    function renderScoreAverages(stocks) {
 
-    renderFeaturedStocks();
+      const configs = [
+
+        {
+          key: "trading",
+          bar: "avgTradingBar",
+          score: "avgTradingScore"
+        },
+
+        {
+          key: "swing",
+          bar: "avgSwingBar",
+          score: "avgSwingScore"
+        },
+
+        {
+          key: "medium",
+          bar: "avgMediumBar",
+          score: "avgMediumScore"
+        },
+
+        {
+          key: "long",
+          bar: "avgLongBar",
+          score: "avgLongScore"
+        }
+
+      ];
+
+
+      configs.forEach(function(config) {
+
+        const average =
+          stocks.reduce(
+            function(sum, stock) {
+
+              return sum +
+                (Number(stock[config.key]) || 0);
+
+            },
+            0
+          ) / stocks.length;
+
+
+        const score =
+          Math.round(average);
+
+
+        document
+          .getElementById(
+            config.bar
+          ).style.width =
+          score + "%";
+
+
+        setText(
+          config.score,
+          score + " / 100"
+        );
+
+      });
+
+    }
+
+
+    /*
+      INITIALIZE HOME
+    */
+    function initializeHome() {
+
+      if (typeof STOCKS === "undefined") {
+
+        setText(
+          "marketStatus",
+          "DATA ERROR"
+        );
+
+
+        setText(
+          "featuredLabel",
+          "DATA ERROR"
+        );
+
+
+        document
+          .getElementById(
+            "featuredEmpty"
+          ).style.display =
+          "block";
+
+
+        setText(
+          "sentimentText",
+          "Database Error"
+        );
+
+
+        setText(
+          "marketRisk",
+          "Unavailable"
+        );
+
+
+        setText(
+          "marketTrend",
+          "Unavailable"
+        );
+
+
+        return;
+
+      }
+
+
+      const stocks =
+        Object.values(STOCKS);
+
+
+      if (stocks.length === 0) {
+
+        setText(
+          "marketStatus",
+          "NO DATA"
+        );
+
+        return;
+
+      }
+
+
+      setText(
+        "marketStatus",
+        stocks.length +
+        " SAHAM"
+      );
+
+
+      renderMarketOverview(
+        stocks
+      );
+
+
+      renderMarketSentiment(
+        stocks
+      );
+
+
+      renderFeaturedStocks(
+        stocks
+      );
+
+
+      renderScoreAverages(
+        stocks
+      );
+
+    }
+
+
+    /*
+      ENTER = SEARCH
+    */
+    document
+      .getElementById("stockSearch")
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (event.key === "Enter") {
+
+            searchStock();
+
+          }
+
+        }
+      );
+
+
+    /*
+      START
+    */
+    initializeHome();
 
   </script>
 
