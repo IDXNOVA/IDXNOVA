@@ -7,15 +7,22 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- =========================
+       NAVBAR
+  ========================== -->
   <header class="navbar">
-    <a href="index.html" class="brand">
-      <span class="brand-mark">N</span>
-      <span>
-        <strong>IDXNOVA</strong>
-        <small>INDONESIAN STOCK INTELLIGENCE</small>
-      </span>
-    </a>
-<button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">
+<a href="index.html" class="brand">
+  <span class="brand-mark">N</span>
+  <span>
+    <strong>IDXNOVA</strong>
+    <small>INDONESIAN STOCK INTELLIGENCE</small>
+  </span>
+</a>
+<button
+  class="menu-btn"
+  onclick="toggleMenu()"
+  aria-label="Buka menu"
+>
   ☰
 </button>
 <nav id="navMenu">
@@ -29,17 +36,22 @@
 </nav>
   </header>
   <main>
-<!-- HERO -->
+<!-- =========================
+     HERO
+========================== -->
 <section class="hero">
   <div class="hero-content">
-    <div class="badge">💎 INVESTMENT INTELLIGENCE</div>
+    <div class="badge">
+      💎 INVESTMENT INTELLIGENCE
+    </div>
     <h1>
       Bangun Portofolio
       <span>Lebih Cerdas.</span>
     </h1>
     <p>
-      IDXNOVA secara otomatis memilih saham dari database pusat
-      untuk strategi investasi jangka menengah dan jangka panjang.
+      IDXNOVA membantu menemukan saham untuk strategi investasi
+      jangka menengah dan jangka panjang berdasarkan score,
+      fundamental, pertumbuhan, kualitas bisnis, dan potensi.
     </p>
   </div>
   <div class="hero-panel">
@@ -48,11 +60,18 @@
       <strong>DEMO MODE</strong>
     </div>
     <div class="sentiment-value">
-      <h2 id="investCount">0<span> Saham</span></h2>
-      <p id="investStatus">Memuat Investment Radar...</p>
+      <h2 id="investCount">
+        0<span> Saham</span>
+      </h2>
+      <p id="investStatus">
+        Memuat Investment Radar...
+      </p>
     </div>
     <div class="sentiment-bar">
-      <span id="investBar" style="width: 0%"></span>
+      <span
+        id="investBar"
+        style="width: 0%"
+      ></span>
     </div>
     <div class="sentiment-info">
       <div>
@@ -69,30 +88,38 @@
     </p>
   </div>
 </section>
-<!-- STRATEGY -->
+<!-- =========================
+     INVESTMENT STRATEGY
+========================== -->
 <section class="section">
   <div class="section-heading">
     <div>
-      <span class="eyebrow">INVESTMENT STRATEGY</span>
-      <h2>Pilih Horizon Investasi</h2>
+      <span class="eyebrow">
+        INVESTMENT STRATEGY
+      </span>
+      <h2>
+        Pilih Horizon Investasi
+      </h2>
     </div>
-    <span class="demo-label">AUTO FILTER</span>
+    <span class="demo-label">
+      AUTO FILTER
+    </span>
   </div>
   <div class="feature-grid">
     <article>
       <span>📊</span>
       <h3>Medium Term</h3>
       <p>
-        Saham dengan Medium Score minimal 80 untuk peluang
-        investasi beberapa bulan hingga beberapa tahun.
+        Saham dengan Medium Score minimal 80 untuk
+        peluang investasi beberapa bulan hingga beberapa tahun.
       </p>
     </article>
     <article>
       <span>💎</span>
       <h3>Long Term</h3>
       <p>
-        Saham dengan Long Score minimal 80 untuk strategi
-        investasi jangka panjang.
+        Saham dengan Long-Term Score minimal 80 untuk
+        strategi investasi jangka panjang.
       </p>
     </article>
     <article>
@@ -100,115 +127,195 @@
       <h3>Fundamental</h3>
       <p>
         Mempertimbangkan pertumbuhan bisnis, profitabilitas,
-        kesehatan keuangan, dan kualitas perusahaan.
+        kualitas keuangan, dan kesehatan perusahaan.
       </p>
     </article>
     <article>
       <span>📈</span>
       <h3>Growth</h3>
       <p>
-        Memantau potensi pertumbuhan pendapatan, laba,
-        dan perkembangan bisnis.
+        Memantau potensi pertumbuhan pendapatan,
+        laba, dan perkembangan bisnis ke depan.
       </p>
     </article>
   </div>
 </section>
-<!-- FILTER -->
+<!-- =========================
+     FILTER BUTTON
+========================== -->
 <section class="section">
   <div class="section-heading">
     <div>
-      <span class="eyebrow">INVESTMENT FILTER</span>
-      <h2 id="investmentTitle">Semua Investment Opportunities</h2>
+      <span class="eyebrow">
+        INVESTMENT FILTER
+      </span>
+      <h2 id="investmentTitle">
+        Semua Investment Opportunities
+      </h2>
     </div>
-    <span id="investmentLabel" class="demo-label">
+    <span
+      id="investmentLabel"
+      class="demo-label"
+    >
       LOADING...
     </span>
   </div>
   <div class="screener-filters">
-    <button class="filter-btn active" onclick="filterInvestments('all', this)">
+    <button
+      class="filter-btn active"
+      onclick="filterInvestments('all', this)"
+    >
       Semua
     </button>
-    <button class="filter-btn" onclick="filterInvestments('medium', this)">
+    <button
+      class="filter-btn"
+      onclick="filterInvestments('medium', this)"
+    >
       📊 Medium Term
     </button>
-    <button class="filter-btn" onclick="filterInvestments('long', this)">
+    <button
+      class="filter-btn"
+      onclick="filterInvestments('long', this)"
+    >
       💎 Long Term
     </button>
   </div>
 </section>
-<!-- RESULTS -->
+<!-- =========================
+     RESULTS
+========================== -->
 <section class="section">
-  <div id="investmentStocks" class="stock-grid"></div>
-  <div id="noInvestmentResult" class="empty-watchlist" style="display: none;">
-    <div class="empty-icon">💼</div>
-    <h3>Belum Ada Saham yang Lolos</h3>
+  <div
+    id="investmentStocks"
+    class="stock-grid"
+  ></div>
+  <div
+    id="noInvestmentResult"
+    class="empty-watchlist"
+    style="display: none;"
+  >
+    <div class="empty-icon">
+      💼
+    </div>
+    <h3>
+      Belum Ada Saham yang Lolos
+    </h3>
     <p>
-      Belum ada saham dalam database IDXNOVA yang memenuhi
-      minimum score untuk kategori ini.
+      Belum ada saham dalam database IDXNOVA
+      yang memenuhi minimum score untuk kategori ini.
     </p>
   </div>
 </section>
-<!-- CTA -->
+<!-- =========================
+     CTA
+========================== -->
 <section class="cta">
-  <span class="eyebrow">IDXNOVA INVESTING</span>
-  <h2>Invest With A Clearer View.</h2>
+  <span class="eyebrow">
+    IDXNOVA INVESTING
+  </span>
+  <h2>
+    Invest With A Clearer View.
+  </h2>
   <p>
-    Saham otomatis dipilih berdasarkan Medium Score dan Long Score
-    dari database pusat IDXNOVA.
+    IDXNOVA otomatis memilih saham berdasarkan Medium Score
+    dan Long-Term Score dari database pusat.
   </p>
   <a href="screener.html">
-    <button>Buka Stock Screener</button>
+    <button>
+      Buka Stock Screener
+    </button>
   </a>
 </section>
   </main>
+  <!-- =========================
+       FOOTER
+  ========================== -->
   <footer>
-    <div class="footer-brand">
-      <strong>IDXNOVA</strong>
-      <span>Indonesian Stock Intelligence</span>
-    </div>
+<div class="footer-brand">
+  <strong>IDXNOVA</strong>
+  <span>Indonesian Stock Intelligence</span>
+</div>
 <p>
-  Investment Radar menggunakan data demonstrasi dan bukan rekomendasi
-  membeli atau menjual saham. Investasi memiliki risiko.
+  Investment Radar menggunakan data demonstrasi dan bukan
+  rekomendasi membeli atau menjual saham.
+  Investasi memiliki risiko.
 </p>
-<small>© 2026 IDXNOVA. All rights reserved.</small>
+<small>
+  © 2026 IDXNOVA. All rights reserved.
+</small>
   </footer>
-  <!-- DATABASE PUSAT -->
+  <!-- =========================
+       DATABASE PUSAT
+  ========================== -->
   <script src="stocks.js"></script>
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
   <script>
     let currentInvestmentFilter = "all";
+    /* MENU MOBILE */
     function toggleMenu() {
-      document.getElementById("navMenu").classList.toggle("active");
+      document
+        .getElementById("navMenu")
+        .classList
+        .toggle("active");
     }
+    /* BUKA DETAIL SAHAM */
     function openStock(ticker) {
       window.location.href =
-        "stock.html?ticker=" + encodeURIComponent(ticker);
+        "stock.html?ticker=" +
+        encodeURIComponent(ticker);
     }
+    /* FORMAT HARGA */
     function formatPrice(price) {
-      return "Rp" + Number(price).toLocaleString("id-ID");
+      return "Rp" +
+        Number(price).toLocaleString("id-ID");
     }
+    /* AMBIL DATA SESUAI FILTER */
     function getInvestmentStocks(filter) {
-      if (typeof STOCKS === "undefined" || !STOCKS) {
+      if (
+        typeof STOCKS === "undefined" ||
+        !STOCKS
+      ) {
         return [];
       }
-      const allStocks = Object.values(STOCKS);
+      const allStocks =
+        Object.values(STOCKS);
       if (filter === "medium") {
         return allStocks
           .filter(function(stock) {
-            return stock && Number(stock.medium) >= 80;
+            return (
+              stock &&
+              Number(stock.medium) >= 80
+            );
           })
           .sort(function(a, b) {
-            return Number(b.medium) - Number(a.medium);
+            return (
+              Number(b.medium) -
+              Number(a.medium)
+            );
           });
       }
       if (filter === "long") {
         return allStocks
           .filter(function(stock) {
-            return stock && Number(stock.long) >= 80;
+            return (
+              stock &&
+              Number(stock.long) >= 80
+            );
           })
           .sort(function(a, b) {
-            return Number(b.long) - Number(a.long);
+            return (
+              Number(b.long) -
+              Number(a.long)
+            );
           });
       }
+      /* FILTER SEMUA
+         TAMPILKAN SAHAM YANG LOLOS
+         MEDIUM ATAU LONG TERM,
+         TANPA DUPLIKAT
+      */
       return allStocks
         .filter(function(stock) {
           return (
@@ -220,17 +327,20 @@
           );
         })
         .sort(function(a, b) {
-          const scoreA = Math.max(
-            Number(a.medium) || 0,
-            Number(a.long) || 0
-          );
-          const scoreB = Math.max(
-            Number(b.medium) || 0,
-            Number(b.long) || 0
-          );
+          const scoreA =
+            Math.max(
+              Number(a.medium) || 0,
+              Number(a.long) || 0
+            );
+          const scoreB =
+            Math.max(
+              Number(b.medium) || 0,
+              Number(b.long) || 0
+            );
           return scoreB - scoreA;
         });
     }
+    /* RENDER SAHAM */
     function renderInvestmentStocks() {
       const container =
         document.getElementById("investmentStocks");
@@ -246,7 +356,14 @@
         document.getElementById("investBar");
       const titleElement =
         document.getElementById("investmentTitle");
-      if (typeof STOCKS === "undefined" || !STOCKS) {
+      /* CEK DATABASE */
+      if (
+        typeof STOCKS === "undefined" ||
+        !STOCKS
+      ) {
+        console.error(
+          "Database STOCKS tidak berhasil dimuat."
+        );
         container.innerHTML = "";
         countElement.innerHTML =
           "0<span> Saham</span>";
@@ -260,35 +377,54 @@
           "block";
         return;
       }
+      /* AMBIL DATA */
       const stocks =
-        getInvestmentStocks(currentInvestmentFilter);
+        getInvestmentStocks(
+          currentInvestmentFilter
+        );
+      /* UPDATE JUDUL */
       const titles = {
-        all: "Semua Investment Opportunities",
-        medium: "Medium-Term Opportunities",
-        long: "Long-Term Opportunities"
+        all:
+          "Semua Investment Opportunities",
+        medium:
+          "Medium-Term Opportunities",
+        long:
+          "Long-Term Opportunities"
       };
       titleElement.textContent =
         titles[currentInvestmentFilter];
+      /* BERSIHKAN HASIL */
       container.innerHTML = "";
+      /* UPDATE JUMLAH */
       countElement.innerHTML =
-        stocks.length + "<span> Saham</span>";
+        stocks.length +
+        "<span> Saham</span>";
       statusElement.textContent =
         stocks.length > 0
           ? "Investment Radar aktif"
           : "Belum ada saham yang lolos filter";
       labelElement.textContent =
-        stocks.length + " SAHAM";
+        stocks.length +
+        " SAHAM";
+      /* UPDATE BAR */
       const barWidth =
         stocks.length === 0
           ? 0
-          : Math.min(100, stocks.length * 12);
+          : Math.min(
+              100,
+              stocks.length * 12
+            );
       barElement.style.width =
         barWidth + "%";
+      /* JIKA KOSONG */
       if (stocks.length === 0) {
-        emptyState.style.display = "block";
+        emptyState.style.display =
+          "block";
         return;
       }
-      emptyState.style.display = "none";
+      emptyState.style.display =
+        "none";
+      /* BUAT KARTU */
       stocks.forEach(function(stock) {
         const card =
           document.createElement("article");
@@ -299,9 +435,14 @@
         const change =
           Number(stock.change) || 0;
         const changeSymbol =
-          change >= 0 ? "▲ +" : "▼ -";
+          change >= 0
+            ? "▲ +"
+            : "▼ -";
         const changeClass =
-          change >= 0 ? "positive" : "negative";
+          change >= 0
+            ? "positive"
+            : "negative";
+        /* TENTUKAN SCORE YANG DITAMPILKAN */
         let scoreLabel =
           "Investment Score";
         let scoreValue =
@@ -310,16 +451,22 @@
             Number(stock.long) || 0
           );
         let outlook =
-          stock.fundamental || stock.name;
-        if (currentInvestmentFilter === "medium") {
+          stock.fundamental ||
+          stock.name;
+        if (
+          currentInvestmentFilter === "medium"
+        ) {
           scoreLabel =
             "Medium Score";
           scoreValue =
             Number(stock.medium);
           outlook =
-            stock.fundamental || stock.name;
+            stock.fundamental ||
+            stock.name;
         }
-        if (currentInvestmentFilter === "long") {
+        if (
+          currentInvestmentFilter === "long"
+        ) {
           scoreLabel =
             "Long-Term Score";
           scoreValue =
@@ -329,11 +476,16 @@
             stock.fundamental ||
             stock.name;
         }
+        /* BUAT KARTU */
         card.innerHTML = `
           <div class="stock-header">
             <div>
-              <h3>${stock.ticker}</h3>
-              <p>${outlook}</p>
+              <h3>
+                ${stock.ticker}
+              </h3>
+              <p>
+                ${outlook}
+              </p>
             </div>
             <span class="${changeClass}">
               ${changeSymbol}${Math.abs(change).toFixed(2)}%
@@ -343,26 +495,42 @@
             ${formatPrice(stock.price)}
           </div>
           <div class="stock-footer">
-            <span>${scoreLabel}</span>
-            <strong>${scoreValue}/100</strong>
+            <span>
+              ${scoreLabel}
+            </span>
+            <strong>
+              ${scoreValue}/100
+            </strong>
           </div>
         `;
-        card.addEventListener("click", function() {
-          openStock(stock.ticker);
-        });
+        /* KLIK KE DETAIL */
+        card.addEventListener(
+          "click",
+          function() {
+            openStock(stock.ticker);
+          }
+        );
         container.appendChild(card);
       });
     }
-    function filterInvestments(filter, button) {
-      currentInvestmentFilter = filter;
+    /* FILTER BUTTON */
+    function filterInvestments(
+      filter,
+      button
+    ) {
+      currentInvestmentFilter =
+        filter;
       const buttons =
-        document.querySelectorAll(".filter-btn");
+        document.querySelectorAll(
+          ".filter-btn"
+        );
       buttons.forEach(function(btn) {
         btn.classList.remove("active");
       });
       button.classList.add("active");
       renderInvestmentStocks();
     }
+    /* JALANKAN SAAT HALAMAN DIMUAT */
     document.addEventListener(
       "DOMContentLoaded",
       function() {
