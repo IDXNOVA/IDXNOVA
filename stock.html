@@ -515,6 +515,13 @@
         changeStock();
       }
     });
+    // BACA TICKER DARI URL
+const urlParams = new URLSearchParams(window.location.search);
+const urlTicker = urlParams.get("ticker");
+
+if (urlTicker) {
+  loadStock(urlTicker.trim().toUpperCase());
+}
   </script>
 
 </body>
