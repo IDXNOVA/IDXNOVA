@@ -30,6 +30,7 @@
       <a href="swing.html">Swing</a>
       <a href="investing.html">Investing</a>
       <a href="screener.html">Screener</a>
+      <a href="watchlist.html">Watchlist</a>
     </nav>
   </header>
 
@@ -48,8 +49,7 @@
 
         <p>
           Filter saham Indonesia berdasarkan gaya trading atau investasi.
-          Pilih strategi, lalu IDXNOVA akan menampilkan contoh saham yang
-          sesuai dengan kriteria scanner.
+          Data saham ditampilkan otomatis dari database IDXNOVA.
         </p>
       </div>
 
@@ -60,12 +60,12 @@
         </div>
 
         <div class="sentiment-value">
-          <h2 id="stockCount">8<span> Saham</span></h2>
-          <p id="screenerStatus">Semua strategi aktif</p>
+          <h2 id="stockCount">0<span> Saham</span></h2>
+          <p id="screenerStatus">Memuat data saham...</p>
         </div>
 
         <div class="sentiment-bar">
-          <span id="screenerBar" style="width: 80%"></span>
+          <span id="screenerBar" style="width: 0%"></span>
         </div>
 
         <div class="sentiment-info">
@@ -76,12 +76,12 @@
 
           <div>
             <small>Data</small>
-            <strong>Demo</strong>
+            <strong>Terpusat</strong>
           </div>
         </div>
 
         <p class="demo-note">
-          Hasil saat ini menggunakan data demonstrasi, bukan data pasar real-time.
+          Hasil saat ini masih menggunakan data demonstrasi, bukan data pasar real-time.
         </p>
       </div>
     </section>
@@ -95,7 +95,7 @@
           <h2>Pilih Strategi</h2>
         </div>
 
-        <span class="demo-label">INTERACTIVE DEMO</span>
+        <span class="demo-label">AUTOMATIC DATA</span>
       </div>
 
       <div class="screener-filters">
@@ -133,159 +133,14 @@
           <h2 id="resultTitle">Semua Peluang Saham</h2>
         </div>
 
-        <span class="demo-label">SAMPLE DATA</span>
+        <span class="demo-label">CENTRAL DATABASE</span>
       </div>
 
-
-      <div class="stock-grid" id="stockResults">
-
-        <article class="stock-card screener-stock" data-category="trading swing medium">
-          <div class="stock-header">
-            <div>
-              <h3>ANTM</h3>
-              <p>Momentum & Commodity Growth</p>
-            </div>
-            <span class="positive">▲ +4.25%</span>
-          </div>
-
-          <div class="stock-price">Score 90</div>
-
-          <div class="stock-footer">
-            <span>Best For</span>
-            <strong>Trading / Swing</strong>
-          </div>
-        </article>
-
-
-        <article class="stock-card screener-stock" data-category="trading swing">
-          <div class="stock-header">
-            <div>
-              <h3>ELSA</h3>
-              <p>Volume & Momentum</p>
-            </div>
-            <span class="positive">▲ +2.10%</span>
-          </div>
-
-          <div class="stock-price">Score 86</div>
-
-          <div class="stock-footer">
-            <span>Best For</span>
-            <strong>Trading / Swing</strong>
-          </div>
-        </article>
-
-
-        <article class="stock-card screener-stock" data-category="swing medium longterm">
-          <div class="stock-header">
-            <div>
-              <h3>BBRI</h3>
-              <p>Growth & Dividend</p>
-            </div>
-            <span class="positive">Positive</span>
-          </div>
-
-          <div class="stock-price">Score 88</div>
-
-          <div class="stock-footer">
-            <span>Best For</span>
-            <strong>Medium / Long Term</strong>
-          </div>
-        </article>
-
-
-        <article class="stock-card screener-stock" data-category="medium longterm">
-          <div class="stock-header">
-            <div>
-              <h3>BBCA</h3>
-              <p>Quality & Stability</p>
-            </div>
-            <span class="positive">Strong</span>
-          </div>
-
-          <div class="stock-price">Score 92</div>
-
-          <div class="stock-footer">
-            <span>Best For</span>
-            <strong>Long Term</strong>
-          </div>
-        </article>
-
-
-        <article class="stock-card screener-stock" data-category="swing medium longterm">
-          <div class="stock-header">
-            <div>
-              <h3>UNTR</h3>
-              <p>Value & Dividend</p>
-            </div>
-            <span class="positive">Stable</span>
-          </div>
-
-          <div class="stock-price">Score 84</div>
-
-          <div class="stock-footer">
-            <span>Best For</span>
-            <strong>Medium / Long Term</strong>
-          </div>
-        </article>
-
-
-        <article class="stock-card screener-stock" data-category="trading swing">
-          <div class="stock-header">
-            <div>
-              <h3>PGAS</h3>
-              <p>Volume Activity</p>
-            </div>
-            <span class="positive">▲ +1.85%</span>
-          </div>
-
-          <div class="stock-price">Score 83</div>
-
-          <div class="stock-footer">
-            <span>Best For</span>
-            <strong>Trading / Swing</strong>
-          </div>
-        </article>
-
-
-        <article class="stock-card screener-stock" data-category="medium longterm">
-          <div class="stock-header">
-            <div>
-              <h3>ASII</h3>
-              <p>Diversified Business</p>
-            </div>
-            <span class="positive">Stable</span>
-          </div>
-
-          <div class="stock-price">Score 80</div>
-
-          <div class="stock-footer">
-            <span>Best For</span>
-            <strong>Medium / Long Term</strong>
-          </div>
-        </article>
-
-
-        <article class="stock-card screener-stock" data-category="medium longterm">
-          <div class="stock-header">
-            <div>
-              <h3>ICBP</h3>
-              <p>Defensive Growth</p>
-            </div>
-            <span class="positive">Strong</span>
-          </div>
-
-          <div class="stock-price">Score 85</div>
-
-          <div class="stock-footer">
-            <span>Best For</span>
-            <strong>Medium / Long Term</strong>
-          </div>
-        </article>
-
-      </div>
+      <!-- KARTU SAHAM DIBUAT OTOMATIS -->
+      <div class="stock-grid" id="stockResults"></div>
 
       <div id="noResult" class="no-result" style="display: none;">
-        Tidak ada saham demo yang sesuai dengan filter ini.
+        Tidak ada saham yang sesuai dengan filter ini.
       </div>
 
     </section>
@@ -306,37 +161,25 @@
         <article>
           <span>⚡</span>
           <h3>Trading</h3>
-          <p>
-            Momentum, volume, volatilitas, likuiditas,
-            dan peluang breakout.
-          </p>
+          <p>Momentum, volume, volatilitas, likuiditas, dan peluang breakout.</p>
         </article>
 
         <article>
           <span>📈</span>
           <h3>Swing</h3>
-          <p>
-            Trend, struktur harga, momentum, support-resistance,
-            dan konfirmasi volume.
-          </p>
+          <p>Trend, struktur harga, momentum, support-resistance, dan konfirmasi volume.</p>
         </article>
 
         <article>
           <span>📊</span>
           <h3>Medium Term</h3>
-          <p>
-            Pertumbuhan bisnis, tren keuangan,
-            valuasi, dan prospek beberapa bulan.
-          </p>
+          <p>Pertumbuhan bisnis, tren keuangan, valuasi, dan prospek beberapa bulan.</p>
         </article>
 
         <article>
           <span>💎</span>
           <h3>Long Term</h3>
-          <p>
-            Fundamental, profitabilitas, utang,
-            pertumbuhan, valuasi, dan dividen.
-          </p>
+          <p>Fundamental, profitabilitas, utang, pertumbuhan, valuasi, dan dividen.</p>
         </article>
 
       </div>
@@ -351,11 +194,11 @@
       <h2>One Market. Multiple Strategies.</h2>
 
       <p>
-        Ke depan, Stock Screener IDXNOVA akan dikembangkan dengan
-        filter yang lebih detail dan data pasar yang diperbarui.
+        Tambahkan saham ke database pusat IDXNOVA dan sistem Screener
+        akan membacanya secara otomatis.
       </p>
 
-      <button onclick="filterStocks('all', document.querySelector('.filter-btn'))">
+      <button onclick="resetScanner()">
         Reset Scanner
       </button>
     </section>
@@ -379,17 +222,137 @@
   </footer>
 
 
+  <!-- DATABASE PUSAT -->
+  <script src="stocks.js"></script>
+
   <script>
+
+    let currentCategory = "all";
+
 
     function toggleMenu() {
       document.getElementById("navMenu").classList.toggle("active");
     }
 
 
-    function filterStocks(category, button) {
+    function getCategoryList(stock) {
 
-      const stocks = document.querySelectorAll(".screener-stock");
-      const buttons = document.querySelectorAll(".filter-btn");
+      const categories = [];
+
+      /* Score 70+ = lolos kategori */
+
+      if (stock.trading >= 70) {
+        categories.push("trading");
+      }
+
+      if (stock.swing >= 70) {
+        categories.push("swing");
+      }
+
+      if (stock.medium >= 70) {
+        categories.push("medium");
+      }
+
+      if (stock.long >= 70) {
+        categories.push("longterm");
+      }
+
+      return categories;
+    }
+
+
+    function getBestScore(stock) {
+      return Math.max(
+        stock.overall,
+        stock.trading,
+        stock.swing,
+        stock.medium,
+        stock.long
+      );
+    }
+
+
+    function renderStocks() {
+
+      const container = document.getElementById("stockResults");
+
+      container.innerHTML = "";
+
+      const stockList = Object.values(STOCKS);
+
+      let visibleStocks = stockList;
+
+
+      if (currentCategory !== "all") {
+
+        visibleStocks = stockList.filter(function(stock) {
+          return getCategoryList(stock).includes(currentCategory);
+        });
+
+      }
+
+
+      /* Urutkan berdasarkan Overall Score tertinggi */
+
+      visibleStocks.sort(function(a, b) {
+        return b.overall - a.overall;
+      });
+
+
+      visibleStocks.forEach(function(stock) {
+
+        const card = document.createElement("article");
+
+        card.className = "stock-card screener-stock";
+        card.style.cursor = "pointer";
+
+        const changeSymbol =
+          stock.change >= 0 ? "▲ +" : "▼ ";
+
+        const changeClass =
+          stock.change >= 0 ? "positive" : "negative";
+
+
+        card.innerHTML = `
+          <div class="stock-header">
+            <div>
+              <h3>${stock.ticker}</h3>
+              <p>${stock.name}</p>
+            </div>
+
+            <span class="${changeClass}">
+              ${changeSymbol}${Math.abs(stock.change).toFixed(2)}%
+            </span>
+          </div>
+
+          <div class="stock-price">
+            Score ${stock.overall}
+          </div>
+
+          <div class="stock-footer">
+            <span>Best For</span>
+            <strong>${stock.bestFit}</strong>
+          </div>
+        `;
+
+
+        card.addEventListener("click", function() {
+          window.location.href =
+            "stock.html?ticker=" + encodeURIComponent(stock.ticker);
+        });
+
+
+        container.appendChild(card);
+
+      });
+
+
+      updateScreenerInfo(visibleStocks.length);
+
+    }
+
+
+    function updateScreenerInfo(count) {
 
       const titles = {
         all: "Semua Peluang Saham",
@@ -399,6 +362,7 @@
         longterm: "Long-Term Opportunities"
       };
 
+
       const descriptions = {
         all: "Semua strategi aktif",
         trading: "Filter Trading aktif",
@@ -407,35 +371,63 @@
         longterm: "Filter Long-Term aktif"
       };
 
-      buttons.forEach(btn => btn.classList.remove("active"));
-      button.classList.add("active");
 
-      let visibleCount = 0;
+      document.getElementById("resultTitle").textContent =
+        titles[currentCategory];
 
-      stocks.forEach(stock => {
+      document.getElementById("screenerStatus").textContent =
+        descriptions[currentCategory];
 
-        const categories = stock.dataset.category.split(" ");
-
-        if (category === "all" || categories.includes(category)) {
-          stock.style.display = "block";
-          visibleCount++;
-        } else {
-          stock.style.display = "none";
-        }
-
-      });
-
-      document.getElementById("resultTitle").textContent = titles[category];
-      document.getElementById("screenerStatus").textContent = descriptions[category];
       document.getElementById("stockCount").innerHTML =
-        visibleCount + "<span> Saham</span>";
+        count + "<span> Saham</span>";
 
       document.getElementById("screenerBar").style.width =
-        Math.max(25, visibleCount * 10) + "%";
+        count === 0 ? "0%" : Math.min(100, count * 12) + "%";
 
       document.getElementById("noResult").style.display =
-        visibleCount === 0 ? "block" : "none";
+        count === 0 ? "block" : "none";
+
     }
+
+
+    function filterStocks(category, button) {
+
+      currentCategory = category;
+
+      document.querySelectorAll(".filter-btn").forEach(function(btn) {
+        btn.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      renderStocks();
+
+    }
+
+
+    function resetScanner() {
+
+      currentCategory = "all";
+
+      document.querySelectorAll(".filter-btn").forEach(function(btn) {
+        btn.classList.remove("active");
+      });
+
+      document.querySelector(".filter-btn").classList.add("active");
+
+      renderStocks();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    /* MULAI SCREENER */
+
+    renderStocks();
 
   </script>
 
