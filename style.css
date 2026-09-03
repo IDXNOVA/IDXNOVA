@@ -685,3 +685,322 @@ footer small {
     padding: 35px 18px;
   }
 }
+/* ================================
+   IDXNOVA STOCK DETAIL
+================================ */
+
+.stock-detail-hero {
+  width: min(1100px, 92%);
+  margin: 40px auto 0;
+  padding: 35px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 25px;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.75;
+}
+
+.back-link:hover {
+  opacity: 1;
+}
+
+.ticker-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.ticker-logo {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  font-size: 28px;
+  font-weight: 800;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ticker-row h1 {
+  margin: 0;
+  font-size: 36px;
+}
+
+.ticker-row p {
+  margin: 5px 0 0;
+  opacity: 0.7;
+}
+
+.stock-identity .demo-label {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.stock-main-price {
+  text-align: right;
+}
+
+.stock-main-price small {
+  opacity: 0.6;
+}
+
+.stock-main-price h2 {
+  margin: 8px 0;
+  font-size: 34px;
+}
+
+.stock-main-price p {
+  margin: 0 0 8px;
+}
+
+
+/* OVERALL SCORE */
+
+.overall-score-card {
+  position: relative;
+  overflow: hidden;
+  padding: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+}
+
+.overall-score-number {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.overall-score-number strong {
+  font-size: 64px;
+  line-height: 1;
+}
+
+.overall-score-number span {
+  font-size: 22px;
+  opacity: 0.6;
+}
+
+.overall-score-info h3 {
+  margin: 20px 0 8px;
+  font-size: 24px;
+}
+
+.overall-score-info p {
+  max-width: 700px;
+  opacity: 0.7;
+  line-height: 1.7;
+}
+
+.overall-score-bar {
+  width: 100%;
+  height: 8px;
+  margin-top: 28px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.overall-score-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: currentColor;
+}
+
+
+/* ANALYSIS GRID */
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.analysis-card {
+  display: flex;
+  gap: 15px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+}
+
+.analysis-icon {
+  font-size: 25px;
+}
+
+.analysis-card small {
+  opacity: 0.55;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.analysis-card h3 {
+  margin: 7px 0;
+  font-size: 18px;
+}
+
+.analysis-card p {
+  margin: 0;
+  opacity: 0.65;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+
+/* METRICS */
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.metric-card {
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+}
+
+.metric-card small {
+  display: block;
+  opacity: 0.6;
+  margin-bottom: 10px;
+}
+
+.metric-card strong {
+  font-size: 22px;
+}
+
+
+/* HORIZON CONCLUSION */
+
+.horizon-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.horizon-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+}
+
+.horizon-card > span {
+  font-size: 28px;
+}
+
+.horizon-card small {
+  opacity: 0.55;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.horizon-card h3 {
+  margin: 7px 0;
+  font-size: 20px;
+}
+
+.horizon-card p {
+  margin: 0;
+  opacity: 0.65;
+  line-height: 1.6;
+}
+
+
+/* STOCK SEARCH */
+
+.stock-search-detail {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.stock-search-detail input {
+  width: min(320px, 100%);
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: inherit;
+  outline: none;
+  font-size: 15px;
+}
+
+.stock-search-detail input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.stock-search-detail button {
+  padding: 14px 22px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+
+  .stock-detail-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 25px;
+  }
+
+  .stock-main-price {
+    text-align: left;
+  }
+
+  .analysis-grid,
+  .metric-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 560px) {
+
+  .ticker-row h1 {
+    font-size: 28px;
+  }
+
+  .ticker-row p {
+    font-size: 13px;
+  }
+
+  .overall-score-number strong {
+    font-size: 52px;
+  }
+
+  .analysis-grid,
+  .metric-grid,
+  .horizon-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stock-search-detail {
+    flex-direction: column;
+  }
+
+  .stock-search-detail input,
+  .stock-search-detail button {
+    width: 100%;
+  }
+
+}
