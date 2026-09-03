@@ -3,514 +3,540 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Investing | IDXNOVA</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-  <!-- NAVBAR -->
+  <!-- =========================
+       NAVBAR
+  ========================== -->
   <header class="navbar">
-
-    <a href="index.html" class="brand">
-      <span class="brand-mark">N</span>
-
-      <span>
-        <strong>IDXNOVA</strong>
-        <small>INDONESIAN STOCK INTELLIGENCE</small>
-      </span>
-    </a>
-
-    <button
-      class="menu-btn"
-      onclick="toggleMenu()"
-      aria-label="Buka menu"
-    >
-      ☰
-    </button>
-
-    <nav id="navMenu">
-      <a href="index.html">Home</a>
-      <a href="trading.html">Trading</a>
-      <a href="swing.html">Swing</a>
-      <a href="investing.html">Investing</a>
-      <a href="screener.html">Screener</a>
-      <a href="watchlist.html">Watchlist</a>
-      <a href="search.html">🔎 Search</a>
-    </nav>
-
+<a href="index.html" class="brand">
+  <span class="brand-mark">N</span>
+  <span>
+    <strong>IDXNOVA</strong>
+    <small>INDONESIAN STOCK INTELLIGENCE</small>
+  </span>
+</a>
+<button
+  class="menu-btn"
+  onclick="toggleMenu()"
+  aria-label="Buka menu"
+>
+  ☰
+</button>
+<nav id="navMenu">
+  <a href="index.html">Home</a>
+  <a href="trading.html">Trading</a>
+  <a href="swing.html">Swing</a>
+  <a href="investing.html">Investing</a>
+  <a href="screener.html">Screener</a>
+  <a href="watchlist.html">Watchlist</a>
+  <a href="search.html">🔎 Search</a>
+</nav>
   </header>
-
-
   <main>
-
-    <!-- HERO -->
-    <section class="hero">
-
-      <div class="hero-content">
-
-        <div class="badge">
-          💎 LONG-TERM INVESTMENT INTELLIGENCE
-        </div>
-
-        <h1>
-          Bangun Kekayaan
-          <span>Jangka Panjang.</span>
-        </h1>
-
-        <p>
-          Investing IDXNOVA membantu menemukan saham berdasarkan kualitas bisnis,
-          fundamental, pertumbuhan, valuasi, kesehatan keuangan, dan potensi
-          jangka panjang.
-        </p>
-
-      </div>
-
-
-      <!-- HERO PANEL -->
-      <div class="hero-panel">
-
-        <div class="panel-top">
-          <span>INVESTING RADAR</span>
-          <strong>DEMO MODE</strong>
-        </div>
-
-        <div class="sentiment-value">
-          <h2 id="investingCount">0<span> Saham</span></h2>
-          <p>Data Investing Radar</p>
-        </div>
-
-        <div class="sentiment-bar">
-          <span id="investingBar" style="width: 0%"></span>
-        </div>
-
-        <div class="sentiment-info">
-
-          <div>
-            <small>Strategy</small>
-            <strong>Long-Term Score</strong>
-          </div>
-
-          <div>
-            <small>Status</small>
-            <strong>Central Data</strong>
-          </div>
-
-        </div>
-
-        <p class="demo-note">
-          Data demonstrasi — bukan data pasar real-time.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- INVESTING CRITERIA -->
-    <section class="section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">
-            INVESTMENT STRATEGY
-          </span>
-
-          <h2>
-            Investment Criteria
-          </h2>
-        </div>
-
-        <span class="demo-label">
-          DEMO LOGIC
-        </span>
-
-      </div>
-
-
-      <div class="feature-grid">
-
-        <article>
-          <span>01</span>
-          <h3>🏢 Business Quality</h3>
-          <p>
-            Menilai kualitas bisnis, posisi perusahaan, dan kemampuan
-            bertahan dalam jangka panjang.
-          </p>
-        </article>
-
-
-        <article>
-          <span>02</span>
-          <h3>📈 Growth</h3>
-          <p>
-            Memantau pertumbuhan pendapatan dan laba untuk melihat
-            perkembangan bisnis perusahaan.
-          </p>
-        </article>
-
-
-        <article>
-          <span>03</span>
-          <h3>💰 Financial Health</h3>
-          <p>
-            Melihat profitabilitas, ROE, dan tingkat kesehatan
-            keuangan perusahaan.
-          </p>
-        </article>
-
-
-        <article>
-          <span>04</span>
-          <h3>💎 Long-Term Potential</h3>
-          <p>
-            Menggabungkan fundamental, pertumbuhan, valuasi, dan
-            kualitas bisnis untuk analisis jangka panjang.
-          </p>
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- RESULTS -->
-    <section class="section">
-
-      <div class="section-heading">
-
-        <div>
-          <span class="eyebrow">
-            INVESTING RADAR
-          </span>
-
-          <h2>
-            Top Long-Term Opportunities
-          </h2>
-        </div>
-
-        <span
-          id="investingLabel"
-          class="demo-label"
-        >
-          LOADING...
-        </span>
-
-      </div>
-
-
-      <!-- DATA DARI STOCKS.JS -->
-      <div
-        id="investingStocks"
-        class="stock-grid"
-      ></div>
-
-
-      <!-- EMPTY STATE -->
-      <div
-        id="noInvestingResult"
-        class="empty-watchlist"
-        style="display: none;"
-      >
-
-        <div class="empty-icon">
-          ⚠️
-        </div>
-
-        <h3>
-          Database belum terbaca
-        </h3>
-
-        <p>
-          Pastikan file stocks.js berada di folder yang sama
-          dengan investing.html.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- CTA -->
-    <section class="cta">
-
-      <span class="eyebrow">
-        IDXNOVA INVESTING
-      </span>
-
-      <h2>
-        Invest with Patience. Grow with Quality.
-      </h2>
-
-      <p>
-        Saham diurutkan berdasarkan Long-Term Score dari database pusat IDXNOVA.
-      </p>
-
-      <a href="screener.html">
-        <button>
-          Buka Stock Screener
-        </button>
-      </a>
-
-    </section>
-
-  </main>
-
-
-  <!-- FOOTER -->
-  <footer>
-
-    <div class="footer-brand">
-
-      <strong>
-        IDXNOVA
-      </strong>
-
-      <span>
-        Indonesian Stock Intelligence
-      </span>
-
+<!-- =========================
+     HERO
+========================== -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="badge">
+      💎 INVESTMENT INTELLIGENCE
     </div>
-
-
+    <h1>
+      Bangun Portofolio
+      <span>Lebih Cerdas.</span>
+    </h1>
     <p>
-      Investing IDXNOVA menggunakan data demonstrasi dan bukan rekomendasi
-      membeli atau menjual saham.
+      IDXNOVA membantu menemukan saham untuk strategi investasi
+      jangka menengah dan jangka panjang berdasarkan score,
+      fundamental, pertumbuhan, kualitas bisnis, dan potensi.
     </p>
-
-
-    <small>
-      © 2026 IDXNOVA. All rights reserved.
-    </small>
-
+  </div>
+  <div class="hero-panel">
+    <div class="panel-top">
+      <span>INVESTMENT RADAR</span>
+      <strong>DEMO MODE</strong>
+    </div>
+    <div class="sentiment-value">
+      <h2 id="investCount">
+        0<span> Saham</span>
+      </h2>
+      <p id="investStatus">
+        Memuat Investment Radar...
+      </p>
+    </div>
+    <div class="sentiment-bar">
+      <span
+        id="investBar"
+        style="width: 0%"
+      ></span>
+    </div>
+    <div class="sentiment-info">
+      <div>
+        <small>Medium Score</small>
+        <strong>≥ 80</strong>
+      </div>
+      <div>
+        <small>Long Score</small>
+        <strong>≥ 80</strong>
+      </div>
+    </div>
+    <p class="demo-note">
+      Data demonstrasi — bukan data pasar real-time.
+    </p>
+  </div>
+</section>
+<!-- =========================
+     INVESTMENT STRATEGY
+========================== -->
+<section class="section">
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        INVESTMENT STRATEGY
+      </span>
+      <h2>
+        Pilih Horizon Investasi
+      </h2>
+    </div>
+    <span class="demo-label">
+      AUTO FILTER
+    </span>
+  </div>
+  <div class="feature-grid">
+    <article>
+      <span>📊</span>
+      <h3>Medium Term</h3>
+      <p>
+        Saham dengan Medium Score minimal 80 untuk
+        peluang investasi beberapa bulan hingga beberapa tahun.
+      </p>
+    </article>
+    <article>
+      <span>💎</span>
+      <h3>Long Term</h3>
+      <p>
+        Saham dengan Long-Term Score minimal 80 untuk
+        strategi investasi jangka panjang.
+      </p>
+    </article>
+    <article>
+      <span>🏦</span>
+      <h3>Fundamental</h3>
+      <p>
+        Mempertimbangkan pertumbuhan bisnis, profitabilitas,
+        kualitas keuangan, dan kesehatan perusahaan.
+      </p>
+    </article>
+    <article>
+      <span>📈</span>
+      <h3>Growth</h3>
+      <p>
+        Memantau potensi pertumbuhan pendapatan,
+        laba, dan perkembangan bisnis ke depan.
+      </p>
+    </article>
+  </div>
+</section>
+<!-- =========================
+     FILTER BUTTON
+========================== -->
+<section class="section">
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        INVESTMENT FILTER
+      </span>
+      <h2 id="investmentTitle">
+        Semua Investment Opportunities
+      </h2>
+    </div>
+    <span
+      id="investmentLabel"
+      class="demo-label"
+    >
+      LOADING...
+    </span>
+  </div>
+  <div class="screener-filters">
+    <button
+      class="filter-btn active"
+      onclick="filterInvestments('all', this)"
+    >
+      Semua
+    </button>
+    <button
+      class="filter-btn"
+      onclick="filterInvestments('medium', this)"
+    >
+      📊 Medium Term
+    </button>
+    <button
+      class="filter-btn"
+      onclick="filterInvestments('long', this)"
+    >
+      💎 Long Term
+    </button>
+  </div>
+</section>
+<!-- =========================
+     RESULTS
+========================== -->
+<section class="section">
+  <div
+    id="investmentStocks"
+    class="stock-grid"
+  ></div>
+  <div
+    id="noInvestmentResult"
+    class="empty-watchlist"
+    style="display: none;"
+  >
+    <div class="empty-icon">
+      💼
+    </div>
+    <h3>
+      Belum Ada Saham yang Lolos
+    </h3>
+    <p>
+      Belum ada saham dalam database IDXNOVA
+      yang memenuhi minimum score untuk kategori ini.
+    </p>
+  </div>
+</section>
+<!-- =========================
+     CTA
+========================== -->
+<section class="cta">
+  <span class="eyebrow">
+    IDXNOVA INVESTING
+  </span>
+  <h2>
+    Invest With A Clearer View.
+  </h2>
+  <p>
+    IDXNOVA otomatis memilih saham berdasarkan Medium Score
+    dan Long-Term Score dari database pusat.
+  </p>
+  <a href="screener.html">
+    <button>
+      Buka Stock Screener
+    </button>
+  </a>
+</section>
+  </main>
+  <!-- =========================
+       FOOTER
+  ========================== -->
+  <footer>
+<div class="footer-brand">
+  <strong>IDXNOVA</strong>
+  <span>Indonesian Stock Intelligence</span>
+</div>
+<p>
+  Investment Radar menggunakan data demonstrasi dan bukan
+  rekomendasi membeli atau menjual saham.
+  Investasi memiliki risiko.
+</p>
+<small>
+  © 2026 IDXNOVA. All rights reserved.
+</small>
   </footer>
-
-
-  <!-- DATABASE PUSAT -->
-  <script src="./stocks.js"></script>
-
-
-  <!-- JAVASCRIPT -->
+  <!-- =========================
+       DATABASE PUSAT
+  ========================== -->
+  <script src="stocks.js"></script>
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
   <script>
-
+    let currentInvestmentFilter = "all";
+    /* MENU MOBILE */
     function toggleMenu() {
       document
         .getElementById("navMenu")
         .classList
         .toggle("active");
     }
-
-
+    /* BUKA DETAIL SAHAM */
     function openStock(ticker) {
       window.location.href =
-        "stock.html?ticker=" + encodeURIComponent(ticker);
+        "stock.html?ticker=" +
+        encodeURIComponent(ticker);
     }
-
-
+    /* FORMAT HARGA */
     function formatPrice(price) {
       return "Rp" +
         Number(price).toLocaleString("id-ID");
     }
-
-
-    /* =========================
-       RENDER INVESTING STOCKS
-    ========================== */
-
-    function renderInvestingStocks() {
-
-      const container =
-        document.getElementById("investingStocks");
-
-      const emptyState =
-        document.getElementById("noInvestingResult");
-
-      const count =
-        document.getElementById("investingCount");
-
-      const label =
-        document.getElementById("investingLabel");
-
-      const bar =
-        document.getElementById("investingBar");
-
-
-      /*
-        CEK DATABASE
-      */
-      if (typeof STOCKS === "undefined") {
-
-        console.error(
-          "Database STOCKS tidak ditemukan"
-        );
-
-        emptyState.style.display =
-          "block";
-
-        label.textContent =
-          "DATA ERROR";
-
-        count.innerHTML =
-          "0<span> Saham</span>";
-
-        bar.style.width =
-          "0%";
-
-        return;
+    /* AMBIL DATA SESUAI FILTER */
+    function getInvestmentStocks(filter) {
+      if (
+        typeof STOCKS === "undefined" ||
+        !STOCKS
+      ) {
+        return [];
       }
-
-
-      /*
-        AMBIL SAHAM DENGAN LONG-TERM SCORE
-      */
-      const stocks =
-        Object.values(STOCKS)
+      const allStocks =
+        Object.values(STOCKS);
+      if (filter === "medium") {
+        return allStocks
           .filter(function(stock) {
-            return typeof stock.long === "number";
+            return (
+              stock &&
+              Number(stock.medium) >= 80
+            );
           })
           .sort(function(a, b) {
-            return b.long - a.long;
+            return (
+              Number(b.medium) -
+              Number(a.medium)
+            );
           });
-
-
-      /*
-        RESET CONTAINER
+      }
+      if (filter === "long") {
+        return allStocks
+          .filter(function(stock) {
+            return (
+              stock &&
+              Number(stock.long) >= 80
+            );
+          })
+          .sort(function(a, b) {
+            return (
+              Number(b.long) -
+              Number(a.long)
+            );
+          });
+      }
+      /* FILTER SEMUA
+         TAMPILKAN SAHAM YANG LOLOS
+         MEDIUM ATAU LONG TERM,
+         TANPA DUPLIKAT
       */
-      container.innerHTML = "";
-
-
-      /*
-        UPDATE JUMLAH
-      */
-      count.innerHTML =
-        stocks.length +
-        "<span> Saham</span>";
-
-
-      label.textContent =
-        stocks.length +
-        " SAHAM";
-
-
-      bar.style.width =
-        Math.min(100, stocks.length * 12) +
-        "%";
-
-
-      /*
-        DATA KOSONG
-      */
-      if (stocks.length === 0) {
-
+      return allStocks
+        .filter(function(stock) {
+          return (
+            stock &&
+            (
+              Number(stock.medium) >= 80 ||
+              Number(stock.long) >= 80
+            )
+          );
+        })
+        .sort(function(a, b) {
+          const scoreA =
+            Math.max(
+              Number(a.medium) || 0,
+              Number(a.long) || 0
+            );
+          const scoreB =
+            Math.max(
+              Number(b.medium) || 0,
+              Number(b.long) || 0
+            );
+          return scoreB - scoreA;
+        });
+    }
+    /* RENDER SAHAM */
+    function renderInvestmentStocks() {
+      const container =
+        document.getElementById("investmentStocks");
+      const emptyState =
+        document.getElementById("noInvestmentResult");
+      const countElement =
+        document.getElementById("investCount");
+      const statusElement =
+        document.getElementById("investStatus");
+      const labelElement =
+        document.getElementById("investmentLabel");
+      const barElement =
+        document.getElementById("investBar");
+      const titleElement =
+        document.getElementById("investmentTitle");
+      /* CEK DATABASE */
+      if (
+        typeof STOCKS === "undefined" ||
+        !STOCKS
+      ) {
+        console.error(
+          "Database STOCKS tidak berhasil dimuat."
+        );
+        container.innerHTML = "";
+        countElement.innerHTML =
+          "0<span> Saham</span>";
+        statusElement.textContent =
+          "Database tidak terbaca";
+        labelElement.textContent =
+          "DATA ERROR";
+        barElement.style.width =
+          "0%";
         emptyState.style.display =
           "block";
-
         return;
       }
-
-
+      /* AMBIL DATA */
+      const stocks =
+        getInvestmentStocks(
+          currentInvestmentFilter
+        );
+      /* UPDATE JUDUL */
+      const titles = {
+        all:
+          "Semua Investment Opportunities",
+        medium:
+          "Medium-Term Opportunities",
+        long:
+          "Long-Term Opportunities"
+      };
+      titleElement.textContent =
+        titles[currentInvestmentFilter];
+      /* BERSIHKAN HASIL */
+      container.innerHTML = "";
+      /* UPDATE JUMLAH */
+      countElement.innerHTML =
+        stocks.length +
+        "<span> Saham</span>";
+      statusElement.textContent =
+        stocks.length > 0
+          ? "Investment Radar aktif"
+          : "Belum ada saham yang lolos filter";
+      labelElement.textContent =
+        stocks.length +
+        " SAHAM";
+      /* UPDATE BAR */
+      const barWidth =
+        stocks.length === 0
+          ? 0
+          : Math.min(
+              100,
+              stocks.length * 12
+            );
+      barElement.style.width =
+        barWidth + "%";
+      /* JIKA KOSONG */
+      if (stocks.length === 0) {
+        emptyState.style.display =
+          "block";
+        return;
+      }
       emptyState.style.display =
         "none";
-
-
-      /*
-        BUAT KARTU SAHAM
-      */
+      /* BUAT KARTU */
       stocks.forEach(function(stock) {
-
         const card =
           document.createElement("article");
-
-
         card.className =
           "stock-card";
-
-
         card.style.cursor =
           "pointer";
-
-
         const change =
           Number(stock.change) || 0;
-
-
         const changeSymbol =
           change >= 0
             ? "▲ +"
-            : "▼ ";
-
-
+            : "▼ -";
         const changeClass =
           change >= 0
             ? "positive"
             : "negative";
-
-
+        /* TENTUKAN SCORE YANG DITAMPILKAN */
+        let scoreLabel =
+          "Investment Score";
+        let scoreValue =
+          Math.max(
+            Number(stock.medium) || 0,
+            Number(stock.long) || 0
+          );
+        let outlook =
+          stock.fundamental ||
+          stock.name;
+        if (
+          currentInvestmentFilter === "medium"
+        ) {
+          scoreLabel =
+            "Medium Score";
+          scoreValue =
+            Number(stock.medium);
+          outlook =
+            stock.fundamental ||
+            stock.name;
+        }
+        if (
+          currentInvestmentFilter === "long"
+        ) {
+          scoreLabel =
+            "Long-Term Score";
+          scoreValue =
+            Number(stock.long);
+          outlook =
+            stock.businessQuality ||
+            stock.fundamental ||
+            stock.name;
+        }
+        /* BUAT KARTU */
         card.innerHTML = `
-
           <div class="stock-header">
-
             <div>
-              <h3>${stock.ticker}</h3>
-
+              <h3>
+                ${stock.ticker}
+              </h3>
               <p>
-                ${stock.businessQuality || stock.name}
+                ${outlook}
               </p>
             </div>
-
-
             <span class="${changeClass}">
               ${changeSymbol}${Math.abs(change).toFixed(2)}%
             </span>
-
           </div>
-
-
           <div class="stock-price">
             ${formatPrice(stock.price)}
           </div>
-
-
           <div class="stock-footer">
-            <span>Long-Term Score</span>
-
+            <span>
+              ${scoreLabel}
+            </span>
             <strong>
-              ${stock.long}/100
+              ${scoreValue}/100
             </strong>
           </div>
-
         `;
-
-
-        /*
-          KLIK → STOCK DETAIL
-        */
+        /* KLIK KE DETAIL */
         card.addEventListener(
           "click",
           function() {
-
             openStock(stock.ticker);
-
           }
         );
-
-
         container.appendChild(card);
-
       });
-
     }
-
-
-    /*
-      JALANKAN INVESTING RADAR
-    */
-    renderInvestingStocks();
-
+    /* FILTER BUTTON */
+    function filterInvestments(
+      filter,
+      button
+    ) {
+      currentInvestmentFilter =
+        filter;
+      const buttons =
+        document.querySelectorAll(
+          ".filter-btn"
+        );
+      buttons.forEach(function(btn) {
+        btn.classList.remove("active");
+      });
+      button.classList.add("active");
+      renderInvestmentStocks();
+    }
+    /* JALANKAN SAAT HALAMAN DIMUAT */
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+        renderInvestmentStocks();
+      }
+    );
   </script>
-
 </body>
 </html>
