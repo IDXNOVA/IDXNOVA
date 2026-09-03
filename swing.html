@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swing Scanner | IDXNOVA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">N</span>
+      <span>
+        <strong>IDXNOVA</strong>
+        <small>INDONESIAN STOCK INTELLIGENCE</small>
+      </span>
+    </a>
+
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">
+      ☰
+    </button>
+
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="index.html#market">Market</a>
+      <a href="trading.html">Trading Radar</a>
+      <a href="swing.html">Swing</a>
+      <a href="index.html#scores">NOVA Score</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">📈 SHORT-TERM & SWING SCANNER</div>
+
+        <h1>
+          Tangkap Peluang
+          <span>Sebelum Momentum Berakhir.</span>
+        </h1>
+
+        <p>
+          IDXNOVA Swing Scanner membantu menemukan saham dengan tren,
+          momentum, struktur harga, support-resistance, dan konfirmasi
+          volume untuk peluang beberapa hari hingga beberapa minggu.
+        </p>
+      </div>
+
+      <div class="hero-panel">
+        <div class="panel-top">
+          <span>SWING MARKET BIAS</span>
+          <strong>DEMO MODE</strong>
+        </div>
+
+        <div class="sentiment-value">
+          <h2>68<span>/100</span></h2>
+          <p>Moderately Bullish</p>
+        </div>
+
+        <div class="sentiment-bar">
+          <span style="width: 68%"></span>
+        </div>
+
+        <div class="sentiment-info">
+          <div>
+            <small>Trend</small>
+            <strong>Bullish</strong>
+          </div>
+          <div>
+            <small>Momentum</small>
+            <strong>Healthy</strong>
+          </div>
+        </div>
+
+        <p class="demo-note">
+          Data saat ini hanya demonstrasi.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">SWING INTELLIGENCE</span>
+          <h2>Analisis Multi-Faktor</h2>
+        </div>
+        <span class="demo-label">CONCEPT</span>
+      </div>
+
+      <div class="feature-grid">
+        <article>
+          <span>01</span>
+          <h3>📊 Trend</h3>
+          <p>
+            Mengidentifikasi arah tren menggunakan struktur harga
+            dan indikator tren.
+          </p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>⚡ Momentum</h3>
+          <p>
+            Memantau kekuatan pergerakan untuk mencari peluang
+            kelanjutan tren.
+          </p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>🧱 Support & Resistance</h3>
+          <p>
+            Menentukan area penting sebagai referensi entry,
+            target, dan risiko.
+          </p>
+        </article>
+
+        <article>
+          <span>04</span>
+          <h3>📈 Volume</h3>
+          <p>
+            Mengevaluasi apakah pergerakan harga mendapatkan
+            konfirmasi dari aktivitas perdagangan.
+          </p>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- SWING OPPORTUNITIES -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">SWING RADAR</span>
+          <h2>Top Swing Opportunities</h2>
+        </div>
+        <span class="demo-label">SAMPLE DATA</span>
+      </div>
+
+      <div class="stock-grid">
+
+        <article class="stock-card">
+          <div class="stock-header">
+            <div>
+              <h3>ANTM</h3>
+              <p>Strong Uptrend</p>
+            </div>
+            <span class="positive">▲ +4.25%</span>
+          </div>
+
+          <div class="stock-price">Rp1.840</div>
+
+          <div class="stock-footer">
+            <span>Swing Score</span>
+            <strong>90/100</strong>
+          </div>
+        </article>
+
+        <article class="stock-card">
+          <div class="stock-header">
+            <div>
+              <h3>ELSA</h3>
+              <p>Momentum Build-Up</p>
+            </div>
+            <span class="positive">▲ +2.10%</span>
+          </div>
+
+          <div class="stock-price">Rp690</div>
+
+          <div class="stock-footer">
+            <span>Swing Score</span>
+            <strong>86/100</strong>
+          </div>
+        </article>
+
+        <article class="stock-card">
+          <div class="stock-header">
+            <div>
+              <h3>PWON</h3>
+              <p>Support Area Watch</p>
+            </div>
+            <span class="positive">▲ +1.15%</span>
+          </div>
+
+          <div class="stock-price">Rp272</div>
+
+          <div class="stock-footer">
+            <span>Swing Score</span>
+            <strong>81/100</strong>
+          </div>
+        </article>
+
+        <article class="stock-card">
+          <div class="stock-header">
+            <div>
+              <h3>UNTR</h3>
+              <p>Trend Continuation</p>
+            </div>
+            <span class="positive">▲ +0.92%</span>
+          </div>
+
+          <div class="stock-price">Rp24.500</div>
+
+          <div class="stock-footer">
+            <span>Swing Score</span>
+            <strong>79/100</strong>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- STRATEGY -->
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">TRADING FRAMEWORK</span>
+          <h2>Swing Trading Framework</h2>
+        </div>
+      </div>
+
+      <p class="section-description">
+        Framework ini nantinya dapat membantu pengguna melihat peluang
+        berdasarkan kombinasi tren dan struktur harga. Bukan sinyal beli
+        atau jaminan keuntungan.
+      </p>
+
+      <div class="score-grid">
+
+        <article class="score-card">
+          <div class="score-icon">🔍</div>
+          <h3>Trend Filter</h3>
+          <p>
+            Memilah saham yang memiliki kecenderungan tren sesuai
+            parameter analisis.
+          </p>
+          <div class="score-line">
+            <span style="width: 88%"></span>
+          </div>
+          <strong>Trend Strength</strong>
+        </article>
+
+        <article class="score-card">
+          <div class="score-icon">⚡</div>
+          <h3>Momentum Check</h3>
+          <p>
+            Mengevaluasi kekuatan momentum dan kemungkinan
+            keberlanjutan pergerakan.
+          </p>
+          <div class="score-line">
+            <span style="width: 82%"></span>
+          </div>
+          <strong>Momentum</strong>
+        </article>
+
+        <article class="score-card">
+          <div class="score-icon">📊</div>
+          <h3>Volume Confirmation</h3>
+          <p>
+            Melihat apakah aktivitas volume mendukung
+            pergerakan harga.
+          </p>
+          <div class="score-line">
+            <span style="width: 76%"></span>
+          </div>
+          <strong>Volume</strong>
+        </article>
+
+        <article class="score-card">
+          <div class="score-icon">🎯</div>
+          <h3>Risk / Reward</h3>
+          <p>
+            Membantu membandingkan potensi risiko dengan
+            area target berdasarkan struktur harga.
+          </p>
+          <div class="score-line">
+            <span style="width: 80%"></span>
+          </div>
+          <strong>Risk Profile</strong>
+        </article>
+
+      </div>
+    </section>
+
+
+    <!-- CTA -->
+    <section class="cta">
+      <span class="eyebrow">IDXNOVA SWING</span>
+      <h2>Find the Trend. Manage the Risk.</h2>
+      <p>
+        Gunakan analisis sebagai alat bantu pengambilan keputusan
+        dan selalu lakukan manajemen risiko.
+      </p>
+
+      <button onclick="alert('Swing Scanner real-time akan dikembangkan pada tahap berikutnya.')">
+        Jalankan Swing Scanner
+      </button>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <div class="footer-brand">
+      <strong>IDXNOVA</strong>
+      <span>Indonesian Stock Intelligence</span>
+    </div>
+
+    <p>
+      Swing Scanner saat ini menggunakan data demonstrasi.
+      Informasi bukan merupakan rekomendasi membeli atau menjual saham.
+      Pasar saham memiliki risiko.
+    </p>
+
+    <small>© 2026 IDXNOVA. All rights reserved.</small>
+  </footer>
+
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("navMenu").classList.toggle("active");
+    }
+  </script>
+
+</body>
+</html>
