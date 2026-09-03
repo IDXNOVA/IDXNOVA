@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Watchlist | IDXNOVA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <span class="brand-mark">N</span>
+      <span>
+        <strong>IDXNOVA</strong>
+        <small>INDONESIAN STOCK INTELLIGENCE</small>
+      </span>
+    </a>
+
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">☰</button>
+
+    <nav id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="trading.html">Trading</a>
+      <a href="swing.html">Swing</a>
+      <a href="investing.html">Investing</a>
+      <a href="screener.html">Screener</a>
+      <a href="watchlist.html">Watchlist</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="hero-content">
+        <div class="badge">⭐ PERSONAL STOCK WATCHLIST</div>
+
+        <h1>
+          Pantau Saham
+          <span>Pilihanmu.</span>
+        </h1>
+
+        <p>
+          Simpan ticker saham yang ingin kamu pantau. Watchlist ini
+          tersimpan langsung di browser perangkatmu.
+        </p>
+      </div>
+
+      <div class="hero-panel">
+        <div class="panel-top">
+          <span>MY WATCHLIST</span>
+          <strong>LOCAL MODE</strong>
+        </div>
+
+        <div class="sentiment-value">
+          <h2 id="watchlistCount">0<span> Saham</span></h2>
+          <p>Saham tersimpan</p>
+        </div>
+
+        <div class="sentiment-bar">
+          <span id="watchlistBar" style="width: 0%"></span>
+        </div>
+
+        <div class="sentiment-info">
+          <div>
+            <small>Storage</small>
+            <strong>Browser</strong>
+          </div>
+
+          <div>
+            <small>Login</small>
+            <strong>Tidak Perlu</strong>
+          </div>
+        </div>
+
+        <p class="demo-note">
+          Watchlist tersimpan pada browser/perangkat yang digunakan.
+        </p>
+      </div>
+    </section>
+
+
+    <section class="section">
+
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">ADD STOCK</span>
+          <h2>Tambah ke Watchlist</h2>
+        </div>
+
+        <span class="demo-label">LOCAL STORAGE</span>
+      </div>
+
+      <div class="watchlist-add">
+        <input
+          id="tickerInput"
+          type="text"
+          placeholder="Contoh: BBRI"
+          maxlength="10"
+          autocomplete="off"
+        >
+
+        <button onclick="addStock()">
+          + Tambah Saham
+        </button>
+      </div>
+
+      <p class="watchlist-help">
+        Masukkan ticker saham Indonesia, contoh: BBRI, BBCA, ANTM, ELSA, PWON.
+      </p>
+
+    </section>
+
+
+    <section class="section">
+
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">MY STOCKS</span>
+          <h2>Watchlist Saya</h2>
+        </div>
+
+        <button class="clear-watchlist" onclick="clearWatchlist()">
+          Hapus Semua
+        </button>
+      </div>
+
+
+      <div id="watchlistResults" class="stock-grid"></div>
+
+
+      <div id="emptyWatchlist" class="empty-watchlist">
+        <div class="empty-icon">⭐</div>
+        <h3>Watchlist masih kosong</h3>
+        <p>
+          Tambahkan ticker saham di atas untuk mulai memantau saham pilihanmu.
+        </p>
+      </div>
+
+    </section>
+
+
+    <section class="section">
+      <div class="section-heading">
+        <div>
+          <span class="eyebrow">HOW IT WORKS</span>
+          <h2>Watchlist IDXNOVA</h2>
+        </div>
+      </div>
+
+      <div class="feature-grid">
+
+        <article>
+          <span>01</span>
+          <h3>➕ Tambahkan</h3>
+          <p>
+            Masukkan ticker saham yang ingin kamu pantau.
+          </p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>💾 Tersimpan</h3>
+          <p>
+            Data disimpan secara lokal menggunakan browser perangkatmu.
+          </p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>🔎 Analisis</h3>
+          <p>
+            Tekan Analisis untuk membuka halaman Stock Analysis IDXNOVA.
+          </p>
+        </article>
+
+        <article>
+          <span>04</span>
+          <h3>🗑️ Kelola</h3>
+          <p>
+            Hapus saham satu per satu atau kosongkan seluruh watchlist.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+
+    <section class="cta">
+      <span class="eyebrow">COMING NEXT</span>
+
+      <h2>Watchlist Dengan Data Real-Time.</h2>
+
+      <p>
+        Ke depan, watchlist dapat dikembangkan dengan harga aktual,
+        perubahan harian, alert, dan NOVA Score otomatis.
+      </p>
+
+      <a href="screener.html">
+        <button>Cari Saham</button>
+      </a>
+    </section>
+
+  </main>
+
+
+  <footer>
+    <div class="footer-brand">
+      <strong>IDXNOVA</strong>
+      <span>Indonesian Stock Intelligence</span>
+    </div>
+
+    <p>
+      Watchlist saat ini menggunakan penyimpanan lokal browser dan data
+      yang ditampilkan bukan merupakan data pasar real-time.
+    </p>
+
+    <small>© 2026 IDXNOVA. All rights reserved.</small>
+  </footer>
+
+
+  <script>
+
+    function toggleMenu() {
+      document.getElementById("navMenu").classList.toggle("active");
+    }
+
+
+    const watchlistKey = "idxnovaWatchlist";
+
+
+    const demoStocks = {
+      BBRI: {
+        name: "Bank Rakyat Indonesia",
+        score: 88,
+        outlook: "Strong Opportunity"
+      },
+      BBCA: {
+        name: "Bank Central Asia",
+        score: 92,
+        outlook: "High Quality"
+      },
+      ANTM: {
+        name: "Aneka Tambang",
+        score: 90,
+        outlook: "Strong Momentum"
+      },
+      ELSA: {
+        name: "Elnusa",
+        score: 82,
+        outlook: "Positive Opportunity"
+      },
+      PWON: {
+        name: "Pakuwon Jati",
+        score: 79,
+        outlook: "Watchlist Candidate"
+      },
+      UNTR: {
+        name: "United Tractors",
+        score: 84,
+        outlook: "Stable Opportunity"
+      },
+      PGAS: {
+        name: "Perusahaan Gas Negara",
+        score: 83,
+        outlook: "Positive Watch"
+      },
+      ASII: {
+        name: "Astra International",
+        score: 80,
+        outlook: "Stable"
+      }
+    };
+
+
+    function getWatchlist() {
+      const saved = localStorage.getItem(watchlistKey);
+
+      if (!saved) {
+        return [];
+      }
+
+      try {
+        return JSON.parse(saved);
+      } catch (error) {
+        return [];
+      }
+    }
+
+
+    function saveWatchlist(list) {
+      localStorage.setItem(watchlistKey, JSON.stringify(list));
+    }
+
+
+    function updateWatchlist() {
+
+      const list = getWatchlist();
+      const container = document.getElementById("watchlistResults");
+      const emptyState = document.getElementById("emptyWatchlist");
+
+      container.innerHTML = "";
+
+      document.getElementById("watchlistCount").innerHTML =
+        list.length + "<span> Saham</span>";
+
+      document.getElementById("watchlistBar").style.width =
+        Math.min(100, list.length * 15) + "%";
+
+
+      if (list.length === 0) {
+        emptyState.style.display = "block";
+        return;
+      }
+
+      emptyState.style.display = "none";
+
+
+      list.forEach(function(ticker) {
+
+        const stock = demoStocks[ticker] || {
+          name: "Custom Stock",
+          score: "-",
+          outlook: "Belum tersedia di demo"
+        };
+
+
+        const card = document.createElement("article");
+        card.className = "stock-card watchlist-card";
+
+
+        card.innerHTML = `
+          <div class="stock-header">
+            <div>
+              <h3>${ticker}</h3>
+              <p>${stock.name}</p>
+            </div>
+
+            <span class="watch-score">
+              ${stock.score === "-" ? "NEW" : "Score " + stock.score}
+            </span>
+          </div>
+
+          <div class="watchlist-outlook">
+            ${stock.outlook}
+          </div>
+
+          <div class="watchlist-actions">
+            <button onclick="openAnalysis('${ticker}')">
+              🔎 Analisis
+            </button>
+
+            <button onclick="removeStock('${ticker}')" class="remove-stock">
+              Hapus
+            </button>
+          </div>
+        `;
+
+
+        container.appendChild(card);
+
+      });
+
+    }
+
+
+    function addStock() {
+
+      const input = document.getElementById("tickerInput");
+      const ticker = input.value.trim().toUpperCase();
+
+      if (!ticker) {
+        alert("Masukkan ticker saham terlebih dahulu.");
+        return;
+      }
+
+
+      if (!/^[A-Z0-9]+$/.test(ticker)) {
+        alert("Ticker hanya boleh berisi huruf dan angka.");
+        return;
+      }
+
+
+      const list = getWatchlist();
+
+
+      if (list.includes(ticker)) {
+        alert(ticker + " sudah ada di Watchlist.");
+        return;
+      }
+
+
+      list.push(ticker);
+      saveWatchlist(list);
+
+      input.value = "";
+
+      updateWatchlist();
+
+    }
+
+
+    function removeStock(ticker) {
+
+      const list = getWatchlist();
+
+      const newList = list.filter(function(item) {
+        return item !== ticker;
+      });
+
+      saveWatchlist(newList);
+
+      updateWatchlist();
+
+    }
+
+
+    function clearWatchlist() {
+
+      const list = getWatchlist();
+
+      if (list.length === 0) {
+        return;
+      }
+
+
+      const confirmDelete = confirm(
+        "Yakin ingin menghapus seluruh Watchlist?"
+      );
+
+
+      if (confirmDelete) {
+        localStorage.removeItem(watchlistKey);
+        updateWatchlist();
+      }
+
+    }
+
+
+    function openAnalysis(ticker) {
+      window.location.href = "stock.html?ticker=" + ticker;
+    }
+
+
+    document.getElementById("tickerInput").addEventListener(
+      "keydown",
+      function(event) {
+        if (event.key === "Enter") {
+          addStock();
+        }
+      }
+    );
+
+
+    updateWatchlist();
+
+  </script>
+
+</body>
+</html>
