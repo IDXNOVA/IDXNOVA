@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IDXNOVA | Indonesian Stock Intelligence</title>
+</head>
+
+<body>
+  <header>
+    <h1>IDXNOVA</h1>
+    <p>Indonesian Stock Intelligence</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Analisis Saham Indonesia Lebih Cerdas</h2>
+      <p>
+        Satu platform untuk trading harian, investasi jangka pendek,
+        menengah, dan jangka panjang.
+      </p>
+
+      <input
+        type="text"
+        id="stockSearch"
+        placeholder="Cari ticker saham, contoh: BBRI"
+      >
+
+      <button onclick="searchStock()">Cari Saham</button>
+    </section>
+
+    <section>
+      <h2>Market Overview</h2>
+
+      <div>
+        <h3>IHSG</h3>
+        <p>Demo Data</p>
+        <strong>7.250</strong>
+      </div>
+
+      <div>
+        <h3>Top Gainers</h3>
+        <p>ANTM</p>
+        <p>ELSA</p>
+        <p>PWON</p>
+      </div>
+
+      <div>
+        <h3>Most Active</h3>
+        <p>BBRI</p>
+        <p>BMRI</p>
+        <p>TLKM</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>IDXNOVA Scores</h2>
+      <p>⚡ NOVA Trade Score</p>
+      <p>📈 NOVA Swing Score</p>
+      <p>🏦 NOVA Growth Score</p>
+      <p>💎 NOVA Long-Term Score</p>
+    </section>
+
+    <section>
+      <h2>Fitur IDXNOVA</h2>
+      <ul>
+        <li>Stock Screener</li>
+        <li>Day Trading Scanner</li>
+        <li>Swing Trading Scanner</li>
+        <li>Fundamental Analysis</li>
+        <li>Technical Analysis</li>
+        <li>Watchlist</li>
+        <li>AI Stock Analysis</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 IDXNOVA</p>
+    <p>
+      IDXNOVA adalah platform informasi dan analisis independen.
+      Informasi yang tersedia hanya untuk tujuan edukasi dan informasi,
+      bukan merupakan nasihat keuangan atau rekomendasi membeli maupun menjual saham.
+    </p>
+  </footer>
+
+  <script>
+    function searchStock() {
+      const stock = document
+        .getElementById("stockSearch")
+        .value
+        .trim()
+        .toUpperCase();
+
+      if (!stock) {
+        alert("Masukkan ticker saham terlebih dahulu.");
+        return;
+      }
+
+      alert("Mencari data untuk saham: " + stock + "\n\nFitur data saham akan ditambahkan pada tahap berikutnya.");
+    }
+  </script>
+</body>
+</html>
