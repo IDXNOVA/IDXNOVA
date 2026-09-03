@@ -52,24 +52,23 @@
       <div class="hero-content">
 
         <div class="badge">
-          📈 SWING OPPORTUNITY SCANNER
+          📈 SWING TRADING SCANNER
         </div>
 
         <h1>
-          Tangkap Pergerakan
-          <span>Beberapa Hari.</span>
+          Tangkap Peluang
+          <span>Pergerakan Berikutnya.</span>
         </h1>
 
         <p>
-          Swing Scanner IDXNOVA menampilkan saham dari database pusat
-          berdasarkan Swing Score, tren harga, momentum, dan peluang
-          pergerakan jangka pendek hingga menengah.
+          Swing Scanner IDXNOVA secara otomatis memilih saham dari
+          database pusat berdasarkan Swing Score, tren harga,
+          momentum, dan peluang pergerakan beberapa hari hingga minggu.
         </p>
 
       </div>
 
 
-      <!-- HERO PANEL -->
       <div class="hero-panel">
 
         <div class="panel-top">
@@ -77,28 +76,40 @@
           <strong>DEMO MODE</strong>
         </div>
 
+
         <div class="sentiment-value">
-          <h2 id="swingCount">0<span> Saham</span></h2>
-          <p>Data Swing Scanner</p>
+          <h2 id="swingCount">
+            0<span> Saham</span>
+          </h2>
+
+          <p id="swingStatus">
+            Memuat Swing Scanner...
+          </p>
         </div>
 
+
         <div class="sentiment-bar">
-          <span id="swingBar" style="width: 0%"></span>
+          <span
+            id="swingBar"
+            style="width: 0%"
+          ></span>
         </div>
+
 
         <div class="sentiment-info">
 
           <div>
-            <small>Strategy</small>
-            <strong>Swing Score</strong>
+            <small>Minimum Score</small>
+            <strong>80 / 100</strong>
           </div>
 
           <div>
-            <small>Status</small>
-            <strong>Central Data</strong>
+            <small>Strategy</small>
+            <strong>Swing Trading</strong>
           </div>
 
         </div>
+
 
         <p class="demo-note">
           Data demonstrasi — bukan data pasar real-time.
@@ -109,23 +120,23 @@
     </section>
 
 
-    <!-- SWING CRITERIA -->
+    <!-- HOW IT WORKS -->
     <section class="section">
 
       <div class="section-heading">
 
         <div>
           <span class="eyebrow">
-            SWING STRATEGY
+            SWING FILTER
           </span>
 
           <h2>
-            Scanner Criteria
+            Cara Scanner Memilih Saham
           </h2>
         </div>
 
         <span class="demo-label">
-          DEMO LOGIC
+          AUTO FILTER
         </span>
 
       </div>
@@ -135,40 +146,48 @@
 
         <article>
           <span>01</span>
-          <h3>📈 Trend</h3>
+
+          <h3>📈 Swing Score</h3>
+
           <p>
-            Memantau arah tren dan struktur harga untuk mencari peluang
-            pergerakan yang lebih terarah.
+            Hanya saham dengan Swing Score minimal
+            80 yang masuk ke Swing Scanner.
           </p>
         </article>
 
 
         <article>
           <span>02</span>
-          <h3>⚡ Momentum</h3>
+
+          <h3>📊 Trend</h3>
+
           <p>
-            Mengukur kekuatan pergerakan harga untuk melihat apakah
-            momentum masih mendukung.
+            Membantu memprioritaskan saham berdasarkan
+            kekuatan tren dan struktur pergerakan.
           </p>
         </article>
 
 
         <article>
           <span>03</span>
-          <h3>🛡️ Support & Resistance</h3>
+
+          <h3>⚡ Momentum</h3>
+
           <p>
-            Memantau area harga penting untuk membantu mencari area
-            entry dan target pergerakan.
+            Saham dengan momentum dan peluang pergerakan
+            yang menarik mendapatkan perhatian lebih tinggi.
           </p>
         </article>
 
 
         <article>
           <span>04</span>
-          <h3>📊 Volume</h3>
+
+          <h3>🔎 Ranking Otomatis</h3>
+
           <p>
-            Volume digunakan sebagai konfirmasi terhadap kekuatan
-            tren dan potensi pergerakan harga.
+            Semua saham yang lolos filter otomatis
+            diurutkan dari Swing Score tertinggi.
           </p>
         </article>
 
@@ -192,6 +211,7 @@
           </h2>
         </div>
 
+
         <span
           id="swingLabel"
           class="demo-label"
@@ -202,14 +222,14 @@
       </div>
 
 
-      <!-- DATA DARI STOCKS.JS -->
+      <!-- SAHAM MASUK OTOMATIS -->
       <div
         id="swingStocks"
         class="stock-grid"
       ></div>
 
 
-      <!-- EMPTY STATE -->
+      <!-- JIKA KOSONG -->
       <div
         id="noSwingResult"
         class="empty-watchlist"
@@ -217,16 +237,16 @@
       >
 
         <div class="empty-icon">
-          ⚠️
+          📈
         </div>
 
         <h3>
-          Database belum terbaca
+          Belum Ada Saham Swing
         </h3>
 
         <p>
-          Pastikan file stocks.js berada di folder yang sama
-          dengan swing.html.
+          Belum ada saham dalam database IDXNOVA
+          dengan Swing Score minimal 80.
         </p>
 
       </div>
@@ -242,12 +262,14 @@
       </span>
 
       <h2>
-        Follow the Trend. Control the Risk.
+        Follow The Trend. Control The Risk.
       </h2>
 
       <p>
-        Saham diurutkan berdasarkan Swing Score dari database pusat IDXNOVA.
+        Swing Scanner secara otomatis mengambil dan mengurutkan saham
+        berdasarkan Swing Score dari database pusat IDXNOVA.
       </p>
+
 
       <a href="screener.html">
         <button>
@@ -264,21 +286,14 @@
   <footer>
 
     <div class="footer-brand">
-
-      <strong>
-        IDXNOVA
-      </strong>
-
-      <span>
-        Indonesian Stock Intelligence
-      </span>
-
+      <strong>IDXNOVA</strong>
+      <span>Indonesian Stock Intelligence</span>
     </div>
 
 
     <p>
       Swing Scanner menggunakan data demonstrasi dan bukan rekomendasi
-      membeli atau menjual saham.
+      membeli atau menjual saham. Trading memiliki risiko.
     </p>
 
 
@@ -290,36 +305,43 @@
 
 
   <!-- DATABASE PUSAT -->
-  <script src="./stocks.js"></script>
+  <script src="stocks.js"></script>
 
 
   <!-- JAVASCRIPT -->
   <script>
 
+    /* MENU MOBILE */
     function toggleMenu() {
+
       document
         .getElementById("navMenu")
         .classList
         .toggle("active");
+
     }
 
 
+    /* BUKA DETAIL SAHAM */
     function openStock(ticker) {
+
       window.location.href =
-        "stock.html?ticker=" + encodeURIComponent(ticker);
+        "stock.html?ticker=" +
+        encodeURIComponent(ticker);
+
     }
 
 
+    /* FORMAT HARGA */
     function formatPrice(price) {
+
       return "Rp" +
         Number(price).toLocaleString("id-ID");
+
     }
 
 
-    /* =========================
-       RENDER SWING STOCKS
-    ========================== */
-
+    /* RENDER SWING */
     function renderSwingStocks() {
 
       const container =
@@ -328,87 +350,117 @@
       const emptyState =
         document.getElementById("noSwingResult");
 
-      const count =
+      const countElement =
         document.getElementById("swingCount");
 
-      const label =
+      const statusElement =
+        document.getElementById("swingStatus");
+
+      const labelElement =
         document.getElementById("swingLabel");
 
-      const bar =
+      const barElement =
         document.getElementById("swingBar");
 
 
-      /*
-        CEK DATABASE
-      */
-      if (typeof STOCKS === "undefined") {
+      /* CEK DATABASE */
+      if (
+        typeof STOCKS === "undefined" ||
+        !STOCKS
+      ) {
 
         console.error(
-          "Database STOCKS tidak ditemukan"
+          "Database STOCKS tidak berhasil dimuat."
         );
+
+        container.innerHTML = "";
+
+        countElement.innerHTML =
+          "0<span> Saham</span>";
+
+        statusElement.textContent =
+          "Database tidak terbaca";
+
+        labelElement.textContent =
+          "DATA ERROR";
+
+        barElement.style.width =
+          "0%";
 
         emptyState.style.display =
           "block";
 
-        label.textContent =
-          "DATA ERROR";
-
-        count.innerHTML =
-          "0<span> Saham</span>";
-
-        bar.style.width =
-          "0%";
-
         return;
+
       }
 
 
-      /*
-        AMBIL SAHAM DENGAN SWING SCORE
-      */
+      /* AMBIL SAHAM SWING SCORE >= 80 */
       const stocks =
         Object.values(STOCKS)
+
           .filter(function(stock) {
-            return typeof stock.swing === "number";
+
+            return (
+              stock &&
+              Number(stock.swing) >= 80
+            );
+
           })
+
           .sort(function(a, b) {
-            return b.swing - a.swing;
+
+            return (
+              Number(b.swing) -
+              Number(a.swing)
+            );
+
           });
 
 
-      /*
-        RESET CONTAINER
-      */
+      /* BERSIHKAN CONTAINER */
       container.innerHTML = "";
 
 
-      /*
-        UPDATE JUMLAH
-      */
-      count.innerHTML =
+      /* UPDATE JUMLAH */
+      countElement.innerHTML =
         stocks.length +
         "<span> Saham</span>";
 
 
-      label.textContent =
+      statusElement.textContent =
+        stocks.length > 0
+          ? "Swing Scanner aktif"
+          : "Belum ada saham yang lolos filter";
+
+
+      labelElement.textContent =
         stocks.length +
         " SAHAM";
 
 
-      bar.style.width =
-        Math.min(100, stocks.length * 12) +
-        "%";
+      /* UPDATE BAR */
+      const barWidth =
+        stocks.length === 0
+          ? 0
+          : Math.min(
+              100,
+              stocks.length * 15
+            );
 
 
-      /*
-        DATA KOSONG
-      */
+      barElement.style.width =
+        barWidth + "%";
+
+
+      /* JIKA KOSONG */
       if (stocks.length === 0) {
 
         emptyState.style.display =
           "block";
 
         return;
+
       }
 
 
@@ -416,9 +468,7 @@
         "none";
 
 
-      /*
-        BUAT KARTU SAHAM
-      */
+      /* BUAT KARTU */
       stocks.forEach(function(stock) {
 
         const card =
@@ -440,7 +490,7 @@
         const changeSymbol =
           change >= 0
             ? "▲ +"
-            : "▼ ";
+            : "▼ -";
 
 
         const changeClass =
@@ -454,40 +504,50 @@
           <div class="stock-header">
 
             <div>
-              <h3>${stock.ticker}</h3>
+
+              <h3>
+                ${stock.ticker}
+              </h3>
 
               <p>
                 ${stock.swingOutlook || stock.name}
               </p>
+
             </div>
 
 
             <span class="${changeClass}">
+
               ${changeSymbol}${Math.abs(change).toFixed(2)}%
+
             </span>
 
           </div>
 
 
           <div class="stock-price">
+
             ${formatPrice(stock.price)}
+
           </div>
 
 
           <div class="stock-footer">
-            <span>Swing Score</span>
+
+            <span>
+              Swing Score
+            </span>
 
             <strong>
               ${stock.swing}/100
             </strong>
+
           </div>
 
         `;
 
 
-        /*
-          KLIK → STOCK DETAIL
-        */
+        /* KLIK KE DETAIL */
         card.addEventListener(
           "click",
           function() {
@@ -498,6 +558,7 @@
         );
 
 
+        /* MASUKKAN KARTU */
         container.appendChild(card);
 
       });
@@ -505,10 +566,15 @@
     }
 
 
-    /*
-      JALANKAN SCANNER
-    */
-    renderSwingStocks();
+    /* JALANKAN */
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        renderSwingStocks();
+
+      }
+    );
 
   </script>
 
