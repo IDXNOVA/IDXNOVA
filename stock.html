@@ -349,98 +349,6 @@
       document.getElementById("navMenu").classList.toggle("active");
     }
 
-    const stockData = {
-      BBRI: {
-        name: "Bank Rakyat Indonesia (Persero) Tbk",
-        price: "Rp4.120",
-        change: "▲ +1.24%",
-        overall: 88,
-        label: "Strong Opportunity",
-        trading: 79,
-        swing: 84,
-        medium: 86,
-        long: 90,
-        tradingOutlook: "Bullish Momentum",
-        swingOutlook: "Positive Trend",
-        fundamental: "Strong",
-        valuation: "Fair",
-        risk: "Moderate",
-        bestFit: "Medium & Long Term"
-      },
-
-      BBCA: {
-        name: "Bank Central Asia Tbk",
-        price: "Rp9.425",
-        change: "▲ +0.86%",
-        overall: 92,
-        label: "High Quality",
-        trading: 72,
-        swing: 80,
-        medium: 89,
-        long: 94,
-        tradingOutlook: "Stable",
-        swingOutlook: "Positive",
-        fundamental: "Very Strong",
-        valuation: "Premium",
-        risk: "Low - Moderate",
-        bestFit: "Long Term"
-      },
-
-      ANTM: {
-        name: "Aneka Tambang Tbk",
-        price: "Rp1.840",
-        change: "▲ +4.25%",
-        overall: 90,
-        label: "Strong Momentum",
-        trading: 91,
-        swing: 90,
-        medium: 84,
-        long: 82,
-        tradingOutlook: "Strong Bullish",
-        swingOutlook: "Strong Trend",
-        fundamental: "Positive",
-        valuation: "Variable",
-        risk: "High",
-        bestFit: "Trading & Swing"
-      },
-
-      ELSA: {
-        name: "Elnusa Tbk",
-        price: "Rp690",
-        change: "▲ +2.10%",
-        overall: 82,
-        label: "Positive Opportunity",
-        trading: 86,
-        swing: 86,
-        medium: 80,
-        long: 76,
-        tradingOutlook: "Positive Momentum",
-        swingOutlook: "Breakout Watch",
-        fundamental: "Healthy",
-        valuation: "Interesting",
-        risk: "Moderate - High",
-        bestFit: "Trading & Swing"
-      },
-
-      PWON: {
-        name: "Pakuwon Jati Tbk",
-        price: "Rp272",
-        change: "▲ +1.15%",
-        overall: 79,
-        label: "Watchlist Candidate",
-        trading: 70,
-        swing: 81,
-        medium: 82,
-        long: 84,
-        tradingOutlook: "Neutral",
-        swingOutlook: "Support Watch",
-        fundamental: "Healthy",
-        valuation: "Interesting",
-        risk: "Moderate",
-        bestFit: "Medium & Long Term"
-      }
-    };
-
     function setText(id, value) {
       document.getElementById(id).textContent = value;
     }
@@ -454,7 +362,7 @@
     }
 
     function loadStock(ticker) {
-      const stock = stockData[ticker];
+      const stock = STOCKS[ticker];
 
       if (!stock) {
         alert(
@@ -490,6 +398,12 @@
       setText("valuationOutlook", stock.valuation);
       setText("riskLevel", stock.risk);
       setText("bestFit", stock.bestFit);
+      setText("revenueGrowth", "+" + stock.revenueGrowth + "%");
+setText("profitGrowth", "+" + stock.profitGrowth + "%");
+setText("roe", stock.roe + "%");
+setText("debtLevel", stock.debtLevel);
+setText("dividend", stock.dividend);
+setText("businessQuality", stock.businessQuality);
 
       window.scrollTo({
         top: 0,
@@ -522,6 +436,7 @@ const urlTicker = urlParams.get("ticker");
 if (urlTicker) {
   loadStock(urlTicker.trim().toUpperCase());
 }
+  <script src="stocks.js"></script>  
   </script>
 
 </body>
