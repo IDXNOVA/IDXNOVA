@@ -11,6 +11,7 @@
 
 <body>
 
+  <!-- NAVBAR -->
   <header class="navbar">
 
     <a href="index.html" class="brand">
@@ -22,7 +23,6 @@
       </span>
     </a>
 
-
     <button
       class="menu-btn"
       onclick="toggleMenu()"
@@ -30,7 +30,6 @@
     >
       ☰
     </button>
-
 
     <nav id="navMenu">
       <a href="index.html">Home</a>
@@ -56,12 +55,10 @@
           ● INDONESIA STOCK MARKET PLATFORM
         </div>
 
-
         <h1>
           Analisis Saham Indonesia
           <span>Lebih Cerdas.</span>
         </h1>
-
 
         <p>
           IDXNOVA membantu trader dan investor menganalisis saham Indonesia
@@ -70,13 +67,15 @@
         </p>
 
 
+        <!-- SEARCH -->
         <div class="search-box">
 
           <input
             type="text"
             id="stockSearch"
-            placeholder="Cari ticker atau nama saham..."
+            placeholder="Cari ticker... contoh: BBRI"
             autocomplete="off"
+            onkeydown="handleSearchEnter(event)"
           >
 
           <button onclick="searchStock()">
@@ -86,6 +85,7 @@
         </div>
 
 
+        <!-- POPULAR -->
         <div class="popular">
 
           <span>Populer:</span>
@@ -123,7 +123,6 @@
           <strong>DEMO</strong>
         </div>
 
-
         <div class="sentiment-value">
           <h2>
             62<span>/100</span>
@@ -132,11 +131,9 @@
           <p>Netral Positif</p>
         </div>
 
-
         <div class="sentiment-bar">
           <span></span>
         </div>
-
 
         <div class="sentiment-info">
 
@@ -152,7 +149,6 @@
 
         </div>
 
-
         <p class="demo-note">
           Data demonstrasi — bukan data pasar real-time.
         </p>
@@ -163,13 +159,18 @@
 
 
     <!-- MARKET -->
-    <section class="section">
+    <section id="market" class="section">
 
       <div class="section-heading">
 
         <div>
-          <span class="eyebrow">MARKET PULSE</span>
-          <h2>Market Overview</h2>
+          <span class="eyebrow">
+            MARKET PULSE
+          </span>
+
+          <h2>
+            Market Overview
+          </h2>
         </div>
 
         <span class="demo-label">
@@ -182,34 +183,98 @@
       <div class="market-grid">
 
         <article class="market-card featured">
-          <div class="card-label">IHSG</div>
-          <h3>7,250.42</h3>
-          <p class="positive">▲ +0.82%</p>
-          <small>Pergerakan pasar contoh</small>
+
+          <div class="card-label">
+            IHSG
+          </div>
+
+          <h3>
+            7,250.42
+          </h3>
+
+          <p class="positive">
+            ▲ +0.82%
+          </p>
+
+          <small>
+            Pergerakan pasar contoh
+          </small>
+
         </article>
 
 
-        <article class="market-card">
-          <div class="card-label">TOP GAINER</div>
-          <h3>ANTM</h3>
-          <p class="positive">▲ +4.25%</p>
-          <small>Demo</small>
+        <article
+          class="market-card"
+          style="cursor: pointer;"
+          onclick="openStock('ANTM')"
+        >
+
+          <div class="card-label">
+            TOP GAINER
+          </div>
+
+          <h3>
+            ANTM
+          </h3>
+
+          <p class="positive">
+            ▲ +4.25%
+          </p>
+
+          <small>
+            Klik untuk analisis
+          </small>
+
         </article>
 
 
-        <article class="market-card">
-          <div class="card-label">TOP LOSER</div>
-          <h3>PWON</h3>
-          <p class="negative">▼ -2.18%</p>
-          <small>Demo</small>
+        <article
+          class="market-card"
+          style="cursor: pointer;"
+          onclick="openStock('PWON')"
+        >
+
+          <div class="card-label">
+            TOP LOSER
+          </div>
+
+          <h3>
+            PWON
+          </h3>
+
+          <p class="negative">
+            ▼ -2.18%
+          </p>
+
+          <small>
+            Klik untuk analisis
+          </small>
+
         </article>
 
 
-        <article class="market-card">
-          <div class="card-label">MOST ACTIVE</div>
-          <h3>BBRI</h3>
-          <p>Volume tinggi</p>
-          <small>Demo</small>
+        <article
+          class="market-card"
+          style="cursor: pointer;"
+          onclick="openStock('BBRI')"
+        >
+
+          <div class="card-label">
+            MOST ACTIVE
+          </div>
+
+          <h3>
+            BBRI
+          </h3>
+
+          <p>
+            Volume tinggi
+          </p>
+
+          <small>
+            Klik untuk analisis
+          </small>
+
         </article>
 
       </div>
@@ -218,35 +283,64 @@
 
 
     <!-- STOCKS -->
-    <section class="section">
+    <section id="stocks" class="section">
 
       <div class="section-heading">
 
         <div>
-          <span class="eyebrow">STOCK RADAR</span>
-          <h2>Featured Stocks</h2>
+          <span class="eyebrow">
+            STOCK RADAR
+          </span>
+
+          <h2>
+            Featured Stocks
+          </h2>
         </div>
 
-        <a
-          href="search.html"
+        <span
+          id="featuredLabel"
           class="demo-label"
         >
-          LIHAT SEMUA
-        </a>
+          LOADING...
+        </span>
 
       </div>
 
 
+      <!-- DATA OTOMATIS DARI STOCKS.JS -->
       <div
         id="featuredStocks"
         class="stock-grid"
       ></div>
 
+
+      <!-- ERROR / EMPTY -->
+      <div
+        id="featuredError"
+        class="empty-watchlist"
+        style="display: none;"
+      >
+
+        <div class="empty-icon">
+          ⚠️
+        </div>
+
+        <h3>
+          Database belum terbaca
+        </h3>
+
+        <p>
+          Pastikan file stocks.js berada di folder yang sama
+          dengan index.html.
+        </p>
+
+      </div>
+
     </section>
 
 
     <!-- NOVA SCORE -->
-    <section class="section">
+    <section id="scores" class="section">
 
       <div class="section-heading">
 
@@ -255,7 +349,9 @@
             IDXNOVA INTELLIGENCE
           </span>
 
-          <h2>NOVA Score</h2>
+          <h2>
+            NOVA Score
+          </h2>
         </div>
 
       </div>
@@ -271,80 +367,104 @@
 
         <article class="score-card">
 
-          <div class="score-icon">⚡</div>
+          <div class="score-icon">
+            ⚡
+          </div>
 
-          <h3>NOVA Trade</h3>
+          <h3>
+            NOVA Trade
+          </h3>
 
           <p>
-            Momentum, volume, volatilitas, dan struktur harga
-            untuk analisis trading.
+            Momentum, volume, volatilitas,
+            dan struktur harga untuk analisis trading.
           </p>
 
           <div class="score-line">
             <span style="width: 78%"></span>
           </div>
 
-          <strong>78 / 100</strong>
+          <strong>
+            78 / 100
+          </strong>
 
         </article>
 
 
         <article class="score-card">
 
-          <div class="score-icon">📈</div>
+          <div class="score-icon">
+            📈
+          </div>
 
-          <h3>NOVA Swing</h3>
+          <h3>
+            NOVA Swing
+          </h3>
 
           <p>
-            Trend, momentum, support-resistance, dan peluang
-            pergerakan beberapa hari.
+            Trend, momentum, support-resistance,
+            dan peluang pergerakan beberapa hari.
           </p>
 
           <div class="score-line">
             <span style="width: 82%"></span>
           </div>
 
-          <strong>82 / 100</strong>
+          <strong>
+            82 / 100
+          </strong>
 
         </article>
 
 
         <article class="score-card">
 
-          <div class="score-icon">🏦</div>
+          <div class="score-icon">
+            📊
+          </div>
 
-          <h3>NOVA Growth</h3>
+          <h3>
+            NOVA Growth
+          </h3>
 
           <p>
-            Analisis pertumbuhan pendapatan, laba,
-            kualitas bisnis, dan prospek.
+            Analisis pertumbuhan pendapatan,
+            laba, kualitas bisnis, dan prospek.
           </p>
 
           <div class="score-line">
             <span style="width: 74%"></span>
           </div>
 
-          <strong>74 / 100</strong>
+          <strong>
+            74 / 100
+          </strong>
 
         </article>
 
 
         <article class="score-card">
 
-          <div class="score-icon">💎</div>
+          <div class="score-icon">
+            💎
+          </div>
 
-          <h3>NOVA Long-Term</h3>
+          <h3>
+            NOVA Long-Term
+          </h3>
 
           <p>
-            Fundamental, valuasi, kesehatan keuangan,
-            dan potensi jangka panjang.
+            Fundamental, valuasi,
+            kesehatan keuangan, dan potensi jangka panjang.
           </p>
 
           <div class="score-line">
             <span style="width: 88%"></span>
           </div>
 
-          <strong>88 / 100</strong>
+          <strong>
+            88 / 100
+          </strong>
 
         </article>
 
@@ -354,13 +474,18 @@
 
 
     <!-- FEATURES -->
-    <section class="section">
+    <section id="features" class="section">
 
       <div class="section-heading">
 
         <div>
-          <span class="eyebrow">ONE PLATFORM</span>
-          <h2>Semua yang Kamu Butuhkan</h2>
+          <span class="eyebrow">
+            ONE PLATFORM
+          </span>
+
+          <h2>
+            Semua yang Kamu Butuhkan
+          </h2>
         </div>
 
       </div>
@@ -368,43 +493,79 @@
 
       <div class="feature-grid">
 
-        <article>
+        <article
+          style="cursor: pointer;"
+          onclick="window.location.href='trading.html'"
+        >
+
           <span>01</span>
-          <h3>Trading Radar</h3>
+
+          <h3>
+            Trading Radar
+          </h3>
+
           <p>
-            Temukan saham dengan aktivitas, momentum,
-            dan volume menarik.
+            Temukan saham dengan aktivitas,
+            momentum, dan volume menarik.
           </p>
+
         </article>
 
 
-        <article>
+        <article
+          style="cursor: pointer;"
+          onclick="window.location.href='screener.html'"
+        >
+
           <span>02</span>
-          <h3>Stock Screener</h3>
+
+          <h3>
+            Stock Screener
+          </h3>
+
           <p>
-            Filter saham berdasarkan strategi trading,
-            swing, medium term, atau long term.
+            Filter saham berdasarkan fundamental,
+            valuasi, pertumbuhan, dan lainnya.
           </p>
+
         </article>
 
 
-        <article>
+        <article
+          style="cursor: pointer;"
+          onclick="window.location.href='search.html'"
+        >
+
           <span>03</span>
-          <h3>Stock Analysis</h3>
+
+          <h3>
+            Stock Analysis
+          </h3>
+
           <p>
-            Lihat detail saham dan NOVA Score
-            langsung dari database IDXNOVA.
+            Gabungkan fundamental,
+            teknikal, valuasi, dan NOVA Score.
           </p>
+
         </article>
 
 
-        <article>
+        <article
+          style="cursor: pointer;"
+          onclick="window.location.href='watchlist.html'"
+        >
+
           <span>04</span>
-          <h3>Watchlist</h3>
+
+          <h3>
+            Watchlist
+          </h3>
+
           <p>
             Simpan saham yang ingin dipantau
-            dalam satu dashboard pribadi.
+            dalam satu dashboard.
           </p>
+
         </article>
 
       </div>
@@ -415,32 +576,41 @@
     <!-- CTA -->
     <section class="cta">
 
-      <span class="eyebrow">IDXNOVA</span>
+      <span class="eyebrow">
+        IDXNOVA
+      </span>
 
-      <h2>Build Your Market Intelligence.</h2>
+      <h2>
+        Build Your Market Intelligence.
+      </h2>
 
       <p>
-        Satu tempat untuk mencari, memantau,
+        Satu tempat untuk memantau,
         menyaring, dan menganalisis saham Indonesia.
       </p>
 
-
-      <a href="search.html">
-        <button>
-          Mulai Cari Saham
-        </button>
-      </a>
+      <button onclick="focusSearch()">
+        Mulai Cari Saham
+      </button>
 
     </section>
 
   </main>
 
 
+  <!-- FOOTER -->
   <footer>
 
     <div class="footer-brand">
-      <strong>IDXNOVA</strong>
-      <span>Indonesian Stock Intelligence</span>
+
+      <strong>
+        IDXNOVA
+      </strong>
+
+      <span>
+        Indonesian Stock Intelligence
+      </span>
+
     </div>
 
 
@@ -460,207 +630,92 @@
 
 
   <!-- DATABASE PUSAT -->
-  <script src="stocks.js"></script>
+  <script src="./stocks.js"></script>
 
 
+  <!-- JAVASCRIPT -->
   <script>
 
     function toggleMenu() {
-
       document
         .getElementById("navMenu")
         .classList
         .toggle("active");
-
     }
 
 
-    /*
-      CARI SAHAM DARI DATABASE PUSAT
-    */
-    function searchStock() {
-
-      const input =
-        document.getElementById("stockSearch");
-
-
-      const query =
-        input.value
-          .trim()
-          .toLowerCase();
-
-
-      if (!query) {
-
-        input.focus();
-
-        return;
-
-      }
-
-
-      const stocks =
-        Object.values(STOCKS);
-
-
-      const results =
-        stocks.filter(function(stock) {
-
-          return (
-            stock.ticker
-              .toLowerCase()
-              .includes(query)
-
-            ||
-
-            stock.name
-              .toLowerCase()
-              .includes(query)
-          );
-
-        });
-
-
-      /*
-        JIKA TIDAK ADA HASIL
-      */
-      if (results.length === 0) {
-
-        alert(
-          "Saham tidak ditemukan di database IDXNOVA."
-        );
-
-        return;
-
-      }
-
-
-      /*
-        JIKA TICKER ATAU NAMA PERSIS
-        LANGSUNG BUKA DETAIL
-      */
-      const exactMatch =
-        results.find(function(stock) {
-
-          return (
-            stock.ticker
-              .toLowerCase() === query
-
-            ||
-
-            stock.name
-              .toLowerCase() === query
-          );
-
-        });
-
-
-      if (exactMatch) {
-
-        openStock(
-          exactMatch.ticker
-        );
-
-        return;
-
-      }
-
-
-      /*
-        JIKA HASIL LEBIH DARI SATU
-        PINDAH KE HALAMAN SEARCH
-      */
-      window.location.href =
-        "search.html?q=" +
-        encodeURIComponent(
-          input.value.trim()
-        );
-
-    }
-
-
-    /*
-      QUICK SEARCH
-    */
-    function quickSearch(ticker) {
-
-      document
-        .getElementById("stockSearch")
-        .value =
-        ticker;
-
-
-      searchStock();
-
-    }
-
-
-    /*
-      BUKA HALAMAN DETAIL SAHAM
-    */
     function openStock(ticker) {
-
       window.location.href =
-        "stock.html?ticker=" +
-        encodeURIComponent(ticker);
-
+        "stock.html?ticker=" + encodeURIComponent(ticker);
     }
 
 
-    /*
-      ENTER UNTUK CARI
-    */
-    document
-      .getElementById("stockSearch")
-      .addEventListener(
-        "keydown",
-        function(event) {
-
-          if (event.key === "Enter") {
-
-            searchStock();
-
-          }
-
-        }
-      );
+    function formatPrice(price) {
+      return "Rp" +
+        Number(price).toLocaleString("id-ID");
+    }
 
 
-    /*
-      FEATURED STOCKS
-      DIBACA DARI DATABASE PUSAT
-    */
+    /* =========================
+       FEATURED STOCKS
+    ========================== */
+
     function renderFeaturedStocks() {
 
       const container =
         document.getElementById("featuredStocks");
 
+      const error =
+        document.getElementById("featuredError");
 
-      const tickers = [
-        "BBRI",
-        "BBCA",
-        "ANTM",
-        "ELSA"
-      ];
+      const label =
+        document.getElementById("featuredLabel");
 
 
-      container.innerHTML =
-        "";
+      if (typeof STOCKS === "undefined") {
+
+        console.error(
+          "STOCKS database tidak ditemukan"
+        );
+
+        error.style.display = "block";
+
+        label.textContent =
+          "DATA ERROR";
+
+        return;
+      }
 
 
-      tickers.forEach(function(ticker) {
+      const stocks =
+        Object.values(STOCKS)
+          .sort(function(a, b) {
+            return b.overall - a.overall;
+          })
+          .slice(0, 4);
 
-        const stock =
-          STOCKS[ticker];
+
+      container.innerHTML = "";
 
 
-        /*
-          LEWATI JIKA DATA BELUM ADA
-        */
-        if (!stock) {
-          return;
-        }
+      if (stocks.length === 0) {
 
+        error.style.display = "block";
+
+        label.textContent =
+          "0 SAHAM";
+
+        return;
+      }
+
+
+      error.style.display = "none";
+
+      label.textContent =
+        stocks.length + " SAHAM";
+
+
+      stocks.forEach(function(stock) {
 
         const card =
           document.createElement("article");
@@ -687,7 +742,6 @@
 
 
         card.innerHTML = `
-
           <div class="stock-header">
 
             <div>
@@ -701,31 +755,21 @@
 
           </div>
 
-
           <div class="stock-price">
-            Score ${stock.overall}
+            ${formatPrice(stock.price)}
           </div>
-
 
           <div class="stock-footer">
-
             <span>Overall NOVA</span>
-
-            <strong>
-              ${stock.overall}/100
-            </strong>
-
+            <strong>${stock.overall}/100</strong>
           </div>
-
         `;
 
 
         card.addEventListener(
           "click",
           function() {
-
             openStock(stock.ticker);
-
           }
         );
 
@@ -737,9 +781,99 @@
     }
 
 
-    /*
-      JALANKAN SAAT HALAMAN DIBUKA
-    */
+    /* =========================
+       SEARCH
+    ========================== */
+
+    function searchStock() {
+
+      const input =
+        document.getElementById("stockSearch");
+
+      const ticker =
+        input.value
+          .trim()
+          .toUpperCase();
+
+
+      if (!ticker) {
+
+        alert(
+          "Masukkan ticker saham terlebih dahulu."
+        );
+
+        input.focus();
+
+        return;
+      }
+
+
+      if (
+        typeof STOCKS !== "undefined" &&
+        STOCKS[ticker]
+      ) {
+
+        openStock(ticker);
+
+      } else {
+
+        alert(
+          "Ticker " +
+          ticker +
+          " belum tersedia dalam database IDXNOVA."
+        );
+
+      }
+
+    }
+
+
+    function quickSearch(ticker) {
+
+      document
+        .getElementById("stockSearch")
+        .value = ticker;
+
+
+      searchStock();
+
+    }
+
+
+    function handleSearchEnter(event) {
+
+      if (event.key === "Enter") {
+
+        searchStock();
+
+      }
+
+    }
+
+
+    function focusSearch() {
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+
+      setTimeout(function() {
+
+        document
+          .getElementById("stockSearch")
+          .focus();
+
+      }, 500);
+
+    }
+
+
+    /* =========================
+       START
+    ========================== */
+
     renderFeaturedStocks();
 
   </script>
