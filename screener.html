@@ -11,16 +11,23 @@
 
 <body>
 
+  <!-- NAVBAR -->
   <header class="navbar">
+
     <a href="index.html" class="brand">
       <span class="brand-mark">N</span>
+
       <span>
         <strong>IDXNOVA</strong>
         <small>INDONESIAN STOCK INTELLIGENCE</small>
       </span>
     </a>
 
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="Buka menu">
+    <button
+      class="menu-btn"
+      onclick="toggleMenu()"
+      aria-label="Buka menu"
+    >
       ☰
     </button>
 
@@ -31,7 +38,9 @@
       <a href="investing.html">Investing</a>
       <a href="screener.html">Screener</a>
       <a href="watchlist.html">Watchlist</a>
+      <a href="search.html">🔎 Search</a>
     </nav>
+
   </header>
 
 
@@ -39,8 +48,12 @@
 
     <!-- HERO -->
     <section class="hero">
+
       <div class="hero-content">
-        <div class="badge">🔎 IDXNOVA STOCK SCREENER</div>
+
+        <div class="badge">
+          🔎 IDXNOVA STOCK SCREENER
+        </div>
 
         <h1>
           Temukan Saham Sesuai
@@ -48,12 +61,17 @@
         </h1>
 
         <p>
-          Filter saham Indonesia berdasarkan gaya trading atau investasi.
-          Saham dan hasil scanner dibaca otomatis dari database pusat IDXNOVA.
+          Filter saham Indonesia dari database pusat IDXNOVA.
+          Pilih strategi untuk melihat saham berdasarkan skor
+          Trading, Swing, Medium Term, atau Long Term.
         </p>
+
       </div>
 
+
+      <!-- HERO PANEL -->
       <div class="hero-panel">
+
         <div class="panel-top">
           <span>SCREENER STATUS</span>
           <strong>DEMO MODE</strong>
@@ -61,14 +79,20 @@
 
         <div class="sentiment-value">
           <h2 id="stockCount">0<span> Saham</span></h2>
-          <p id="screenerStatus">Memuat data saham...</p>
+          <p id="screenerStatus">
+            Memuat database...
+          </p>
         </div>
 
         <div class="sentiment-bar">
-          <span id="screenerBar" style="width: 0%"></span>
+          <span
+            id="screenerBar"
+            style="width: 0%"
+          ></span>
         </div>
 
         <div class="sentiment-info">
+
           <div>
             <small>Market</small>
             <strong>Indonesia</strong>
@@ -76,14 +100,17 @@
 
           <div>
             <small>Data</small>
-            <strong>Terpusat</strong>
+            <strong>Central Demo</strong>
           </div>
+
         </div>
 
         <p class="demo-note">
-          Hasil saat ini menggunakan data demonstrasi dan bukan data pasar real-time.
+          Data demonstrasi — bukan data pasar real-time.
         </p>
+
       </div>
+
     </section>
 
 
@@ -91,33 +118,61 @@
     <section class="section">
 
       <div class="section-heading">
+
         <div>
-          <span class="eyebrow">STRATEGY FILTER</span>
-          <h2>Pilih Strategi</h2>
+          <span class="eyebrow">
+            STRATEGY FILTER
+          </span>
+
+          <h2>
+            Pilih Strategi
+          </h2>
         </div>
 
-        <span class="demo-label">AUTOMATIC DATA</span>
+        <span
+          id="filterLabel"
+          class="demo-label"
+        >
+          ALL STOCKS
+        </span>
+
       </div>
+
 
       <div class="screener-filters">
 
-        <button class="filter-btn active" onclick="filterStocks('all', this)">
+        <button
+          class="filter-btn active"
+          onclick="filterStocks('all', this)"
+        >
           Semua
         </button>
 
-        <button class="filter-btn" onclick="filterStocks('trading', this)">
+        <button
+          class="filter-btn"
+          onclick="filterStocks('trading', this)"
+        >
           ⚡ Trading
         </button>
 
-        <button class="filter-btn" onclick="filterStocks('swing', this)">
+        <button
+          class="filter-btn"
+          onclick="filterStocks('swing', this)"
+        >
           📈 Swing
         </button>
 
-        <button class="filter-btn" onclick="filterStocks('medium', this)">
+        <button
+          class="filter-btn"
+          onclick="filterStocks('medium', this)"
+        >
           📊 Medium Term
         </button>
 
-        <button class="filter-btn" onclick="filterStocks('longterm', this)">
+        <button
+          class="filter-btn"
+          onclick="filterStocks('long', this)"
+        >
           💎 Long Term
         </button>
 
@@ -130,19 +185,53 @@
     <section class="section">
 
       <div class="section-heading">
+
         <div>
-          <span class="eyebrow">SCAN RESULTS</span>
-          <h2 id="resultTitle">Semua Peluang Saham</h2>
+          <span class="eyebrow">
+            SCAN RESULTS
+          </span>
+
+          <h2 id="resultTitle">
+            Semua Peluang Saham
+          </h2>
         </div>
 
-        <span class="demo-label">CENTRAL DATABASE</span>
+        <span
+          id="resultCountLabel"
+          class="demo-label"
+        >
+          LOADING...
+        </span>
+
       </div>
 
-      <!-- SAHAM DIBUAT OTOMATIS DARI stocks.js -->
-      <div class="stock-grid" id="stockResults"></div>
 
-      <div id="noResult" class="no-result" style="display: none;">
-        Tidak ada saham yang memenuhi kriteria strategi ini.
+      <!-- HASIL DARI DATABASE -->
+      <div
+        id="stockResults"
+        class="stock-grid"
+      ></div>
+
+
+      <!-- EMPTY STATE -->
+      <div
+        id="noResult"
+        class="empty-watchlist"
+        style="display: none;"
+      >
+
+        <div class="empty-icon">
+          ⚠️
+        </div>
+
+        <h3>
+          Tidak ada saham ditemukan
+        </h3>
+
+        <p>
+          Belum ada saham dari database yang sesuai dengan filter ini.
+        </p>
+
       </div>
 
     </section>
@@ -152,11 +241,19 @@
     <section class="section">
 
       <div class="section-heading">
+
         <div>
-          <span class="eyebrow">HOW IDXNOVA SCREENS</span>
-          <h2>Kriteria Scanner</h2>
+          <span class="eyebrow">
+            HOW IDXNOVA SCREENS
+          </span>
+
+          <h2>
+            Kriteria Scanner
+          </h2>
         </div>
+
       </div>
+
 
       <div class="feature-grid">
 
@@ -169,6 +266,7 @@
           </p>
         </article>
 
+
         <article>
           <span>📈</span>
           <h3>Swing</h3>
@@ -178,6 +276,7 @@
           </p>
         </article>
 
+
         <article>
           <span>📊</span>
           <h3>Medium Term</h3>
@@ -186,6 +285,7 @@
             valuasi, dan prospek beberapa bulan.
           </p>
         </article>
+
 
         <article>
           <span>💎</span>
@@ -204,17 +304,20 @@
     <!-- CTA -->
     <section class="cta">
 
-      <span class="eyebrow">IDXNOVA SCREENER</span>
+      <span class="eyebrow">
+        IDXNOVA SCREENER
+      </span>
 
-      <h2>One Market. Multiple Strategies.</h2>
+      <h2>
+        One Market. Multiple Strategies.
+      </h2>
 
       <p>
-        Satu database saham dapat digunakan untuk berbagai strategi.
-        Tambahkan saham baru ke database pusat dan Screener akan
-        menampilkannya secara otomatis.
+        Semua hasil Screener IDXNOVA diambil dari database pusat
+        dan dapat dikembangkan ke data pasar real-time.
       </p>
 
-      <button onclick="resetScanner()">
+      <button onclick="resetScreener()">
         Reset Scanner
       </button>
 
@@ -223,343 +326,413 @@
   </main>
 
 
+  <!-- FOOTER -->
   <footer>
 
     <div class="footer-brand">
-      <strong>IDXNOVA</strong>
-      <span>Indonesian Stock Intelligence</span>
+
+      <strong>
+        IDXNOVA
+      </strong>
+
+      <span>
+        Indonesian Stock Intelligence
+      </span>
+
     </div>
 
+
     <p>
-      Stock Screener saat ini menggunakan data demonstrasi.
+      Stock Screener menggunakan data demonstrasi.
       Bukan rekomendasi membeli atau menjual saham.
       Investasi dan trading memiliki risiko.
     </p>
 
-    <small>© 2026 IDXNOVA. All rights reserved.</small>
+
+    <small>
+      © 2026 IDXNOVA. All rights reserved.
+    </small>
 
   </footer>
 
 
   <!-- DATABASE PUSAT -->
-  <script src="stocks.js"></script>
+  <script src="./stocks.js"></script>
 
 
+  <!-- JAVASCRIPT -->
   <script>
 
-    let currentCategory = "all";
+    let currentFilter = "all";
 
 
     function toggleMenu() {
-      document.getElementById("navMenu").classList.toggle("active");
+      document
+        .getElementById("navMenu")
+        .classList
+        .toggle("active");
     }
 
 
-    /*
-      MENGAMBIL SCORE SESUAI STRATEGI
-    */
-    function getStrategyScore(stock, category) {
-
-      if (category === "trading") {
-        return stock.trading;
-      }
-
-      if (category === "swing") {
-        return stock.swing;
-      }
-
-      if (category === "medium") {
-        return stock.medium;
-      }
-
-      if (category === "longterm") {
-        return stock.long;
-      }
-
-      return stock.overall;
+    function openStock(ticker) {
+      window.location.href =
+        "stock.html?ticker=" + encodeURIComponent(ticker);
     }
 
 
-    /*
-      MENENTUKAN STRATEGI TERBAIK SAHAM
-    */
+    function formatPrice(price) {
+      return "Rp" +
+        Number(price).toLocaleString("id-ID");
+    }
+
+
     function getBestFit(stock) {
 
-      const strategies = [
-        {
-          name: "Trading",
-          score: stock.trading
-        },
-        {
-          name: "Swing",
-          score: stock.swing
-        },
-        {
-          name: "Medium Term",
-          score: stock.medium
-        },
-        {
-          name: "Long Term",
-          score: stock.long
+      const scores = {
+        Trading: stock.trading,
+        Swing: stock.swing,
+        "Medium Term": stock.medium,
+        "Long Term": stock.long
+      };
+
+
+      let bestStrategy = "Long Term";
+      let highestScore = -1;
+
+
+      Object.keys(scores).forEach(function(strategy) {
+
+        const score =
+          Number(scores[strategy]);
+
+        if (
+          !isNaN(score) &&
+          score > highestScore
+        ) {
+          highestScore = score;
+          bestStrategy = strategy;
         }
-      ];
 
-
-      strategies.sort(function(a, b) {
-        return b.score - a.score;
       });
 
 
-      return strategies[0].name;
+      return {
+        strategy: bestStrategy,
+        score: highestScore
+      };
+
     }
 
 
-    /*
-      CEK APAKAH SAHAM MASUK FILTER
+    function getStocksByFilter(filter) {
 
-      Minimal score 75.
-      Selain itu, score strategi tersebut harus
-      cukup kuat dibanding strategi terbaik saham.
-    */
-    function passesFilter(stock, category) {
-
-      if (category === "all") {
-        return true;
+      if (typeof STOCKS === "undefined") {
+        return [];
       }
 
 
-      const selectedScore =
-        getStrategyScore(stock, category);
+      const allStocks =
+        Object.values(STOCKS);
 
 
-      const highestScore = Math.max(
-        stock.trading,
-        stock.swing,
-        stock.medium,
-        stock.long
-      );
+      if (filter === "all") {
+
+        return allStocks
+          .sort(function(a, b) {
+            return b.overall - a.overall;
+          });
+
+      }
 
 
-      return (
-        selectedScore >= 75 &&
-        selectedScore >= highestScore - 5
-      );
+      return allStocks
+        .filter(function(stock) {
+          return typeof stock[filter] === "number";
+        })
+        .sort(function(a, b) {
+          return b[filter] - a[filter];
+        });
+
     }
 
 
-    /*
-      MEMBUAT KARTU SAHAM OTOMATIS
-    */
+    function getFilterInfo(filter) {
+
+      const info = {
+
+        all: {
+          title: "Semua Peluang Saham",
+          status: "Semua strategi aktif",
+          label: "ALL STOCKS",
+          scoreName: "Overall NOVA",
+          bestName: "Best Overall"
+        },
+
+        trading: {
+          title: "Trading Opportunities",
+          status: "Filter Trading aktif",
+          label: "TRADING",
+          scoreName: "Trading Score",
+          bestName: "Best For"
+        },
+
+        swing: {
+          title: "Swing Opportunities",
+          status: "Filter Swing aktif",
+          label: "SWING",
+          scoreName: "Swing Score",
+          bestName: "Best For"
+        },
+
+        medium: {
+          title: "Medium-Term Opportunities",
+          status: "Filter Medium Term aktif",
+          label: "MEDIUM TERM",
+          scoreName: "Medium-Term Score",
+          bestName: "Best For"
+        },
+
+        long: {
+          title: "Long-Term Opportunities",
+          status: "Filter Long-Term aktif",
+          label: "LONG TERM",
+          scoreName: "Long-Term Score",
+          bestName: "Best For"
+        }
+
+      };
+
+
+      return info[filter];
+
+    }
+
+
     function renderStocks() {
 
       const container =
         document.getElementById("stockResults");
 
+      const emptyState =
+        document.getElementById("noResult");
+
+      const stocks =
+        getStocksByFilter(currentFilter);
+
+      const info =
+        getFilterInfo(currentFilter);
+
 
       container.innerHTML = "";
 
 
-      let stockList =
-        Object.values(STOCKS);
+      /*
+        UPDATE TEXT
+      */
+      document
+        .getElementById("resultTitle")
+        .textContent =
+        info.title;
+
+
+      document
+        .getElementById("screenerStatus")
+        .textContent =
+        info.status;
+
+
+      document
+        .getElementById("filterLabel")
+        .textContent =
+        info.label;
+
+
+      document
+        .getElementById("resultCountLabel")
+        .textContent =
+        stocks.length + " SAHAM";
+
+
+      document
+        .getElementById("stockCount")
+        .innerHTML =
+        stocks.length +
+        "<span> Saham</span>";
+
+
+      document
+        .getElementById("screenerBar")
+        .style.width =
+        Math.min(100, stocks.length * 12) +
+        "%";
 
 
       /*
-        FILTER SAHAM SESUAI STRATEGI
+        JIKA KOSONG
       */
-      stockList = stockList.filter(function(stock) {
-        return passesFilter(stock, currentCategory);
-      });
+      if (stocks.length === 0) {
+
+        emptyState.style.display =
+          "block";
+
+        return;
+
+      }
+
+
+      emptyState.style.display =
+        "none";
 
 
       /*
-        URUTKAN BERDASARKAN FILTER YANG DIPILIH
-
-        Contoh:
-        Trading = Trading Score tertinggi
-        Swing = Swing Score tertinggi
-        Long Term = Long Score tertinggi
+        RENDER KARTU
       */
-      stockList.sort(function(a, b) {
-
-        const scoreA =
-          getStrategyScore(a, currentCategory);
-
-        const scoreB =
-          getStrategyScore(b, currentCategory);
-
-        return scoreB - scoreA;
-
-      });
-
-
-      /*
-        TAMPILKAN KARTU
-      */
-      stockList.forEach(function(stock) {
+      stocks.forEach(function(stock) {
 
         const card =
           document.createElement("article");
 
 
         card.className =
-          "stock-card screener-stock";
+          "stock-card";
 
 
         card.style.cursor =
           "pointer";
 
 
-        const strategyScore =
-          getStrategyScore(stock, currentCategory);
-
-
-        const displayedScore =
-          currentCategory === "all"
-            ? stock.overall
-            : strategyScore;
-
-
-        const displayedLabel =
-          currentCategory === "all"
-            ? "Overall Score"
-            : currentCategory === "trading"
-            ? "Trading Score"
-            : currentCategory === "swing"
-            ? "Swing Score"
-            : currentCategory === "medium"
-            ? "Medium Score"
-            : "Long Term Score";
+        const change =
+          Number(stock.change) || 0;
 
 
         const changeSymbol =
-          stock.change >= 0
+          change >= 0
             ? "▲ +"
             : "▼ ";
 
 
         const changeClass =
-          stock.change >= 0
+          change >= 0
             ? "positive"
             : "negative";
 
 
+        /*
+          SCORE SESUAI FILTER
+        */
+        let displayedScore;
+        let scoreLabel;
+        let bestFitText;
+
+
+        if (currentFilter === "all") {
+
+          displayedScore =
+            stock.overall;
+
+          scoreLabel =
+            "Overall NOVA";
+
+          bestFitText =
+            getBestFit(stock).strategy;
+
+        } else {
+
+          displayedScore =
+            stock[currentFilter];
+
+          scoreLabel =
+            info.scoreName;
+
+          bestFitText =
+            stock.bestFit ||
+            getBestFit(stock).strategy;
+
+        }
+
+
         card.innerHTML = `
+
           <div class="stock-header">
 
             <div>
               <h3>${stock.ticker}</h3>
-              <p>${stock.name}</p>
+
+              <p>
+                ${stock.name}
+              </p>
             </div>
 
+
             <span class="${changeClass}">
-              ${changeSymbol}${Math.abs(stock.change).toFixed(2)}%
+              ${changeSymbol}${Math.abs(change).toFixed(2)}%
             </span>
 
           </div>
 
+
           <div class="stock-price">
-            ${displayedLabel}: ${displayedScore}
+            ${formatPrice(stock.price)}
           </div>
 
+
           <div class="stock-footer">
-            <span>Best For</span>
-            <strong>${getBestFit(stock)}</strong>
+
+            <span>
+              ${scoreLabel}
+            </span>
+
+            <strong>
+              ${displayedScore}/100
+            </strong>
+
           </div>
+
+
+          <div class="stock-footer">
+
+            <span>
+              Best For
+            </span>
+
+            <strong>
+              ${bestFitText}
+            </strong>
+
+          </div>
+
         `;
 
 
         /*
-          KLIK KARTU → STOCK DETAIL
+          KLIK → STOCK DETAIL
         */
-        card.addEventListener("click", function() {
+        card.addEventListener(
+          "click",
+          function() {
 
-          window.location.href =
-            "stock.html?ticker=" +
-            encodeURIComponent(stock.ticker);
+            openStock(stock.ticker);
 
-        });
+          }
+        );
 
 
         container.appendChild(card);
 
       });
 
-
-      updateScreenerInfo(stockList.length);
-
     }
 
 
-    /*
-      UPDATE INFORMASI BAGIAN ATAS
-    */
-    function updateScreenerInfo(count) {
+    function filterStocks(filter, button) {
 
-      const titles = {
-
-        all: "Semua Peluang Saham",
-
-        trading: "Trading Opportunities",
-
-        swing: "Swing Opportunities",
-
-        medium: "Medium-Term Opportunities",
-
-        longterm: "Long-Term Opportunities"
-
-      };
+      currentFilter =
+        filter;
 
 
-      const descriptions = {
-
-        all: "Semua strategi aktif",
-
-        trading: "Menampilkan saham dengan Trading Score kuat",
-
-        swing: "Menampilkan saham dengan Swing Score kuat",
-
-        medium: "Menampilkan saham untuk Medium Term",
-
-        longterm: "Menampilkan saham untuk Long Term"
-
-      };
-
-
-      document.getElementById("resultTitle").textContent =
-        titles[currentCategory];
-
-
-      document.getElementById("screenerStatus").textContent =
-        descriptions[currentCategory];
-
-
-      document.getElementById("stockCount").innerHTML =
-        count + "<span> Saham</span>";
-
-
-      document.getElementById("screenerBar").style.width =
-        count === 0
-          ? "0%"
-          : Math.min(100, count * 15) + "%";
-
-
-      document.getElementById("noResult").style.display =
-        count === 0
-          ? "block"
-          : "none";
-
-    }
-
-
-    /*
-      SAAT FILTER DIKLIK
-    */
-    function filterStocks(category, button) {
-
-      currentCategory =
-        category;
-
-
+      /*
+        UPDATE ACTIVE BUTTON
+      */
       document
         .querySelectorAll(".filter-btn")
         .forEach(function(btn) {
@@ -569,7 +742,11 @@
         });
 
 
-      button.classList.add("active");
+      if (button) {
+
+        button.classList.add("active");
+
+      }
 
 
       renderStocks();
@@ -577,36 +754,18 @@
     }
 
 
-    /*
-      RESET KE SEMUA SAHAM
-    */
-    function resetScanner() {
+    function resetScreener() {
 
-      currentCategory =
-        "all";
-
-
-      document
-        .querySelectorAll(".filter-btn")
-        .forEach(function(btn) {
-
-          btn.classList.remove("active");
-
-        });
+      const allButton =
+        document.querySelector(
+          ".filter-btn"
+        );
 
 
-      document
-        .querySelector(".filter-btn")
-        .classList.add("active");
-
-
-      renderStocks();
-
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      filterStocks(
+        "all",
+        allButton
+      );
 
     }
 
