@@ -3,1384 +3,908 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>IDXNOVA | Indonesian Stock Intelligence</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
   <!-- NAVBAR -->
   <header class="navbar">
-
-    <a href="index.html" class="brand">
-      <span class="brand-mark">N</span>
-
-      <span>
-        <strong>IDXNOVA</strong>
-        <small>INDONESIAN STOCK INTELLIGENCE</small>
-      </span>
-    </a>
-
-    <button
-      class="menu-btn"
-      onclick="toggleMenu()"
-      aria-label="Buka menu"
-    >
-      ☰
-    </button>
-
-    <nav id="navMenu">
-      <a href="index.html">Home</a>
-      <a href="trading.html">Trading</a>
-      <a href="swing.html">Swing</a>
-      <a href="investing.html">Investing</a>
-      <a href="screener.html">Screener</a>
-      <a href="watchlist.html">Watchlist</a>
-      <a href="search.html">🔎 Search</a>
-    </nav>
-
+<a href="index.html" class="brand">
+  <span class="brand-mark">N</span>
+  <span>
+    <strong>IDXNOVA</strong>
+    <small>INDONESIAN STOCK INTELLIGENCE</small>
+  </span>
+</a>
+<button
+  class="menu-btn"
+  onclick="toggleMenu()"
+  aria-label="Buka menu"
+>
+  ☰
+</button>
+<nav id="navMenu">
+  <a href="index.html">Home</a>
+  <a href="trading.html">Trading</a>
+  <a href="swing.html">Swing</a>
+  <a href="investing.html">Investing</a>
+  <a href="screener.html">Screener</a>
+  <a href="watchlist.html">Watchlist</a>
+  <a href="search.html">🔎 Search</a>
+</nav>
   </header>
-
-
   <main>
-
-    <!-- HERO -->
-    <section class="hero">
-
-      <div class="hero-content">
-
-        <div class="badge">
-          ● INDONESIA STOCK MARKET PLATFORM
-        </div>
-
-        <h1>
-          Analisis Saham Indonesia
-          <span>Lebih Cerdas.</span>
-        </h1>
-
-        <p>
-          IDXNOVA membantu trader dan investor menganalisis saham Indonesia
-          untuk trading harian, investasi jangka pendek, menengah,
-          hingga jangka panjang.
-        </p>
-
-
-        <!-- SEARCH -->
-        <div class="search-box">
-
-          <input
-            type="text"
-            id="stockSearch"
-            placeholder="Cari ticker... contoh: BBRI"
-            autocomplete="off"
-          >
-
-          <button onclick="searchStock()">
-            Cari
-          </button>
-
-        </div>
-
-
-        <div class="popular">
-
-          <span>Populer:</span>
-
-          <button onclick="quickSearch('BBRI')">
-            BBRI
-          </button>
-
-          <button onclick="quickSearch('BBCA')">
-            BBCA
-          </button>
-
-          <button onclick="quickSearch('ANTM')">
-            ANTM
-          </button>
-
-          <button onclick="quickSearch('ELSA')">
-            ELSA
-          </button>
-
-          <button onclick="quickSearch('PWON')">
-            PWON
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- HERO PANEL -->
-      <div class="hero-panel">
-
-        <div class="panel-top">
-          <span>MARKET SENTIMENT</span>
-          <strong>DEMO</strong>
-        </div>
-
-        <div class="sentiment-value">
-
-          <h2 id="sentimentScore">
-            0<span>/100</span>
-          </h2>
-
-          <p id="sentimentText">
-            Loading...
-          </p>
-
-        </div>
-
-
-        <div class="sentiment-bar">
-          <span
-            id="sentimentBar"
-            style="width: 0%"
-          ></span>
-        </div>
-
-
-        <div class="sentiment-info">
-
-          <div>
-            <small>Risk Level</small>
-            <strong id="marketRisk">
-              Loading
-            </strong>
-          </div>
-
-
-          <div>
-            <small>Market Trend</small>
-            <strong id="marketTrend">
-              Loading
-            </strong>
-          </div>
-
-        </div>
-
-
-        <p class="demo-note">
-          Data demonstrasi — bukan data pasar real-time.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- MARKET -->
-    <section
-      id="market"
-      class="section"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="eyebrow">
-            MARKET PULSE
-          </span>
-
-          <h2>
-            Market Overview
-          </h2>
-
-        </div>
-
-        <span
-          id="marketStatus"
-          class="demo-label"
-        >
-          LOADING...
-        </span>
-
-      </div>
-
-
-      <div class="market-grid">
-
-        <!-- MARKET AVERAGE -->
-        <article class="market-card featured">
-
-          <div class="card-label">
-            MARKET AVG
-          </div>
-
-          <h3 id="marketAverage">
-            Loading...
-          </h3>
-
-          <p
-            id="marketAverageChange"
-            class="positive"
-          >
-            Calculating...
-          </p>
-
-          <small>
-            Rata-rata perubahan database IDXNOVA
-          </small>
-
-        </article>
-
-
-        <!-- TOP GAINER -->
-        <article
-          class="market-card"
-          id="topGainerCard"
-          style="cursor: pointer;"
-        >
-
-          <div class="card-label">
-            TOP GAINER
-          </div>
-
-          <h3 id="topGainer">
-            Loading...
-          </h3>
-
-          <p
-            id="topGainerChange"
-            class="positive"
-          >
-            Loading...
-          </p>
-
-          <small>
-            Perubahan tertinggi
-          </small>
-
-        </article>
-
-
-        <!-- TOP LOSER -->
-        <article
-          class="market-card"
-          id="topLoserCard"
-          style="cursor: pointer;"
-        >
-
-          <div class="card-label">
-            TOP LOSER
-          </div>
-
-          <h3 id="topLoser">
-            Loading...
-          </h3>
-
-          <p
-            id="topLoserChange"
-            class="negative"
-          >
-            Loading...
-          </p>
-
-          <small>
-            Perubahan terendah
-          </small>
-
-        </article>
-
-
-        <!-- HIGHEST SCORE -->
-        <article
-          class="market-card"
-          id="topScoreCard"
-          style="cursor: pointer;"
-        >
-
-          <div class="card-label">
-            HIGHEST NOVA
-          </div>
-
-          <h3 id="topScore">
-            Loading...
-          </h3>
-
-          <p id="topScoreValue">
-            Loading...
-          </p>
-
-          <small>
-            Overall NOVA tertinggi
-          </small>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- STOCKS -->
-    <section
-      id="stocks"
-      class="section"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="eyebrow">
-            STOCK RADAR
-          </span>
-
-          <h2>
-            Featured Stocks
-          </h2>
-
-        </div>
-
-        <span
-          id="featuredLabel"
-          class="demo-label"
-        >
-          LOADING...
-        </span>
-
-      </div>
-
-
-      <!-- AUTO FROM STOCKS.JS -->
-      <div
-        id="featuredStocks"
-        class="stock-grid"
-      ></div>
-
-
-      <div
-        id="featuredEmpty"
-        class="empty-watchlist"
-        style="display: none;"
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="badge">
+      ● INDONESIA STOCK MARKET PLATFORM
+    </div>
+    <h1>
+      Analisis Saham Indonesia
+      <span>Lebih Cerdas.</span>
+    </h1>
+    <p>
+      IDXNOVA membantu trader dan investor menganalisis saham Indonesia
+      untuk trading harian, investasi jangka pendek, menengah,
+      hingga jangka panjang.
+    </p>
+    <!-- SEARCH -->
+    <div class="search-box">
+      <input
+        type="text"
+        id="stockSearch"
+        placeholder="Cari ticker... contoh: BBRI"
+        autocomplete="off"
       >
-
-        <div class="empty-icon">
-          ⚠️
-        </div>
-
-        <h3>
-          Database belum terbaca
-        </h3>
-
-        <p>
-          Pastikan stocks.js berada di folder yang sama dengan index.html.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- NOVA SCORE -->
-    <section
-      id="scores"
-      class="section"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="eyebrow">
-            IDXNOVA INTELLIGENCE
-          </span>
-
-          <h2>
-            NOVA Score
-          </h2>
-
-        </div>
-
-      </div>
-
-
-      <p class="section-description">
-        Sistem indikator analitis untuk membantu melihat karakteristik saham
-        dari berbagai sudut pandang. Skor bukan jaminan pergerakan harga.
-      </p>
-
-
-      <div class="score-grid">
-
-        <article class="score-card">
-
-          <div class="score-icon">
-            ⚡
-          </div>
-
-          <h3>
-            NOVA Trade
-          </h3>
-
-          <p>
-            Momentum, volume, volatilitas, dan struktur harga untuk analisis trading.
-          </p>
-
-          <div class="score-line">
-            <span id="avgTradingBar" style="width: 0%"></span>
-          </div>
-
-          <strong id="avgTradingScore">
-            Loading...
-          </strong>
-
-        </article>
-
-
-        <article class="score-card">
-
-          <div class="score-icon">
-            📈
-          </div>
-
-          <h3>
-            NOVA Swing
-          </h3>
-
-          <p>
-            Trend, momentum, support-resistance, dan peluang pergerakan beberapa hari.
-          </p>
-
-          <div class="score-line">
-            <span id="avgSwingBar" style="width: 0%"></span>
-          </div>
-
-          <strong id="avgSwingScore">
-            Loading...
-          </strong>
-
-        </article>
-
-
-        <article class="score-card">
-
-          <div class="score-icon">
-            📊
-          </div>
-
-          <h3>
-            NOVA Medium
-          </h3>
-
-          <p>
-            Analisis pertumbuhan bisnis, tren keuangan, valuasi, dan prospek.
-          </p>
-
-          <div class="score-line">
-            <span id="avgMediumBar" style="width: 0%"></span>
-          </div>
-
-          <strong id="avgMediumScore">
-            Loading...
-          </strong>
-
-        </article>
-
-
-        <article class="score-card">
-
-          <div class="score-icon">
-            💎
-          </div>
-
-          <h3>
-            NOVA Long-Term
-          </h3>
-
-          <p>
-            Fundamental, valuasi, kesehatan keuangan, dan potensi jangka panjang.
-          </p>
-
-          <div class="score-line">
-            <span id="avgLongBar" style="width: 0%"></span>
-          </div>
-
-          <strong id="avgLongScore">
-            Loading...
-          </strong>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- FEATURES -->
-    <section
-      id="features"
-      class="section"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="eyebrow">
-            ONE PLATFORM
-          </span>
-
-          <h2>
-            Semua yang Kamu Butuhkan
-          </h2>
-
-        </div>
-
-      </div>
-
-
-      <div class="feature-grid">
-
-        <article
-          style="cursor: pointer;"
-          onclick="window.location.href='trading.html'"
-        >
-          <span>01</span>
-          <h3>Trading Radar</h3>
-          <p>
-            Temukan saham dengan aktivitas, momentum, dan volume menarik.
-          </p>
-        </article>
-
-
-        <article
-          style="cursor: pointer;"
-          onclick="window.location.href='screener.html'"
-        >
-          <span>02</span>
-          <h3>Stock Screener</h3>
-          <p>
-            Filter saham berdasarkan strategi dan karakteristik saham.
-          </p>
-        </article>
-
-
-        <article
-          style="cursor: pointer;"
-          onclick="window.location.href='search.html'"
-        >
-          <span>03</span>
-          <h3>Stock Analysis</h3>
-          <p>
-            Cari saham dan lihat fundamental, skor, dan karakteristiknya.
-          </p>
-        </article>
-
-
-        <article
-          style="cursor: pointer;"
-          onclick="window.location.href='watchlist.html'"
-        >
-          <span>04</span>
-          <h3>Watchlist</h3>
-          <p>
-            Simpan saham yang ingin dipantau dalam satu dashboard.
-          </p>
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- CTA -->
-    <section class="cta">
-
-      <span class="eyebrow">
-        IDXNOVA
-      </span>
-
-      <h2>
-        Build Your Market Intelligence.
-      </h2>
-
-      <p>
-        Satu tempat untuk memantau, menyaring, dan menganalisis saham Indonesia.
-      </p>
-
-      <button
-        onclick="document.getElementById('stockSearch').focus()"
-      >
-        Mulai Cari Saham
+      <button onclick="searchStock()">
+        Cari
       </button>
-
-    </section>
-
+    </div>
+    <div class="popular">
+      <span>Populer:</span>
+      <button onclick="quickSearch('BBRI')">
+        BBRI
+      </button>
+      <button onclick="quickSearch('BBCA')">
+        BBCA
+      </button>
+      <button onclick="quickSearch('ANTM')">
+        ANTM
+      </button>
+      <button onclick="quickSearch('ELSA')">
+        ELSA
+      </button>
+      <button onclick="quickSearch('PWON')">
+        PWON
+      </button>
+    </div>
+  </div>
+  <!-- HERO PANEL -->
+  <div class="hero-panel">
+    <div class="panel-top">
+      <span>MARKET SENTIMENT</span>
+      <strong id="dataMode">LOADING</strong>
+    </div>
+    <div class="sentiment-value">
+      <h2 id="sentimentScore">
+        0<span>/100</span>
+      </h2>
+      <p id="sentimentText">
+        Loading...
+      </p>
+    </div>
+    <div class="sentiment-bar">
+      <span
+        id="sentimentBar"
+        style="width: 0%"
+      ></span>
+    </div>
+    <div class="sentiment-info">
+      <div>
+        <small>Risk Level</small>
+        <strong id="marketRisk">
+          Loading
+        </strong>
+      </div>
+      <div>
+        <small>Market Trend</small>
+        <strong id="marketTrend">
+          Loading
+        </strong>
+      </div>
+    </div>
+    <p class="demo-note" id="dataNote">
+      Menghubungkan ke IDXNOVA API...
+    </p>
+  </div>
+</section>
+<!-- MARKET -->
+<section
+  id="market"
+  class="section"
+>
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        MARKET PULSE
+      </span>
+      <h2>
+        Market Overview
+      </h2>
+    </div>
+    <span
+      id="marketStatus"
+      class="demo-label"
+    >
+      LOADING...
+    </span>
+  </div>
+  <div class="market-grid">
+    <article class="market-card featured">
+      <div class="card-label">
+        MARKET AVG
+      </div>
+      <h3 id="marketAverage">
+        Loading...
+      </h3>
+      <p
+        id="marketAverageChange"
+        class="positive"
+      >
+        Calculating...
+      </p>
+      <small>
+        Rata-rata perubahan database IDXNOVA
+      </small>
+    </article>
+    <article
+      class="market-card"
+      id="topGainerCard"
+      style="cursor: pointer;"
+    >
+      <div class="card-label">
+        TOP GAINER
+      </div>
+      <h3 id="topGainer">
+        Loading...
+      </h3>
+      <p
+        id="topGainerChange"
+        class="positive"
+      >
+        Loading...
+      </p>
+      <small>
+        Perubahan tertinggi
+      </small>
+    </article>
+    <article
+      class="market-card"
+      id="topLoserCard"
+      style="cursor: pointer;"
+    >
+      <div class="card-label">
+        TOP LOSER
+      </div>
+      <h3 id="topLoser">
+        Loading...
+      </h3>
+      <p
+        id="topLoserChange"
+        class="negative"
+      >
+        Loading...
+      </p>
+      <small>
+        Perubahan terendah
+      </small>
+    </article>
+    <article
+      class="market-card"
+      id="topScoreCard"
+      style="cursor: pointer;"
+    >
+      <div class="card-label">
+        HIGHEST NOVA
+      </div>
+      <h3 id="topScore">
+        Loading...
+      </h3>
+      <p id="topScoreValue">
+        Loading...
+      </p>
+      <small>
+        Overall NOVA tertinggi
+      </small>
+    </article>
+  </div>
+</section>
+<!-- STOCKS -->
+<section
+  id="stocks"
+  class="section"
+>
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        STOCK RADAR
+      </span>
+      <h2>
+        Featured Stocks
+      </h2>
+    </div>
+    <span
+      id="featuredLabel"
+      class="demo-label"
+    >
+      LOADING...
+    </span>
+  </div>
+  <div
+    id="featuredStocks"
+    class="stock-grid"
+  ></div>
+  <div
+    id="featuredEmpty"
+    class="empty-watchlist"
+    style="display: none;"
+  >
+    <div class="empty-icon">
+      ⚠️
+    </div>
+    <h3>
+      Data saham tidak tersedia
+    </h3>
+    <p>
+      IDXNOVA API sedang tidak dapat dihubungi.
+    </p>
+  </div>
+</section>
+<!-- NOVA SCORE -->
+<section
+  id="scores"
+  class="section"
+>
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        IDXNOVA INTELLIGENCE
+      </span>
+      <h2>
+        NOVA Score
+      </h2>
+    </div>
+  </div>
+  <p class="section-description">
+    Sistem indikator analitis untuk membantu melihat karakteristik saham
+    dari berbagai sudut pandang. Skor bukan jaminan pergerakan harga.
+  </p>
+  <div class="score-grid">
+    <article class="score-card">
+      <div class="score-icon">
+        ⚡
+      </div>
+      <h3>
+        NOVA Trade
+      </h3>
+      <p>
+        Momentum, volume, volatilitas, dan struktur harga untuk analisis trading.
+      </p>
+      <div class="score-line">
+        <span id="avgTradingBar" style="width: 0%"></span>
+      </div>
+      <strong id="avgTradingScore">
+        Loading...
+      </strong>
+    </article>
+    <article class="score-card">
+      <div class="score-icon">
+        📈
+      </div>
+      <h3>
+        NOVA Swing
+      </h3>
+      <p>
+        Trend, momentum, support-resistance, dan peluang pergerakan beberapa hari.
+      </p>
+      <div class="score-line">
+        <span id="avgSwingBar" style="width: 0%"></span>
+      </div>
+      <strong id="avgSwingScore">
+        Loading...
+      </strong>
+    </article>
+    <article class="score-card">
+      <div class="score-icon">
+        📊
+      </div>
+      <h3>
+        NOVA Medium
+      </h3>
+      <p>
+        Analisis pertumbuhan bisnis, tren keuangan, valuasi, dan prospek.
+      </p>
+      <div class="score-line">
+        <span id="avgMediumBar" style="width: 0%"></span>
+      </div>
+      <strong id="avgMediumScore">
+        Loading...
+      </strong>
+    </article>
+    <article class="score-card">
+      <div class="score-icon">
+        💎
+      </div>
+      <h3>
+        NOVA Long-Term
+      </h3>
+      <p>
+        Fundamental, valuasi, kesehatan keuangan, dan potensi jangka panjang.
+      </p>
+      <div class="score-line">
+        <span id="avgLongBar" style="width: 0%"></span>
+      </div>
+      <strong id="avgLongScore">
+        Loading...
+      </strong>
+    </article>
+  </div>
+</section>
+<!-- FEATURES -->
+<section
+  id="features"
+  class="section"
+>
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        ONE PLATFORM
+      </span>
+      <h2>
+        Semua yang Kamu Butuhkan
+      </h2>
+    </div>
+  </div>
+  <div class="feature-grid">
+    <article
+      style="cursor: pointer;"
+      onclick="window.location.href='trading.html'"
+    >
+      <span>01</span>
+      <h3>Trading Radar</h3>
+      <p>
+        Temukan saham dengan aktivitas, momentum, dan volume menarik.
+      </p>
+    </article>
+    <article
+      style="cursor: pointer;"
+      onclick="window.location.href='screener.html'"
+    >
+      <span>02</span>
+      <h3>Stock Screener</h3>
+      <p>
+        Filter saham berdasarkan strategi dan karakteristik saham.
+      </p>
+    </article>
+    <article
+      style="cursor: pointer;"
+      onclick="window.location.href='search.html'"
+    >
+      <span>03</span>
+      <h3>Stock Analysis</h3>
+      <p>
+        Cari saham dan lihat fundamental, skor, dan karakteristiknya.
+      </p>
+    </article>
+    <article
+      style="cursor: pointer;"
+      onclick="window.location.href='watchlist.html'"
+    >
+      <span>04</span>
+      <h3>Watchlist</h3>
+      <p>
+        Simpan saham yang ingin dipantau dalam satu dashboard.
+      </p>
+    </article>
+  </div>
+</section>
+<!-- CTA -->
+<section class="cta">
+  <span class="eyebrow">
+    IDXNOVA
+  </span>
+  <h2>
+    Build Your Market Intelligence.
+  </h2>
+  <p>
+    Satu tempat untuk memantau, menyaring, dan menganalisis saham Indonesia.
+  </p>
+  <button
+    onclick="document.getElementById('stockSearch').focus()"
+  >
+    Mulai Cari Saham
+  </button>
+</section>
   </main>
-
-
   <!-- FOOTER -->
   <footer>
-
-    <div class="footer-brand">
-
-      <strong>
-        IDXNOVA
-      </strong>
-
-      <span>
-        Indonesian Stock Intelligence
-      </span>
-
-    </div>
-
-
-    <p>
-      IDXNOVA adalah platform informasi dan analisis independen.
-      Seluruh informasi disediakan untuk tujuan edukasi dan informasi,
-      bukan merupakan nasihat keuangan atau rekomendasi membeli maupun menjual efek.
-    </p>
-
-
-    <small>
-      © 2026 IDXNOVA. All rights reserved.
-    </small>
-
+<div class="footer-brand">
+  <strong>
+    IDXNOVA
+  </strong>
+  <span>
+    Indonesian Stock Intelligence
+  </span>
+</div>
+<p>
+  IDXNOVA adalah platform informasi dan analisis independen.
+  Seluruh informasi disediakan untuk tujuan edukasi dan informasi,
+  bukan merupakan nasihat keuangan atau rekomendasi membeli maupun menjual efek.
+</p>
+<small>
+  © 2026 IDXNOVA. All rights reserved.
+</small>
   </footer>
-
-
-  <!-- DATABASE PUSAT -->
+  <!-- FALLBACK DATABASE -->
   <script src="./stocks.js"></script>
-
-
   <!-- HOME SYSTEM -->
   <script>
-
+    const API_URL =
+      "https://idxnova-api.rendyalterio22.workers.dev/api/stocks";
+    let HOME_STOCKS = [];
     function toggleMenu() {
-
       document
         .getElementById("navMenu")
         .classList
         .toggle("active");
-
     }
-
-
     function formatPrice(price) {
-
       return "Rp" +
         Number(price).toLocaleString("id-ID");
-
     }
-
-
     function openStock(ticker) {
-
       window.location.href =
         "stock.html?ticker=" +
         encodeURIComponent(ticker);
-
     }
-
-
     function setText(id, value) {
-
       const element =
         document.getElementById(id);
-
       if (element) {
-
-        element.textContent =
-          value;
-
+        element.textContent = value;
       }
-
     }
-
-
-    /*
-      SEARCH HOME
-    */
     function searchStock() {
-
       const input =
         document.getElementById("stockSearch");
-
-
       const ticker =
         input.value
           .trim()
           .toUpperCase();
-
-
       if (!ticker) {
-
         window.location.href =
           "search.html";
-
         return;
-
       }
-
-
-      if (
-        typeof STOCKS !== "undefined" &&
-        STOCKS[ticker]
-      ) {
-
+      const found =
+        HOME_STOCKS.find(function(stock) {
+          return stock.ticker === ticker;
+        });
+      if (found) {
         openStock(ticker);
-
       } else {
-
         window.location.href =
           "search.html?q=" +
           encodeURIComponent(
             input.value.trim()
           );
-
       }
-
     }
-
-
     function quickSearch(ticker) {
-
       document
         .getElementById("stockSearch")
         .value =
         ticker;
-
-
       searchStock();
-
     }
-
-
-    /*
-      MARKET OVERVIEW
-    */
     function renderMarketOverview(stocks) {
-
       const changes =
         stocks.map(function(stock) {
-
           return Number(stock.change) || 0;
-
         });
-
-
       const averageChange =
         changes.reduce(function(sum, value) {
-
           return sum + value;
-
-        }, 0) / changes.length;
-
-
+        }, 0) / stocks.length;
       const topGainer =
         stocks.reduce(function(best, stock) {
-
-          return stock.change > best.change
+          return Number(stock.change) > Number(best.change)
             ? stock
             : best;
-
         });
-
-
       const topLoser =
         stocks.reduce(function(worst, stock) {
-
-          return stock.change < worst.change
+          return Number(stock.change) < Number(worst.change)
             ? stock
             : worst;
-
         });
-
-
       const highestScore =
         stocks.reduce(function(best, stock) {
-
-          return stock.overall > best.overall
+          return Number(stock.overall) > Number(best.overall)
             ? stock
             : best;
-
         });
-
-
       setText(
         "marketAverage",
         stocks.length + " Saham"
       );
-
-
       const averageElement =
         document.getElementById(
           "marketAverageChange"
         );
-
-
       averageElement.textContent =
         (averageChange >= 0 ? "▲ +" : "▼ ") +
         Math.abs(averageChange).toFixed(2) +
         "%";
-
-
       averageElement.className =
         averageChange >= 0
           ? "positive"
           : "negative";
-
-
-      setText(
-        "topGainer",
-        topGainer.ticker
-      );
-
-
+      setText("topGainer", topGainer.ticker);
+      const gainerChange =
+        Number(topGainer.change) || 0;
       setText(
         "topGainerChange",
-        "▲ +" +
-        Number(topGainer.change).toFixed(2) +
+        (gainerChange >= 0 ? "▲ +" : "▼ ") +
+        Math.abs(gainerChange).toFixed(2) +
         "%"
       );
-
-
-      setText(
-        "topLoser",
-        topLoser.ticker
-      );
-
-
+      document
+        .getElementById("topGainerChange")
+        .className =
+        gainerChange >= 0
+          ? "positive"
+          : "negative";
+      setText("topLoser", topLoser.ticker);
       const loserChange =
         Number(topLoser.change) || 0;
-
-
       setText(
         "topLoserChange",
         (loserChange >= 0 ? "▲ +" : "▼ ") +
         Math.abs(loserChange).toFixed(2) +
         "%"
       );
-
-
       document
         .getElementById("topLoserChange")
         .className =
         loserChange >= 0
           ? "positive"
           : "negative";
-
-
-      setText(
-        "topScore",
-        highestScore.ticker
-      );
-
-
+      setText("topScore", highestScore.ticker);
       setText(
         "topScoreValue",
         "NOVA " +
         highestScore.overall +
         "/100"
       );
-
-
-      /*
-        CLICK MARKET CARDS
-      */
       document
         .getElementById("topGainerCard")
         .onclick =
         function() {
-
           openStock(topGainer.ticker);
-
         };
-
-
       document
         .getElementById("topLoserCard")
         .onclick =
         function() {
-
           openStock(topLoser.ticker);
-
         };
-
-
       document
         .getElementById("topScoreCard")
         .onclick =
         function() {
-
           openStock(highestScore.ticker);
-
         };
-
     }
-
-
-    /*
-      MARKET SENTIMENT
-    */
     function renderMarketSentiment(stocks) {
-
       const averageOverall =
         stocks.reduce(
           function(sum, stock) {
-
             return sum +
               (Number(stock.overall) || 0);
-
           },
           0
         ) / stocks.length;
-
-
       const averageChange =
         stocks.reduce(
           function(sum, stock) {
-
             return sum +
               (Number(stock.change) || 0);
-
           },
           0
         ) / stocks.length;
-
-
       const score =
         Math.round(averageOverall);
-
-
-      setText(
-        "sentimentScore",
-        score
-      );
-
-
       document
-        .getElementById(
-          "sentimentScore"
-        ).innerHTML =
+        .getElementById("sentimentScore")
+        .innerHTML =
         score + "<span>/100</span>";
-
-
       document
-        .getElementById(
-          "sentimentBar"
-        ).style.width =
-        score + "%";
-
-
-      let sentiment =
-        "Netral";
-
-
+        .getElementById("sentimentBar")
+        .style.width =
+        Math.min(100, Math.max(0, score)) + "%";
+      let sentiment = "Netral";
       if (averageChange > 1) {
-
-        sentiment =
-          "Positif";
-
+        sentiment = "Positif";
       } else if (averageChange < -1) {
-
-        sentiment =
-          "Negatif";
-
+        sentiment = "Negatif";
       } else if (averageChange > 0) {
-
-        sentiment =
-          "Netral Positif";
-
+        sentiment = "Netral Positif";
       } else if (averageChange < 0) {
-
-        sentiment =
-          "Netral Negatif";
-
+        sentiment = "Netral Negatif";
       }
-
-
       setText(
         "sentimentText",
         sentiment
       );
-
-
-      let trend =
-        "Neutral";
-
-
+      let trend = "Neutral";
       if (averageChange > 0.5) {
-
-        trend =
-          "Bullish";
-
+        trend = "Bullish";
       } else if (averageChange < -0.5) {
-
-        trend =
-          "Bearish";
-
+        trend = "Bearish";
       }
-
-
       setText(
         "marketTrend",
         trend
       );
-
-
-      let risk =
-        "Moderate";
-
-
+      let risk = "Moderate";
       if (score >= 88) {
-
-        risk =
-          "Low - Moderate";
-
+        risk = "Low - Moderate";
       } else if (score < 75) {
-
-        risk =
-          "Moderate - High";
-
+        risk = "Moderate - High";
       }
-
-
       setText(
         "marketRisk",
         risk
       );
-
     }
-
-
-    /*
-      FEATURED STOCKS
-      TOP 4 OVERALL SCORE
-    */
     function renderFeaturedStocks(stocks) {
-
       const container =
         document.getElementById(
           "featuredStocks"
         );
-
-
       const emptyState =
         document.getElementById(
           "featuredEmpty"
         );
-
-
       const featured =
         stocks
           .slice()
           .sort(function(a, b) {
-
-            return b.overall -
-              a.overall;
-
+            return Number(b.overall) -
+              Number(a.overall);
           })
           .slice(0, 4);
-
-
-      container.innerHTML =
-        "";
-
-
+      container.innerHTML = "";
       featured.forEach(function(stock) {
-
         const card =
-          document.createElement(
-            "article"
-          );
-
-
-        card.className =
-          "stock-card";
-
-
-        card.style.cursor =
-          "pointer";
-
-
+          document.createElement("article");
+        card.className = "stock-card";
+        card.style.cursor = "pointer";
         const change =
           Number(stock.change) || 0;
-
-
         const changeSymbol =
           change >= 0
             ? "▲ +"
             : "▼ ";
-
-
         const changeClass =
           change >= 0
             ? "positive"
             : "negative";
-
-
         card.innerHTML = `
-
           <div class="stock-header">
-
             <div>
-
-              <h3>
-                ${stock.ticker}
-              </h3>
-
-              <p>
-                ${stock.name}
-              </p>
-
+              <h3>${stock.ticker}</h3>
+              <p>${stock.name || "-"}</p>
             </div>
-
-
             <span class="${changeClass}">
-
               ${changeSymbol}${Math.abs(change).toFixed(2)}%
-
             </span>
-
           </div>
-
-
           <div class="stock-price">
-
             ${formatPrice(stock.price)}
-
           </div>
-
-
           <div class="stock-footer">
-
-            <span>
-              Overall NOVA
-            </span>
-
-            <strong>
-              ${stock.overall}/100
-            </strong>
-
+            <span>Overall NOVA</span>
+            <strong>${stock.overall}/100</strong>
           </div>
-
         `;
-
-
         card.addEventListener(
           "click",
           function() {
-
             openStock(stock.ticker);
-
           }
         );
-
-
         container.appendChild(card);
-
       });
-
-
       emptyState.style.display =
         featured.length === 0
           ? "block"
           : "none";
-
-
       setText(
         "featuredLabel",
         featured.length +
         " SAHAM"
       );
-
     }
-
-
-    /*
-      NOVA SCORE AVERAGES
-    */
     function renderScoreAverages(stocks) {
-
       const configs = [
-
         {
           key: "trading",
           bar: "avgTradingBar",
           score: "avgTradingScore"
         },
-
         {
           key: "swing",
           bar: "avgSwingBar",
           score: "avgSwingScore"
         },
-
         {
           key: "medium",
           bar: "avgMediumBar",
           score: "avgMediumScore"
         },
-
         {
           key: "long",
           bar: "avgLongBar",
           score: "avgLongScore"
         }
-
       ];
-
-
       configs.forEach(function(config) {
-
         const average =
           stocks.reduce(
             function(sum, stock) {
-
               return sum +
                 (Number(stock[config.key]) || 0);
-
             },
             0
           ) / stocks.length;
-
-
         const score =
           Math.round(average);
-
-
         document
-          .getElementById(
-            config.bar
-          ).style.width =
-          score + "%";
-
-
+          .getElementById(config.bar)
+          .style.width =
+          Math.min(100, Math.max(0, score)) + "%";
         setText(
           config.score,
           score + " / 100"
         );
-
       });
-
     }
-
-
-    /*
-      INITIALIZE HOME
-    */
-    function initializeHome() {
-
-      if (typeof STOCKS === "undefined") {
-
-        setText(
-          "marketStatus",
-          "DATA ERROR"
-        );
-
-
-        setText(
-          "featuredLabel",
-          "DATA ERROR"
-        );
-
-
+    function renderHome(stocks, mode) {
+      if (!Array.isArray(stocks) || stocks.length === 0) {
+        setText("marketStatus", "NO DATA");
+        setText("featuredLabel", "NO DATA");
         document
-          .getElementById(
-            "featuredEmpty"
-          ).style.display =
+          .getElementById("featuredEmpty")
+          .style.display =
           "block";
-
-
-        setText(
-          "sentimentText",
-          "Database Error"
-        );
-
-
-        setText(
-          "marketRisk",
-          "Unavailable"
-        );
-
-
-        setText(
-          "marketTrend",
-          "Unavailable"
-        );
-
-
         return;
-
       }
-
-
-      const stocks =
-        Object.values(STOCKS);
-
-
-      if (stocks.length === 0) {
-
-        setText(
-          "marketStatus",
-          "NO DATA"
-        );
-
-        return;
-
-      }
-
-
+      HOME_STOCKS = stocks;
       setText(
         "marketStatus",
-        stocks.length +
-        " SAHAM"
+        stocks.length + " SAHAM"
       );
-
-
-      renderMarketOverview(
-        stocks
+      setText(
+        "dataMode",
+        mode === "API" ? "API" : "FALLBACK"
       );
-
-
-      renderMarketSentiment(
-        stocks
+      setText(
+        "dataNote",
+        mode === "API"
+          ? "Data dimuat melalui IDXNOVA API."
+          : "API tidak tersedia — menggunakan database cadangan."
       );
-
-
-      renderFeaturedStocks(
-        stocks
-      );
-
-
-      renderScoreAverages(
-        stocks
-      );
-
+      renderMarketOverview(stocks);
+      renderMarketSentiment(stocks);
+      renderFeaturedStocks(stocks);
+      renderScoreAverages(stocks);
     }
-
-
-    /*
-      ENTER = SEARCH
-    */
+    async function loadHomeData() {
+      try {
+        const response =
+          await fetch(API_URL, {
+            method: "GET",
+            headers: {
+              "Accept": "application/json"
+            }
+          });
+        if (!response.ok) {
+          throw new Error(
+            "API HTTP " + response.status
+          );
+        }
+        const result =
+          await response.json();
+        if (
+          result.status !== "success" ||
+          !Array.isArray(result.data)
+        ) {
+          throw new Error(
+            "Format data API tidak valid"
+          );
+        }
+        renderHome(
+          result.data,
+          "API"
+        );
+        console.log(
+          "IDXNOVA API connected:",
+          result.data.length,
+          "stocks"
+        );
+      } catch (error) {
+        console.error(
+          "IDXNOVA API gagal:",
+          error
+        );
+        if (
+          typeof STOCKS !== "undefined" &&
+          STOCKS
+        ) {
+          renderHome(
+            Object.values(STOCKS),
+            "FALLBACK"
+          );
+        } else {
+          setText(
+            "marketStatus",
+            "DATA ERROR"
+          );
+          setText(
+            "featuredLabel",
+            "DATA ERROR"
+          );
+          setText(
+            "dataMode",
+            "ERROR"
+          );
+          setText(
+            "dataNote",
+            "IDXNOVA API dan database cadangan tidak tersedia."
+          );
+          setText(
+            "sentimentText",
+            "Data Error"
+          );
+          setText(
+            "marketRisk",
+            "Unavailable"
+          );
+          setText(
+            "marketTrend",
+            "Unavailable"
+          );
+          document
+            .getElementById("featuredEmpty")
+            .style.display =
+            "block";
+        }
+      }
+    }
     document
       .getElementById("stockSearch")
       .addEventListener(
         "keydown",
         function(event) {
-
           if (event.key === "Enter") {
-
             searchStock();
-
           }
-
         }
       );
-
-
-    /*
-      START
-    */
-    initializeHome();
-
+    loadHomeData();
   </script>
-
 </body>
 </html>
