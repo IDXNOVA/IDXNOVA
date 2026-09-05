@@ -1,37 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-
   <meta charset="UTF-8">
-
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   >
 
+  <title>Search Saham | IDXNOVA</title>
 
-  <title>
-    Search Saham | IDXNOVA
-  </title>
-
-
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
-
+  <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
   <!-- =========================
        NAVBAR
-  ========================= -->
+  ========================== -->
 
   <header class="navbar">
-
 
     <a
       href="index.html"
@@ -42,13 +29,11 @@
         N
       </span>
 
-
       <span>
 
         <strong>
           IDXNOVA
         </strong>
-
 
         <small>
           INDONESIAN STOCK INTELLIGENCE
@@ -59,17 +44,13 @@
     </a>
 
 
-
     <button
       class="menu-btn"
       onclick="toggleMenu()"
       aria-label="Buka menu"
     >
-
       ☰
-
     </button>
-
 
 
     <nav id="navMenu">
@@ -98,44 +79,33 @@
         Watchlist
       </a>
 
-      <a
-        href="search.html"
-        class="active"
-      >
+      <a href="search.html">
         🔎 Search
       </a>
 
     </nav>
 
-
   </header>
-
 
 
   <!-- =========================
        MAIN
-  ========================= -->
+  ========================== -->
 
   <main>
 
 
-
     <!-- =========================
          HERO
-    ========================= -->
+    ========================== -->
 
     <section class="hero">
 
-
       <div class="hero-content">
 
-
         <div class="badge">
-
           🔎 IDXNOVA STOCK SEARCH
-
         </div>
-
 
 
         <h1>
@@ -149,22 +119,15 @@
         </h1>
 
 
-
         <p>
-
-          Cari saham berdasarkan ticker,
-          nama perusahaan, atau sektor.
-          Data saham diambil langsung dari
-          IDXNOVA API.
-
+          Cari saham berdasarkan ticker, nama perusahaan,
+          atau sektor. Data diambil langsung dari IDXNOVA API.
         </p>
-
 
 
         <!-- SEARCH BOX -->
 
         <div class="search-box">
-
 
           <input
             type="text"
@@ -173,29 +136,22 @@
             autocomplete="off"
           >
 
-
           <button
             onclick="searchStocks()"
           >
-
             Cari
-
           </button>
 
-
         </div>
-
 
 
         <!-- POPULAR -->
 
         <div class="popular">
 
-
           <span>
             Populer:
           </span>
-
 
 
           <button
@@ -205,13 +161,11 @@
           </button>
 
 
-
           <button
             onclick="quickSearch('BBCA')"
           >
             BBCA
           </button>
-
 
 
           <button
@@ -221,13 +175,11 @@
           </button>
 
 
-
           <button
             onclick="quickSearch('ELSA')"
           >
             ELSA
           </button>
-
 
 
           <button
@@ -236,17 +188,14 @@
             PWON
           </button>
 
-
         </div>
-
 
       </div>
 
 
-
       <!-- =========================
            HERO PANEL
-      ========================= -->
+      ========================== -->
 
       <div class="hero-panel">
 
@@ -257,19 +206,14 @@
             SEARCH DATABASE
           </span>
 
-
-          <strong
-            id="apiMode"
-          >
+          <strong id="apiMode">
             LOADING
           </strong>
 
         </div>
 
 
-
         <div class="sentiment-value">
-
 
           <h2 id="searchCount">
 
@@ -279,14 +223,10 @@
 
 
           <p id="searchStatus">
-
             Menghubungkan ke IDXNOVA API...
-
           </p>
 
-
         </div>
-
 
 
         <div class="sentiment-bar">
@@ -299,7 +239,6 @@
         </div>
 
 
-
         <div class="sentiment-info">
 
 
@@ -309,15 +248,11 @@
               Database
             </small>
 
-
-            <strong
-              id="databaseCount"
-            >
+            <strong id="databaseCount">
               -
             </strong>
 
           </div>
-
 
 
           <div>
@@ -326,10 +261,7 @@
               Status
             </small>
 
-
-            <strong
-              id="databaseStatus"
-            >
+            <strong id="databaseStatus">
               Loading
             </strong>
 
@@ -339,27 +271,21 @@
         </div>
 
 
-
         <p
           class="demo-note"
           id="apiNote"
         >
-
-          Sedang mengambil data pasar terbaru...
-
+          Mengambil data saham dari IDXNOVA API...
         </p>
 
-
       </div>
-
 
     </section>
 
 
-
     <!-- =========================
-         RESULTS
-    ========================= -->
+         SEARCH RESULTS
+    ========================== -->
 
     <section class="section">
 
@@ -369,41 +295,52 @@
 
         <div>
 
-
           <span class="eyebrow">
-
             SEARCH RESULTS
-
           </span>
 
 
-
           <h2 id="resultTitle">
-
             Mulai Cari Saham
-
           </h2>
 
-
         </div>
-
 
 
         <span
           id="resultLabel"
           class="demo-label"
         >
-
           LOADING
-
         </span>
 
 
       </div>
 
 
+      <!-- LOADING -->
 
-      <!-- HASIL -->
+      <div
+        id="searchLoading"
+        class="empty-watchlist"
+      >
+
+        <div class="empty-icon">
+          ⏳
+        </div>
+
+        <h3>
+          Memuat Database IDXNOVA
+        </h3>
+
+        <p>
+          Sedang mengambil data saham terbaru...
+        </p>
+
+      </div>
+
+
+      <!-- HASIL SEARCH -->
 
       <div
         id="searchResults"
@@ -411,40 +348,31 @@
       ></div>
 
 
-
-      <!-- EMPTY STATE -->
+      <!-- EMPTY / ERROR -->
 
       <div
         id="searchEmpty"
         class="empty-watchlist"
+        style="display: none;"
       >
-
 
         <div
           class="empty-icon"
+          id="emptyIcon"
         >
-
           🔎
-
         </div>
 
 
-
         <h3 id="emptyTitle">
-
-          Memuat database saham...
-
+          Cari saham yang ingin kamu analisis
         </h3>
 
 
-
         <p id="emptyText">
-
-          IDXNOVA sedang mengambil data saham
-          dari server.
-
+          Ketik ticker, nama perusahaan,
+          atau sektor untuk mencari saham.
         </p>
-
 
       </div>
 
@@ -452,52 +380,36 @@
     </section>
 
 
-
     <!-- =========================
          CTA
-    ========================= -->
+    ========================== -->
 
     <section class="cta">
 
-
       <span class="eyebrow">
-
         IDXNOVA SEARCH
-
       </span>
 
 
-
       <h2>
-
         Search. Discover. Analyze.
-
       </h2>
 
 
-
       <p>
-
-        Temukan saham dari IDXNOVA API
+        Temukan saham dari database IDXNOVA
         dan buka Stock Detail untuk melihat
         analisis lebih lengkap.
-
       </p>
 
 
-
-      <a
-        href="screener.html"
-      >
+      <a href="screener.html">
 
         <button>
-
           Buka Stock Screener
-
         </button>
 
       </a>
-
 
     </section>
 
@@ -505,52 +417,36 @@
   </main>
 
 
-
   <!-- =========================
        FOOTER
-  ========================= -->
+  ========================== -->
 
   <footer>
 
 
     <div class="footer-brand">
 
-
       <strong>
-
         IDXNOVA
-
       </strong>
 
 
-
       <span>
-
         Indonesian Stock Intelligence
-
       </span>
-
 
     </div>
 
 
-
     <p>
-
       IDXNOVA menyediakan informasi untuk
       tujuan edukasi dan analisis.
-      Bukan rekomendasi membeli atau
-      menjual saham.
-
+      Bukan rekomendasi membeli atau menjual saham.
     </p>
 
 
-
     <small>
-
-      © 2026 IDXNOVA.
-      All rights reserved.
-
+      © 2026 IDXNOVA. All rights reserved.
     </small>
 
 
@@ -560,34 +456,28 @@
 
   <!-- =========================
        JAVASCRIPT
-  ========================= -->
+  ========================== -->
 
   <script>
 
 
     /* =========================
-       IDXNOVA API
-    ========================= */
+       API CONFIG
+    ========================== */
 
     const API_URL =
-      "https://api.rendyalterio22.workers.dev/api/stocks";
+      "https://idxnova-api.rendyalterio22.workers.dev/api/stocks";
 
-
-
-    /*
-      DATABASE SEMENTARA DI MEMORY
-
-      Data langsung berasal dari API,
-      bukan lagi dari stocks.js.
-    */
 
     let STOCKS = [];
+
+    let API_READY = false;
 
 
 
     /* =========================
        MENU
-    ========================= */
+    ========================== */
 
     function toggleMenu() {
 
@@ -601,8 +491,8 @@
 
 
     /* =========================
-       FORMAT HARGA
-    ========================= */
+       FORMAT PRICE
+    ========================== */
 
     function formatPrice(price) {
 
@@ -610,10 +500,59 @@
         Number(price) || 0;
 
 
-      return "Rp" +
-        value.toLocaleString(
-          "id-ID"
+      return (
+        "Rp" +
+        value.toLocaleString("id-ID")
+      );
+
+    }
+
+
+
+    /* =========================
+       FORMAT DATE
+    ========================== */
+
+    function formatDate(dateValue) {
+
+      if (!dateValue) {
+
+        return "-";
+
+      }
+
+
+      try {
+
+        const date =
+          new Date(dateValue);
+
+
+        if (
+          Number.isNaN(
+            date.getTime()
+          )
+        ) {
+
+          return String(dateValue);
+
+        }
+
+
+        return date.toLocaleDateString(
+          "id-ID",
+          {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+          }
         );
+
+      } catch (error) {
+
+        return String(dateValue);
+
+      }
 
     }
 
@@ -621,15 +560,13 @@
 
     /* =========================
        OPEN STOCK DETAIL
-    ========================= */
+    ========================== */
 
     function openStock(ticker) {
 
       window.location.href =
         "stock.html?ticker=" +
-        encodeURIComponent(
-          ticker
-        );
+        encodeURIComponent(ticker);
 
     }
 
@@ -637,14 +574,13 @@
 
     /* =========================
        UPDATE SEARCH INFO
-    ========================= */
+    ========================== */
 
     function updateSearchInfo(
       count,
       status,
       label
     ) {
-
 
       document
         .getElementById("searchCount")
@@ -653,12 +589,10 @@
         "<span> Hasil</span>";
 
 
-
       document
         .getElementById("searchStatus")
         .textContent =
         status;
-
 
 
       document
@@ -667,19 +601,22 @@
         label;
 
 
-
-      document
-        .getElementById("searchBar")
-        .style.width =
+      const width =
         count === 0
-          ? "0%"
+          ? 0
           : Math.min(
               100,
               Math.max(
                 10,
                 count * 10
               )
-            ) + "%";
+            );
+
+
+      document
+        .getElementById("searchBar")
+        .style.width =
+        width + "%";
 
     }
 
@@ -687,9 +624,15 @@
 
     /* =========================
        LOAD API
-    ========================= */
+    ========================== */
 
     async function loadStocks() {
+
+
+      const loading =
+        document.getElementById(
+          "searchLoading"
+        );
 
 
       const emptyState =
@@ -698,169 +641,141 @@
         );
 
 
-      const emptyTitle =
-        document.getElementById(
-          "emptyTitle"
-        );
+      loading.style.display =
+        "block";
 
 
-      const emptyText =
-        document.getElementById(
-          "emptyText"
-        );
+      emptyState.style.display =
+        "none";
+
+
+      document
+        .getElementById("databaseStatus")
+        .textContent =
+        "Loading";
+
+
+      document
+        .getElementById("apiMode")
+        .textContent =
+        "LOADING";
+
+
+      document
+        .getElementById("resultLabel")
+        .textContent =
+        "LOADING";
+
+
+      document
+        .getElementById("apiNote")
+        .textContent =
+        "Menghubungkan ke IDXNOVA API...";
 
 
       try {
-
-
-        document
-          .getElementById("databaseStatus")
-          .textContent =
-          "Loading";
-
-
-        document
-          .getElementById("apiMode")
-          .textContent =
-          "LIVE API";
-
-
-        document
-          .getElementById("apiNote")
-          .textContent =
-          "Menghubungkan ke database IDXNOVA...";
-
-
-        emptyState.style.display =
-          "block";
-
-
-        emptyTitle.textContent =
-          "Memuat database saham";
-
-
-        emptyText.textContent =
-          "Mohon tunggu, data sedang diambil dari IDXNOVA API.";
-
 
 
         const response =
           await fetch(
             API_URL,
             {
-              method:
-                "GET",
+              method: "GET",
 
               headers: {
                 "Accept":
                   "application/json"
-              }
+              },
+
+              cache:
+                "no-store"
             }
           );
-
 
 
         if (!response.ok) {
 
           throw new Error(
-            "API HTTP " +
+            "HTTP " +
             response.status
           );
 
         }
 
 
-
         const result =
           await response.json();
 
 
-
         if (
           !result ||
-          result.status !== "success"
-        ) {
-
-          throw new Error(
-            result &&
-            result.message
-              ? result.message
-              : "Respons API tidak valid"
-          );
-
-        }
-
-
-
-        if (
           !Array.isArray(
             result.data
           )
         ) {
 
           throw new Error(
-            "Data saham dari API tidak valid"
+            "Format data API tidak valid"
           );
 
         }
-
 
 
         STOCKS =
           result.data;
 
 
-
-        const total =
-          STOCKS.length;
-
+        API_READY =
+          true;
 
 
-        document
-          .getElementById("databaseCount")
-          .textContent =
-          total +
-          " Saham";
-
+        loading.style.display =
+          "none";
 
 
         document
           .getElementById("databaseStatus")
           .textContent =
-          "Live";
+          "Online";
 
+
+        document
+          .getElementById("databaseCount")
+          .textContent =
+          STOCKS.length +
+          " Saham";
 
 
         document
           .getElementById("apiMode")
           .textContent =
-          "LIVE DATA";
+          "ONLINE";
 
+
+        document
+          .getElementById("resultLabel")
+          .textContent =
+          "READY";
 
 
         document
           .getElementById("apiNote")
           .textContent =
-          "Data pasar terhubung dari IDXNOVA API.";
-
-
-
-        emptyTitle.textContent =
-          "Cari saham yang ingin kamu analisis";
-
-
-        emptyText.textContent =
-          total +
-          " saham berhasil dimuat. " +
-          "Ketik ticker, nama perusahaan, atau sektor.";
-
+          "Data terhubung langsung ke IDXNOVA API.";
 
 
         updateSearchInfo(
           0,
-          total +
-          " saham siap dicari",
+          STOCKS.length +
+          " saham berhasil dimuat",
           "READY"
+        );
+
+
+        console.log(
+          "IDXNOVA API berhasil dimuat:",
+          STOCKS.length,
+          "saham"
         );
 
 
@@ -873,16 +788,39 @@
         );
 
 
+        STOCKS =
+          [];
 
-        STOCKS = [];
 
+        API_READY =
+          false;
+
+
+        loading.style.display =
+          "none";
+
+
+        emptyState.style.display =
+          "block";
 
 
         document
-          .getElementById("databaseCount")
+          .getElementById("emptyIcon")
           .textContent =
-          "0 Saham";
+          "⚠️";
 
+
+        document
+          .getElementById("emptyTitle")
+          .textContent =
+          "Gagal memuat database";
+
+
+        document
+          .getElementById("emptyText")
+          .textContent =
+          "IDXNOVA API tidak dapat dihubungi. Coba refresh halaman. Detail: " +
+          error.message;
 
 
         document
@@ -891,19 +829,16 @@
           "Error";
 
 
+        document
+          .getElementById("databaseCount")
+          .textContent =
+          "0 Saham";
+
 
         document
           .getElementById("apiMode")
           .textContent =
           "OFFLINE";
-
-
-
-        document
-          .getElementById("apiNote")
-          .textContent =
-          "Gagal terhubung ke IDXNOVA API.";
-
 
 
         document
@@ -912,27 +847,10 @@
           "Database Error";
 
 
-
         document
-          .getElementById("resultLabel")
+          .getElementById("apiNote")
           .textContent =
-          "ERROR";
-
-
-
-        emptyState.style.display =
-          "block";
-
-
-        emptyTitle.textContent =
-          "Gagal memuat database";
-
-
-        emptyText.textContent =
-          "IDXNOVA API tidak dapat dihubungi. " +
-          "Coba refresh halaman. Detail: " +
-          error.message;
-
+          "Koneksi ke IDXNOVA API gagal.";
 
 
         updateSearchInfo(
@@ -949,7 +867,7 @@
 
     /* =========================
        SEARCH STOCKS
-    ========================= */
+    ========================== */
 
     function searchStocks() {
 
@@ -966,7 +884,6 @@
           .toLowerCase();
 
 
-
       const container =
         document.getElementById(
           "searchResults"
@@ -976,6 +893,18 @@
       const emptyState =
         document.getElementById(
           "searchEmpty"
+        );
+
+
+      const loading =
+        document.getElementById(
+          "searchLoading"
+        );
+
+
+      const emptyIcon =
+        document.getElementById(
+          "emptyIcon"
         );
 
 
@@ -991,31 +920,35 @@
         );
 
 
+      /*
+        API BELUM SIAP
+      */
 
-      /* =====================
-         API BELUM TERSEDIA
-      ===================== */
-
-      if (
-        !Array.isArray(STOCKS) ||
-        STOCKS.length === 0
-      ) {
+      if (!API_READY) {
 
 
         container.innerHTML =
           "";
 
 
+        loading.style.display =
+          "none";
+
+
         emptyState.style.display =
           "block";
 
 
+        emptyIcon.textContent =
+          "⚠️";
+
+
         emptyTitle.textContent =
-          "Database belum tersedia";
+          "Database belum siap";
 
 
         emptyText.textContent =
-          "Data saham belum berhasil dimuat dari IDXNOVA API.";
+          "IDXNOVA API sedang dimuat atau koneksi gagal. Coba refresh halaman.";
 
 
         document
@@ -1026,7 +959,7 @@
 
         updateSearchInfo(
           0,
-          "Database IDXNOVA belum tersedia",
+          "Menunggu koneksi API",
           "WAIT"
         );
 
@@ -1037,9 +970,9 @@
 
 
 
-      /* =====================
-         INPUT KOSONG
-      ===================== */
+      /*
+        INPUT KOSONG
+      */
 
       if (!query) {
 
@@ -1050,6 +983,10 @@
 
         emptyState.style.display =
           "block";
+
+
+        emptyIcon.textContent =
+          "🔎";
 
 
         emptyTitle.textContent =
@@ -1082,9 +1019,9 @@
 
 
 
-      /* =====================
-         CARI SAHAM
-      ===================== */
+      /*
+        CARI DI API DATABASE
+      */
 
       const results =
         STOCKS
@@ -1094,45 +1031,29 @@
 
               const ticker =
                 String(
-                  stock.ticker ||
-                  ""
+                  stock.ticker || ""
                 )
                   .toLowerCase();
-
 
 
               const name =
                 String(
-                  stock.name ||
-                  ""
+                  stock.name || ""
                 )
                   .toLowerCase();
-
 
 
               const sector =
                 String(
-                  stock.sector ||
-                  ""
+                  stock.sector || ""
                 )
                   .toLowerCase();
 
 
-
               return (
-
-                ticker.includes(
-                  query
-                ) ||
-
-                name.includes(
-                  query
-                ) ||
-
-                sector.includes(
-                  query
-                )
-
+                ticker.includes(query) ||
+                name.includes(query) ||
+                sector.includes(query)
               );
 
             }
@@ -1140,32 +1061,23 @@
           .sort(
             function(a, b) {
 
-
               return (
-                Number(
-                  b.overall
-                ) || 0
-              ) -
-              (
-                Number(
-                  a.overall
-                ) || 0
+                (Number(b.overall) || 0) -
+                (Number(a.overall) || 0)
               );
-
 
             }
           );
 
 
 
-      /* RESET */
+      /*
+        RESET
+      */
 
       container.innerHTML =
         "";
 
-
-
-      /* UPDATE TITLE */
 
       document
         .getElementById("resultTitle")
@@ -1175,17 +1087,19 @@
 
 
 
-      /* =====================
-         TIDAK ADA HASIL
-      ===================== */
+      /*
+        TIDAK ADA HASIL
+      */
 
-      if (
-        results.length === 0
-      ) {
+      if (results.length === 0) {
 
 
         emptyState.style.display =
           "block";
+
+
+        emptyIcon.textContent =
+          "🔍";
 
 
         emptyTitle.textContent =
@@ -1193,9 +1107,9 @@
 
 
         emptyText.textContent =
-          "Tidak ada saham yang cocok dengan \"" +
+          'Tidak ada saham yang cocok dengan "' +
           input.value.trim() +
-          "\" di IDXNOVA Database.";
+          '" di database IDXNOVA.';
 
 
         updateSearchInfo(
@@ -1211,13 +1125,12 @@
 
 
 
-      /* =====================
-         ADA HASIL
-      ===================== */
+      /*
+        ADA HASIL
+      */
 
       emptyState.style.display =
         "none";
-
 
 
       updateSearchInfo(
@@ -1230,9 +1143,9 @@
 
 
 
-      /* =====================
-         RENDER RESULTS
-      ===================== */
+      /*
+        RENDER STOCK CARD
+      */
 
       results.forEach(
         function(stock) {
@@ -1244,7 +1157,6 @@
             );
 
 
-
           card.className =
             "stock-card";
 
@@ -1253,12 +1165,10 @@
             "pointer";
 
 
-
           const change =
             Number(
               stock.change
             ) || 0;
-
 
 
           const changeSymbol =
@@ -1267,28 +1177,21 @@
               : "▼ ";
 
 
-
           const changeClass =
             change >= 0
               ? "positive"
               : "negative";
 
 
-
-          const price =
+          const overall =
             Number(
-              stock.price
+              stock.overall
             ) || 0;
 
 
-
-          const overall =
-            Math.round(
-              Number(
-                stock.overall
-              ) || 0
-            );
-
+          const outlook =
+            stock.label ||
+            "Netral";
 
 
           card.innerHTML = `
@@ -1319,7 +1222,7 @@
 
             <div class="stock-price">
 
-              ${formatPrice(price)}
+              ${formatPrice(stock.price)}
 
             </div>
 
@@ -1340,26 +1243,21 @@
           `;
 
 
-
           card.addEventListener(
             "click",
             function() {
-
 
               openStock(
                 stock.ticker
               );
 
-
             }
           );
-
 
 
           container.appendChild(
             card
           );
-
 
         }
       );
@@ -1370,11 +1268,9 @@
 
     /* =========================
        QUICK SEARCH
-    ========================= */
+    ========================== */
 
-    function quickSearch(
-      ticker
-    ) {
+    function quickSearch(ticker) {
 
 
       document
@@ -1383,17 +1279,15 @@
         ticker;
 
 
-
       searchStocks();
-
 
     }
 
 
 
     /* =========================
-       ENTER SEARCH
-    ========================= */
+       ENTER TO SEARCH
+    ========================== */
 
     document
       .getElementById("stockSearch")
@@ -1401,18 +1295,13 @@
         "keydown",
         function(event) {
 
-
           if (
-            event.key ===
-            "Enter"
+            event.key === "Enter"
           ) {
-
 
             searchStocks();
 
-
           }
-
 
         }
       );
@@ -1420,16 +1309,14 @@
 
 
     /* =========================
-       LOAD PAGE
-    ========================= */
+       AUTO LOAD API
+    ========================== */
 
     window.addEventListener(
       "DOMContentLoaded",
       function() {
 
-
         loadStocks();
-
 
       }
     );
