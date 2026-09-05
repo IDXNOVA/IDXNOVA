@@ -1,5 +1,3 @@
-<script src="./stocks.js"></script>
-
 <script>
 
 /* =========================================
@@ -60,7 +58,11 @@ function setText(id, value) {
 
   if (element) {
 
-    element.textContent = value;
+    element.textContent =
+      value === null ||
+      value === undefined
+        ? "-"
+        : value;
 
   }
 
@@ -426,12 +428,18 @@ function normalizeStock(stock) {
 
   return {
 
+    /* =====================================
+       IDENTITAS
+    ===================================== */
+
     ticker:
       String(
         stock.ticker ||
         stock.StockCode ||
         ""
-      ).toUpperCase(),
+      )
+      .trim()
+      .toUpperCase(),
 
     name:
       stock.name ||
@@ -442,6 +450,11 @@ function normalizeStock(stock) {
       stock.sector ||
       stock.Sector ||
       "IDX Listed Company",
+
+
+    /* =====================================
+       MARKET DATA
+    ===================================== */
 
     price:
       stock.price ??
@@ -457,6 +470,11 @@ function normalizeStock(stock) {
       stock.ChangePercent ??
       0,
 
+
+    /* =====================================
+       IDXNOVA SCORES
+    ===================================== */
+
     overall:
       overall,
 
@@ -471,6 +489,11 @@ function normalizeStock(stock) {
 
     long:
       long,
+
+
+    /* =====================================
+       ANALYSIS LABEL
+    ===================================== */
 
     bestFit:
       stock.bestFit ||
@@ -509,20 +532,130 @@ function normalizeStock(stock) {
       stock.longOutlook ||
       getOutlook(long),
 
+
+    /* =====================================
+       FUNDAMENTAL GROWTH
+    ===================================== */
+
     revenueGrowth:
       stock.revenueGrowth ??
-      "-",
+      stock.revenue_growth ??
+      null,
 
     profitGrowth:
       stock.profitGrowth ??
-      "-",
+      stock.profit_growth ??
+      null,
+
+
+    /* =====================================
+       PROFITABILITY
+    ===================================== */
 
     roe:
       stock.roe ??
-      "-",
+      stock.ROE ??
+      null,
+
+    roa:
+      stock.roa ??
+      stock.ROA ??
+      null,
+
+    netMargin:
+      stock.netMargin ??
+      stock.net_margin ??
+      stock.netProfitMargin ??
+      null,
+
+
+    /* =====================================
+       FINANCIAL HEALTH
+    ===================================== */
+
+    debtToEquity:
+      stock.debtToEquity ??
+      stock.debt_to_equity ??
+      stock.der ??
+      stock.DER ??
+      null,
+
+    currentRatio:
+      stock.currentRatio ??
+      stock.current_ratio ??
+      null,
+
+
+    /* =====================================
+       VALUATION METRICS
+    ===================================== */
+
+    pe:
+      stock.pe ??
+      stock.PE ??
+      stock.per ??
+      stock.PER ??
+      null,
+
+    pb:
+      stock.pb ??
+      stock.PB ??
+      stock.pbv ??
+      stock.PBV ??
+      null,
+
+
+    /* =====================================
+       DIVIDEND
+    ===================================== */
+
+    dividendYield:
+      stock.dividendYield ??
+      stock.dividend_yield ??
+      null,
+
+    dividendPerShare:
+      stock.dividendPerShare ??
+      stock.dps ??
+      null,
+
+
+    /* =====================================
+       ADDITIONAL FUNDAMENTAL
+    ===================================== */
+
+    eps:
+      stock.eps ??
+      stock.EPS ??
+      null,
+
+    bvps:
+      stock.bvps ??
+      stock.BVPS ??
+      null,
+
+    revenue:
+      stock.revenue ??
+      null,
+
+    netIncome:
+      stock.netIncome ??
+      stock.net_income ??
+      null,
+
+    grossProfit:
+      stock.grossProfit ??
+      stock.gross_profit ??
+      null,
+
+
+    /* =====================================
+       DISPLAY SNAPSHOT
+    ===================================== */
 
     debtLevel:
       stock.debtLevel ??
+      stock.debt_level ??
       "-",
 
     dividend:
@@ -531,6 +664,7 @@ function normalizeStock(stock) {
 
     businessQuality:
       stock.businessQuality ??
+      stock.business_quality ??
       getOutlook(long)
 
   };
@@ -543,7 +677,9 @@ function normalizeStock(stock) {
 ========================================= */
 
 
-/* RATA-RATA SCORE YANG TERSEDIA */
+/* =========================================
+   RATA-RATA SCORE YANG TERSEDIA
+========================================= */
 
 function calculateAverageScore(scores) {
 
@@ -560,6 +696,7 @@ function calculateAverageScore(scores) {
       }
     );
 
+
   if (validScores.length === 0) {
 
     return {
@@ -571,6 +708,7 @@ function calculateAverageScore(scores) {
 
   }
 
+
   const total =
     validScores.reduce(
       function(sum, score) {
@@ -580,6 +718,7 @@ function calculateAverageScore(scores) {
       },
       0
     );
+
 
   return {
 
@@ -896,6 +1035,7 @@ function calculateFundamentalScore(stock) {
       scoreRevenueGrowth(
         stock.revenueGrowth
       ),
+
       scoreProfitGrowth(
         stock.profitGrowth
       )
@@ -907,6 +1047,7 @@ function calculateFundamentalScore(stock) {
       scoreDebtToEquity(
         stock.debtToEquity
       ),
+
       scoreCurrentRatio(
         stock.currentRatio
       )
@@ -966,11 +1107,11 @@ function calculateFundamentalScore(stock) {
 
       overall: null,
       metrics: 0,
-      profitability,
-      growth,
-      health,
-      valuation,
-      dividend
+      profitability: profitability,
+      growth: growth,
+      health: health,
+      valuation: valuation,
+      dividend: dividend
 
     };
 
@@ -1052,13 +1193,13 @@ function calculateFundamentalScore(stock) {
 
   return {
 
-    overall,
+    overall: overall,
     metrics: totalMetrics,
-    profitability,
-    growth,
-    health,
-    valuation,
-    dividend
+    profitability: profitability,
+    growth: growth,
+    health: health,
+    valuation: valuation,
+    dividend: dividend
 
   };
 
@@ -1126,39 +1267,49 @@ function getFundamentalDescription(
 
   if (score >= 85) {
 
-    return "Fundamental sangat kuat berdasarkan " +
+    return (
+      "Fundamental sangat kuat berdasarkan " +
       metrics +
-      " metrik yang tersedia.";
+      " metrik yang tersedia."
+    );
 
   }
 
   if (score >= 75) {
 
-    return "Fundamental kuat berdasarkan " +
+    return (
+      "Fundamental kuat berdasarkan " +
       metrics +
-      " metrik yang tersedia.";
+      " metrik yang tersedia."
+    );
 
   }
 
   if (score >= 60) {
 
-    return "Fundamental cukup sehat berdasarkan " +
+    return (
+      "Fundamental cukup sehat berdasarkan " +
       metrics +
-      " metrik yang tersedia.";
+      " metrik yang tersedia."
+    );
 
   }
 
   if (score >= 45) {
 
-    return "Fundamental berada pada kondisi moderat berdasarkan " +
+    return (
+      "Fundamental berada pada kondisi moderat berdasarkan " +
       metrics +
-      " metrik yang tersedia.";
+      " metrik yang tersedia."
+    );
 
   }
 
-  return "Fundamental memerlukan perhatian berdasarkan " +
+  return (
+    "Fundamental memerlukan perhatian berdasarkan " +
     metrics +
-    " metrik yang tersedia.";
+    " metrik yang tersedia."
+  );
 
 }
 
@@ -1528,6 +1679,10 @@ function renderStock(rawStock, mode) {
     " | IDXNOVA";
 
 
+  /* =====================================
+     HEADER
+  ===================================== */
+
   setText(
     "stockSector",
     stock.sector
@@ -1566,6 +1721,10 @@ function renderStock(rawStock, mode) {
     stock.label
   );
 
+
+  /* =====================================
+     OVERALL SCORE
+  ===================================== */
 
   const overallElement =
     document.getElementById(
@@ -1608,6 +1767,10 @@ function renderStock(rawStock, mode) {
   );
 
 
+  /* =====================================
+     PRICE
+  ===================================== */
+
   setText(
     "stockPrice",
     formatPrice(stock.price)
@@ -1640,6 +1803,10 @@ function renderStock(rawStock, mode) {
   }
 
 
+  /* =====================================
+     SCORE SUMMARY
+  ===================================== */
+
   setText(
     "stockTrading",
     stock.trading + "/100"
@@ -1657,6 +1824,10 @@ function renderStock(rawStock, mode) {
     stock.medium + "/100"
   );
 
+
+  /* =====================================
+     TRADING
+  ===================================== */
 
   setText(
     "tradingOutlook",
@@ -1684,6 +1855,10 @@ function renderStock(rawStock, mode) {
   }
 
 
+  /* =====================================
+     SWING
+  ===================================== */
+
   setText(
     "swingOutlook",
     stock.swingOutlook
@@ -1710,6 +1885,10 @@ function renderStock(rawStock, mode) {
   }
 
 
+  /* =====================================
+     MEDIUM TERM
+  ===================================== */
+
   setText(
     "mediumOutlook",
     stock.mediumOutlook
@@ -1735,6 +1914,10 @@ function renderStock(rawStock, mode) {
 
   }
 
+
+  /* =====================================
+     LONG TERM
+  ===================================== */
 
   setText(
     "longOutlook",
@@ -1792,15 +1975,32 @@ function renderStock(rawStock, mode) {
 
   setText(
     "debtLevel",
-    stock.debtLevel ||
-    "Data belum tersedia"
+    stock.debtLevel !== "-"
+      ? stock.debtLevel
+      : (
+          stock.debtToEquity !== null
+            ? "D/E " +
+              Number(
+                stock.debtToEquity
+              ).toFixed(2) +
+              "x"
+            : "Data belum tersedia"
+        )
   );
 
 
   setText(
     "stockDividend",
-    stock.dividend ||
-    "Data belum tersedia"
+    stock.dividend !== "-"
+      ? stock.dividend
+      : (
+          stock.dividendYield !== null
+            ? Number(
+                stock.dividendYield
+              ).toFixed(2) +
+              "%"
+            : "Data belum tersedia"
+        )
   );
 
 
@@ -1813,10 +2013,14 @@ function renderStock(rawStock, mode) {
 
   /* =====================================
      NOVA FUNDAMENTAL SCORE
+
+     PENTING:
+     Gunakan "stock" yang sudah dinormalisasi,
+     bukan rawStock.
   ===================================== */
 
   renderFundamentalAnalysis(
-    rawStock
+    stock
   );
 
 
@@ -2010,9 +2214,9 @@ async function loadStock() {
        GABUNGKAN DATA
 
        Prioritas:
-       1. stocks.js fallback
+       1. Fundamental API
        2. Market API
-       3. Fundamental API
+       3. stocks.js fallback
     ===================================== */
 
     const mergedStock = {
@@ -2021,6 +2225,12 @@ async function loadStock() {
 
       ...marketStock,
 
+      ...fundamental,
+
+
+      /* =================================
+         IDENTITAS
+      ================================= */
 
       ticker:
         marketStock.ticker ||
@@ -2121,28 +2331,32 @@ async function loadStock() {
 
 
       /* =================================
-         FUNDAMENTAL
+         FUNDAMENTAL GROWTH
       ================================= */
 
       revenueGrowth:
         fundamental.revenueGrowth ??
         fundamental.revenue_growth ??
         fallbackStock.revenueGrowth ??
-        "-",
+        null,
 
 
       profitGrowth:
         fundamental.profitGrowth ??
         fundamental.profit_growth ??
         fallbackStock.profitGrowth ??
-        "-",
+        null,
 
+
+      /* =================================
+         PROFITABILITY
+      ================================= */
 
       roe:
         fundamental.roe ??
         fundamental.ROE ??
         fallbackStock.roe ??
-        "-",
+        null,
 
 
       roa:
@@ -2160,6 +2374,10 @@ async function loadStock() {
         null,
 
 
+      /* =================================
+         FINANCIAL HEALTH
+      ================================= */
+
       debtToEquity:
         fundamental.debtToEquity ??
         fundamental.debt_to_equity ??
@@ -2175,6 +2393,10 @@ async function loadStock() {
         fallbackStock.currentRatio ??
         null,
 
+
+      /* =================================
+         VALUATION
+      ================================= */
 
       pe:
         fundamental.pe ??
@@ -2194,6 +2416,10 @@ async function loadStock() {
         null,
 
 
+      /* =================================
+         DIVIDEND
+      ================================= */
+
       dividendYield:
         fundamental.dividendYield ??
         fundamental.dividend_yield ??
@@ -2207,6 +2433,10 @@ async function loadStock() {
         fallbackStock.dividendPerShare ??
         null,
 
+
+      /* =================================
+         OTHER FUNDAMENTAL
+      ================================= */
 
       eps:
         fundamental.eps ??
@@ -2242,6 +2472,10 @@ async function loadStock() {
         null,
 
 
+      /* =================================
+         FUNDAMENTAL SNAPSHOT DISPLAY
+      ================================= */
+
       debtLevel:
         fundamental.debtLevel ??
         fundamental.debt_level ??
@@ -2255,7 +2489,7 @@ async function loadStock() {
               "x"
             : (
               fallbackStock.debtLevel ??
-              "Data belum tersedia"
+              "-"
             )
         ),
 
@@ -2271,7 +2505,7 @@ async function loadStock() {
               "%"
             : (
               fallbackStock.dividend ??
-              "Data belum tersedia"
+              "-"
             )
         ),
 
@@ -2280,7 +2514,7 @@ async function loadStock() {
         fundamental.businessQuality ??
         fundamental.business_quality ??
         fallbackStock.businessQuality ??
-        "-",
+        "",
 
 
       /* =================================
@@ -2394,7 +2628,6 @@ async function loadStock() {
         STOCKS[ticker],
         "FALLBACK"
       );
-
 
     } else {
 
