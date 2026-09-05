@@ -1,72 +1,170 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Search Saham | IDXNOVA</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-  <link rel="stylesheet" href="style.css">
+
+  <title>
+    Search Saham | IDXNOVA
+  </title>
+
+
+  <link
+    rel="stylesheet"
+    href="style.css"
+  >
+
 </head>
+
 
 <body>
 
-  <!-- NAVBAR -->
+
+  <!-- =========================
+       NAVBAR
+  ========================= -->
+
   <header class="navbar">
 
-    <a href="index.html" class="brand">
-      <span class="brand-mark">N</span>
-      <span>
-        <strong>IDXNOVA</strong>
-        <small>INDONESIAN STOCK INTELLIGENCE</small>
+
+    <a
+      href="index.html"
+      class="brand"
+    >
+
+      <span class="brand-mark">
+        N
       </span>
+
+
+      <span>
+
+        <strong>
+          IDXNOVA
+        </strong>
+
+
+        <small>
+          INDONESIAN STOCK INTELLIGENCE
+        </small>
+
+      </span>
+
     </a>
+
+
 
     <button
       class="menu-btn"
       onclick="toggleMenu()"
       aria-label="Buka menu"
     >
+
       ☰
+
     </button>
 
+
+
     <nav id="navMenu">
-      <a href="index.html">Home</a>
-      <a href="trading.html">Trading</a>
-      <a href="swing.html">Swing</a>
-      <a href="investing.html">Investing</a>
-      <a href="screener.html">Screener</a>
-      <a href="watchlist.html">Watchlist</a>
-      <a href="search.html">🔎 Search</a>
+
+      <a href="index.html">
+        Home
+      </a>
+
+      <a href="trading.html">
+        Trading
+      </a>
+
+      <a href="swing.html">
+        Swing
+      </a>
+
+      <a href="investing.html">
+        Investing
+      </a>
+
+      <a href="screener.html">
+        Screener
+      </a>
+
+      <a href="watchlist.html">
+        Watchlist
+      </a>
+
+      <a
+        href="search.html"
+        class="active"
+      >
+        🔎 Search
+      </a>
+
     </nav>
+
 
   </header>
 
 
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
   <main>
 
-    <!-- HERO -->
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
     <section class="hero">
+
 
       <div class="hero-content">
 
+
         <div class="badge">
+
           🔎 IDXNOVA STOCK SEARCH
+
         </div>
 
+
+
         <h1>
+
           Cari Saham Indonesia
-          <span>Lebih Cepat.</span>
+
+          <span>
+            Lebih Cepat.
+          </span>
+
         </h1>
 
+
+
         <p>
-          Cari saham berdasarkan ticker, nama perusahaan, atau sektor.
-          Semua hasil diambil dari database pusat IDXNOVA.
+
+          Cari saham berdasarkan ticker,
+          nama perusahaan, atau sektor.
+          Data saham diambil langsung dari
+          IDXNOVA API.
+
         </p>
 
 
+
         <!-- SEARCH BOX -->
+
         <div class="search-box">
+
 
           <input
             type="text"
@@ -75,214 +173,421 @@
             autocomplete="off"
           >
 
-          <button onclick="searchStocks()">
+
+          <button
+            onclick="searchStocks()"
+          >
+
             Cari
+
           </button>
+
 
         </div>
 
+
+
+        <!-- POPULAR -->
 
         <div class="popular">
 
-          <span>Populer:</span>
 
-          <button onclick="quickSearch('BBRI')">
+          <span>
+            Populer:
+          </span>
+
+
+
+          <button
+            onclick="quickSearch('BBRI')"
+          >
             BBRI
           </button>
 
-          <button onclick="quickSearch('BBCA')">
+
+
+          <button
+            onclick="quickSearch('BBCA')"
+          >
             BBCA
           </button>
 
-          <button onclick="quickSearch('ANTM')">
+
+
+          <button
+            onclick="quickSearch('ANTM')"
+          >
             ANTM
           </button>
 
-          <button onclick="quickSearch('ELSA')">
+
+
+          <button
+            onclick="quickSearch('ELSA')"
+          >
             ELSA
           </button>
 
-          <button onclick="quickSearch('PWON')">
+
+
+          <button
+            onclick="quickSearch('PWON')"
+          >
             PWON
           </button>
 
+
         </div>
+
 
       </div>
 
 
-      <!-- HERO PANEL -->
+
+      <!-- =========================
+           HERO PANEL
+      ========================= -->
+
       <div class="hero-panel">
 
+
         <div class="panel-top">
-          <span>SEARCH DATABASE</span>
-          <strong>DEMO MODE</strong>
+
+          <span>
+            SEARCH DATABASE
+          </span>
+
+
+          <strong
+            id="apiMode"
+          >
+            LOADING
+          </strong>
+
         </div>
+
 
 
         <div class="sentiment-value">
 
+
           <h2 id="searchCount">
+
             0<span> Hasil</span>
+
           </h2>
 
+
           <p id="searchStatus">
-            Cari saham di database IDXNOVA
+
+            Menghubungkan ke IDXNOVA API...
+
           </p>
 
+
         </div>
+
 
 
         <div class="sentiment-bar">
-          <span id="searchBar" style="width: 0%"></span>
+
+          <span
+            id="searchBar"
+            style="width: 0%"
+          ></span>
+
         </div>
+
 
 
         <div class="sentiment-info">
 
-          <div>
-            <small>Database</small>
-            <strong>Central</strong>
-          </div>
 
           <div>
-            <small>Status</small>
-            <strong id="databaseStatus">
-              Ready
+
+            <small>
+              Database
+            </small>
+
+
+            <strong
+              id="databaseCount"
+            >
+              -
             </strong>
+
           </div>
+
+
+
+          <div>
+
+            <small>
+              Status
+            </small>
+
+
+            <strong
+              id="databaseStatus"
+            >
+              Loading
+            </strong>
+
+          </div>
+
 
         </div>
 
 
-        <p class="demo-note">
-          Data masih menggunakan database demonstrasi IDXNOVA.
+
+        <p
+          class="demo-note"
+          id="apiNote"
+        >
+
+          Sedang mengambil data pasar terbaru...
+
         </p>
 
+
       </div>
+
 
     </section>
 
 
-    <!-- RESULTS -->
+
+    <!-- =========================
+         RESULTS
+    ========================= -->
+
     <section class="section">
+
 
       <div class="section-heading">
 
+
         <div>
 
+
           <span class="eyebrow">
+
             SEARCH RESULTS
+
           </span>
 
+
+
           <h2 id="resultTitle">
+
             Mulai Cari Saham
+
           </h2>
 
+
         </div>
+
 
 
         <span
           id="resultLabel"
           class="demo-label"
         >
-          READY
+
+          LOADING
+
         </span>
+
 
       </div>
 
 
-      <!-- HASIL SEARCH -->
+
+      <!-- HASIL -->
+
       <div
         id="searchResults"
         class="stock-grid"
       ></div>
 
 
-      <!-- PESAN AWAL / TIDAK ADA HASIL -->
+
+      <!-- EMPTY STATE -->
+
       <div
         id="searchEmpty"
         class="empty-watchlist"
       >
 
-        <div class="empty-icon">
+
+        <div
+          class="empty-icon"
+        >
+
           🔎
+
         </div>
 
+
+
         <h3 id="emptyTitle">
-          Cari saham yang ingin kamu analisis
+
+          Memuat database saham...
+
         </h3>
 
+
+
         <p id="emptyText">
-          Ketik ticker, nama perusahaan, atau sektor untuk mencari saham.
+
+          IDXNOVA sedang mengambil data saham
+          dari server.
+
         </p>
+
 
       </div>
 
+
     </section>
 
 
-    <!-- CTA -->
+
+    <!-- =========================
+         CTA
+    ========================= -->
+
     <section class="cta">
 
+
       <span class="eyebrow">
+
         IDXNOVA SEARCH
+
       </span>
 
+
+
       <h2>
+
         Search. Discover. Analyze.
+
       </h2>
 
+
+
       <p>
-        Temukan saham dari database IDXNOVA dan buka Stock Detail
-        untuk melihat analisis lebih lengkap.
+
+        Temukan saham dari IDXNOVA API
+        dan buka Stock Detail untuk melihat
+        analisis lebih lengkap.
+
       </p>
 
-      <a href="screener.html">
+
+
+      <a
+        href="screener.html"
+      >
+
         <button>
+
           Buka Stock Screener
+
         </button>
+
       </a>
 
+
     </section>
+
 
   </main>
 
 
-  <!-- FOOTER -->
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
   <footer>
+
 
     <div class="footer-brand">
 
+
       <strong>
+
         IDXNOVA
+
       </strong>
 
+
+
       <span>
+
         Indonesian Stock Intelligence
+
       </span>
+
 
     </div>
 
 
+
     <p>
-      IDXNOVA menyediakan informasi untuk tujuan edukasi dan analisis.
-      Bukan rekomendasi membeli atau menjual saham.
+
+      IDXNOVA menyediakan informasi untuk
+      tujuan edukasi dan analisis.
+      Bukan rekomendasi membeli atau
+      menjual saham.
+
     </p>
 
 
+
     <small>
-      © 2026 IDXNOVA. All rights reserved.
+
+      © 2026 IDXNOVA.
+      All rights reserved.
+
     </small>
+
 
   </footer>
 
 
-  <!-- DATABASE PUSAT -->
-  <script src="./stocks.js"></script>
 
+  <!-- =========================
+       JAVASCRIPT
+  ========================= -->
 
   <script>
+
+
+    /* =========================
+       IDXNOVA API
+    ========================= */
+
+    const API_URL =
+      "https://api.rendyalterio22.workers.dev/api/stocks";
+
+
+
+    /*
+      DATABASE SEMENTARA DI MEMORY
+
+      Data langsung berasal dari API,
+      bukan lagi dari stocks.js.
+    */
+
+    let STOCKS = [];
+
+
+
+    /* =========================
+       MENU
+    ========================= */
 
     function toggleMenu() {
 
@@ -294,22 +599,45 @@
     }
 
 
+
+    /* =========================
+       FORMAT HARGA
+    ========================= */
+
     function formatPrice(price) {
 
+      const value =
+        Number(price) || 0;
+
+
       return "Rp" +
-        Number(price).toLocaleString("id-ID");
+        value.toLocaleString(
+          "id-ID"
+        );
 
     }
 
+
+
+    /* =========================
+       OPEN STOCK DETAIL
+    ========================= */
 
     function openStock(ticker) {
 
       window.location.href =
         "stock.html?ticker=" +
-        encodeURIComponent(ticker);
+        encodeURIComponent(
+          ticker
+        );
 
     }
 
+
+
+    /* =========================
+       UPDATE SEARCH INFO
+    ========================= */
 
     function updateSearchInfo(
       count,
@@ -317,10 +645,13 @@
       label
     ) {
 
+
       document
         .getElementById("searchCount")
         .innerHTML =
-        count + "<span> Hasil</span>";
+        count +
+        "<span> Hasil</span>";
+
 
 
       document
@@ -329,10 +660,12 @@
         status;
 
 
+
       document
         .getElementById("resultLabel")
         .textContent =
         label;
+
 
 
       document
@@ -340,56 +673,216 @@
         .style.width =
         count === 0
           ? "0%"
-          : Math.min(100, count * 20) + "%";
+          : Math.min(
+              100,
+              Math.max(
+                10,
+                count * 10
+              )
+            ) + "%";
 
     }
 
 
-    function searchStocks() {
 
-      const input =
-        document.getElementById("stockSearch");
+    /* =========================
+       LOAD API
+    ========================= */
 
-
-      const query =
-        input.value
-          .trim()
-          .toLowerCase();
-
-
-      const container =
-        document.getElementById("searchResults");
+    async function loadStocks() {
 
 
       const emptyState =
-        document.getElementById("searchEmpty");
+        document.getElementById(
+          "searchEmpty"
+        );
 
 
       const emptyTitle =
-        document.getElementById("emptyTitle");
+        document.getElementById(
+          "emptyTitle"
+        );
 
 
       const emptyText =
-        document.getElementById("emptyText");
+        document.getElementById(
+          "emptyText"
+        );
 
 
-      /*
-        CEK DATABASE
-      */
-      if (typeof STOCKS === "undefined") {
+      try {
 
-        container.innerHTML = "";
+
+        document
+          .getElementById("databaseStatus")
+          .textContent =
+          "Loading";
+
+
+        document
+          .getElementById("apiMode")
+          .textContent =
+          "LIVE API";
+
+
+        document
+          .getElementById("apiNote")
+          .textContent =
+          "Menghubungkan ke database IDXNOVA...";
+
 
         emptyState.style.display =
           "block";
 
 
         emptyTitle.textContent =
-          "Database belum terbaca";
+          "Memuat database saham";
 
 
         emptyText.textContent =
-          "Pastikan file stocks.js berada di folder yang sama dengan search.html.";
+          "Mohon tunggu, data sedang diambil dari IDXNOVA API.";
+
+
+
+        const response =
+          await fetch(
+            API_URL,
+            {
+              method:
+                "GET",
+
+              headers: {
+                "Accept":
+                  "application/json"
+              }
+            }
+          );
+
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            "API HTTP " +
+            response.status
+          );
+
+        }
+
+
+
+        const result =
+          await response.json();
+
+
+
+        if (
+          !result ||
+          result.status !== "success"
+        ) {
+
+          throw new Error(
+            result &&
+            result.message
+              ? result.message
+              : "Respons API tidak valid"
+          );
+
+        }
+
+
+
+        if (
+          !Array.isArray(
+            result.data
+          )
+        ) {
+
+          throw new Error(
+            "Data saham dari API tidak valid"
+          );
+
+        }
+
+
+
+        STOCKS =
+          result.data;
+
+
+
+        const total =
+          STOCKS.length;
+
+
+
+        document
+          .getElementById("databaseCount")
+          .textContent =
+          total +
+          " Saham";
+
+
+
+        document
+          .getElementById("databaseStatus")
+          .textContent =
+          "Live";
+
+
+
+        document
+          .getElementById("apiMode")
+          .textContent =
+          "LIVE DATA";
+
+
+
+        document
+          .getElementById("apiNote")
+          .textContent =
+          "Data pasar terhubung dari IDXNOVA API.";
+
+
+
+        emptyTitle.textContent =
+          "Cari saham yang ingin kamu analisis";
+
+
+        emptyText.textContent =
+          total +
+          " saham berhasil dimuat. " +
+          "Ketik ticker, nama perusahaan, atau sektor.";
+
+
+
+        updateSearchInfo(
+          0,
+          total +
+          " saham siap dicari",
+          "READY"
+        );
+
+
+      } catch (error) {
+
+
+        console.error(
+          "IDXNOVA API Error:",
+          error
+        );
+
+
+
+        STOCKS = [];
+
+
+
+        document
+          .getElementById("databaseCount")
+          .textContent =
+          "0 Saham";
+
 
 
         document
@@ -398,16 +891,143 @@
           "Error";
 
 
+
+        document
+          .getElementById("apiMode")
+          .textContent =
+          "OFFLINE";
+
+
+
+        document
+          .getElementById("apiNote")
+          .textContent =
+          "Gagal terhubung ke IDXNOVA API.";
+
+
+
         document
           .getElementById("resultTitle")
           .textContent =
           "Database Error";
 
 
+
+        document
+          .getElementById("resultLabel")
+          .textContent =
+          "ERROR";
+
+
+
+        emptyState.style.display =
+          "block";
+
+
+        emptyTitle.textContent =
+          "Gagal memuat database";
+
+
+        emptyText.textContent =
+          "IDXNOVA API tidak dapat dihubungi. " +
+          "Coba refresh halaman. Detail: " +
+          error.message;
+
+
+
         updateSearchInfo(
           0,
-          "Database IDXNOVA belum terbaca",
+          "Koneksi API gagal",
           "DATA ERROR"
+        );
+
+      }
+
+    }
+
+
+
+    /* =========================
+       SEARCH STOCKS
+    ========================= */
+
+    function searchStocks() {
+
+
+      const input =
+        document.getElementById(
+          "stockSearch"
+        );
+
+
+      const query =
+        input.value
+          .trim()
+          .toLowerCase();
+
+
+
+      const container =
+        document.getElementById(
+          "searchResults"
+        );
+
+
+      const emptyState =
+        document.getElementById(
+          "searchEmpty"
+        );
+
+
+      const emptyTitle =
+        document.getElementById(
+          "emptyTitle"
+        );
+
+
+      const emptyText =
+        document.getElementById(
+          "emptyText"
+        );
+
+
+
+      /* =====================
+         API BELUM TERSEDIA
+      ===================== */
+
+      if (
+        !Array.isArray(STOCKS) ||
+        STOCKS.length === 0
+      ) {
+
+
+        container.innerHTML =
+          "";
+
+
+        emptyState.style.display =
+          "block";
+
+
+        emptyTitle.textContent =
+          "Database belum tersedia";
+
+
+        emptyText.textContent =
+          "Data saham belum berhasil dimuat dari IDXNOVA API.";
+
+
+        document
+          .getElementById("resultTitle")
+          .textContent =
+          "Database Belum Siap";
+
+
+        updateSearchInfo(
+          0,
+          "Database IDXNOVA belum tersedia",
+          "WAIT"
         );
 
 
@@ -416,18 +1036,17 @@
       }
 
 
-      document
-        .getElementById("databaseStatus")
-        .textContent =
-        "Ready";
 
+      /* =====================
+         INPUT KOSONG
+      ===================== */
 
-      /*
-        JIKA INPUT KOSONG
-      */
       if (!query) {
 
-        container.innerHTML = "";
+
+        container.innerHTML =
+          "";
+
 
         emptyState.style.display =
           "block";
@@ -456,56 +1075,98 @@
 
         input.focus();
 
+
         return;
 
       }
 
 
-      /*
-        CARI DI DATABASE PUSAT
-      */
+
+      /* =====================
+         CARI SAHAM
+      ===================== */
+
       const results =
-        Object.values(STOCKS)
-          .filter(function(stock) {
-
-            const ticker =
-              String(stock.ticker || "")
-                .toLowerCase();
+        STOCKS
+          .filter(
+            function(stock) {
 
 
-            const name =
-              String(stock.name || "")
-                .toLowerCase();
+              const ticker =
+                String(
+                  stock.ticker ||
+                  ""
+                )
+                  .toLowerCase();
 
 
-            const sector =
-              String(stock.sector || "")
-                .toLowerCase();
+
+              const name =
+                String(
+                  stock.name ||
+                  ""
+                )
+                  .toLowerCase();
 
 
-            return (
-              ticker.includes(query) ||
-              name.includes(query) ||
-              sector.includes(query)
-            );
 
-          })
-          .sort(function(a, b) {
-
-            return b.overall - a.overall;
-
-          });
+              const sector =
+                String(
+                  stock.sector ||
+                  ""
+                )
+                  .toLowerCase();
 
 
-      /*
-        RESET CONTAINER
-      */
-      container.innerHTML = "";
+
+              return (
+
+                ticker.includes(
+                  query
+                ) ||
+
+                name.includes(
+                  query
+                ) ||
+
+                sector.includes(
+                  query
+                )
+
+              );
+
+            }
+          )
+          .sort(
+            function(a, b) {
 
 
-      /*
-        UPDATE JUDUL
-      */
+              return (
+                Number(
+                  b.overall
+                ) || 0
+              ) -
+              (
+                Number(
+                  a.overall
+                ) || 0
+              );
+
+
+            }
+          );
+
+
+
+      /* RESET */
+
+      container.innerHTML =
+        "";
+
+
+
+      /* UPDATE TITLE */
+
       document
         .getElementById("resultTitle")
         .textContent =
@@ -513,10 +1174,15 @@
         input.value.trim();
 
 
-      /*
-        JIKA TIDAK ADA HASIL
-      */
-      if (results.length === 0) {
+
+      /* =====================
+         TIDAK ADA HASIL
+      ===================== */
+
+      if (
+        results.length === 0
+      ) {
+
 
         emptyState.style.display =
           "block";
@@ -529,7 +1195,7 @@
         emptyText.textContent =
           "Tidak ada saham yang cocok dengan \"" +
           input.value.trim() +
-          "\" di database IDXNOVA.";
+          "\" di IDXNOVA Database.";
 
 
         updateSearchInfo(
@@ -544,11 +1210,14 @@
       }
 
 
-      /*
-        ADA HASIL
-      */
+
+      /* =====================
+         ADA HASIL
+      ===================== */
+
       emptyState.style.display =
         "none";
+
 
 
       updateSearchInfo(
@@ -560,111 +1229,153 @@
       );
 
 
-      /*
-        RENDER HASIL
-      */
-      results.forEach(function(stock) {
 
-        const card =
-          document.createElement("article");
+      /* =====================
+         RENDER RESULTS
+      ===================== */
 
-
-        card.className =
-          "stock-card";
+      results.forEach(
+        function(stock) {
 
 
-        card.style.cursor =
-          "pointer";
+          const card =
+            document.createElement(
+              "article"
+            );
 
 
-        const change =
-          Number(stock.change) || 0;
+
+          card.className =
+            "stock-card";
 
 
-        const changeSymbol =
-          change >= 0
-            ? "▲ +"
-            : "▼ ";
+          card.style.cursor =
+            "pointer";
 
 
-        const changeClass =
-          change >= 0
-            ? "positive"
-            : "negative";
+
+          const change =
+            Number(
+              stock.change
+            ) || 0;
 
 
-        card.innerHTML = `
 
-          <div class="stock-header">
+          const changeSymbol =
+            change >= 0
+              ? "▲ +"
+              : "▼ ";
 
-            <div>
 
-              <h3>
-                ${stock.ticker}
-              </h3>
 
-              <p>
-                ${stock.name}
-              </p>
+          const changeClass =
+            change >= 0
+              ? "positive"
+              : "negative";
+
+
+
+          const price =
+            Number(
+              stock.price
+            ) || 0;
+
+
+
+          const overall =
+            Math.round(
+              Number(
+                stock.overall
+              ) || 0
+            );
+
+
+
+          card.innerHTML = `
+
+            <div class="stock-header">
+
+              <div>
+
+                <h3>
+                  ${stock.ticker || "-"}
+                </h3>
+
+                <p>
+                  ${stock.name || "Nama tidak tersedia"}
+                </p>
+
+              </div>
+
+
+              <span class="${changeClass}">
+
+                ${changeSymbol}${Math.abs(change).toFixed(2)}%
+
+              </span>
 
             </div>
 
 
-            <span class="${changeClass}">
+            <div class="stock-price">
 
-              ${changeSymbol}${Math.abs(change).toFixed(2)}%
+              ${formatPrice(price)}
 
-            </span>
-
-          </div>
+            </div>
 
 
-          <div class="stock-price">
+            <div class="stock-footer">
 
-            ${formatPrice(stock.price)}
-
-          </div>
-
-
-          <div class="stock-footer">
-
-            <span>
-              ${stock.sector}
-            </span>
-
-            <strong>
-              NOVA ${stock.overall}/100
-            </strong>
-
-          </div>
-
-        `;
+              <span>
+                ${stock.sector || "IDX Listed Company"}
+              </span>
 
 
-        /*
-          KLIK → STOCK DETAIL
-        */
-        card.addEventListener(
-          "click",
-          function() {
+              <strong>
+                NOVA ${overall}/100
+              </strong>
 
-            openStock(stock.ticker);
+            </div>
 
-          }
-        );
+          `;
 
 
-        container.appendChild(card);
 
-      });
+          card.addEventListener(
+            "click",
+            function() {
+
+
+              openStock(
+                stock.ticker
+              );
+
+
+            }
+          );
+
+
+
+          container.appendChild(
+            card
+          );
+
+
+        }
+      );
 
     }
 
 
-    /*
-      QUICK SEARCH
-    */
-    function quickSearch(ticker) {
+
+    /* =========================
+       QUICK SEARCH
+    ========================= */
+
+    function quickSearch(
+      ticker
+    ) {
+
 
       document
         .getElementById("stockSearch")
@@ -672,50 +1383,60 @@
         ticker;
 
 
+
       searchStocks();
+
 
     }
 
 
-    /*
-      ENTER UNTUK SEARCH
-    */
+
+    /* =========================
+       ENTER SEARCH
+    ========================= */
+
     document
       .getElementById("stockSearch")
       .addEventListener(
         "keydown",
         function(event) {
 
-          if (event.key === "Enter") {
+
+          if (
+            event.key ===
+            "Enter"
+          ) {
+
 
             searchStocks();
 
+
           }
+
 
         }
       );
 
 
-    /*
-      CEK DATABASE SAAT HALAMAN DIBUKA
-    */
+
+    /* =========================
+       LOAD PAGE
+    ========================= */
+
     window.addEventListener(
       "DOMContentLoaded",
       function() {
 
-        if (typeof STOCKS === "undefined") {
 
-          document
-            .getElementById("databaseStatus")
-            .textContent =
-            "Error";
+        loadStocks();
 
-        }
 
       }
     );
 
+
   </script>
+
 
 </body>
 </html>
