@@ -30,29 +30,34 @@
     }
 
 
+    /* =========================================
+       THEME
+       Selaras dengan halaman utama IDXNOVA:
+       Green + Black
+    ========================================= */
+
     :root {
 
-      --bg: #07111f;
-      --bg-soft: #0b1728;
+      --bg: #07110b;
+      --bg-soft: #0b1a12;
 
-      --card: #0d1b2d;
-      --card-2: #102238;
+      --card: #0d1f16;
+      --card-2: #10291c;
 
       --border:
         rgba(255,255,255,0.08);
 
       --text: #f5f7fb;
-      --muted: #8fa0b7;
+      --muted: #8fa89a;
 
-      --primary: #4f8cff;
-
-      --primary-light: #79a7ff;
+      --primary: #22c55e;
+      --primary-light: #4ade80;
 
       --primary-soft:
-        rgba(79,140,255,0.15);
+        rgba(34,197,94,0.15);
 
       --primary-border:
-        rgba(79,140,255,0.25);
+        rgba(34,197,94,0.25);
 
       --green: #28d17c;
       --red: #ff5c70;
@@ -84,13 +89,13 @@
 
         radial-gradient(
           circle at top left,
-          rgba(79,140,255,0.12),
+          rgba(34,197,94,0.12),
           transparent 30%
         ),
 
         radial-gradient(
           circle at top right,
-          rgba(79,140,255,0.05),
+          rgba(34,197,94,0.05),
           transparent 25%
         ),
 
@@ -130,7 +135,7 @@
       width: 100%;
 
       background:
-        rgba(7,17,31,0.88);
+        rgba(7,17,11,0.88);
 
       backdrop-filter:
         blur(18px);
@@ -189,12 +194,12 @@
         linear-gradient(
           135deg,
           var(--primary),
-          #79a7ff
+          var(--primary-light)
         );
 
       box-shadow:
         0 8px 24px
-        rgba(79,140,255,0.25);
+        rgba(34,197,94,0.25);
 
       color: white;
 
@@ -432,7 +437,7 @@
 
         linear-gradient(
           145deg,
-          rgba(79,140,255,0.13),
+          rgba(34,197,94,0.13),
           rgba(255,255,255,0.02)
         );
 
@@ -710,13 +715,13 @@
       border-radius: 8px;
 
       background:
-        rgba(79,140,255,0.08);
+        var(--primary-soft);
 
       border:
         1px solid
-        rgba(79,140,255,0.12);
+        var(--primary-border);
 
-      color: #dce5f4;
+      color: #dcefe2;
 
       font-size: 12px;
       font-weight: 700;
@@ -1051,8 +1056,8 @@
 
         linear-gradient(
           135deg,
-          rgba(79,140,255,0.18),
-          rgba(79,167,255,0.08)
+          rgba(34,197,94,0.18),
+          rgba(74,222,128,0.08)
         );
 
       border:
@@ -1073,7 +1078,7 @@
 
     .cta p {
 
-      color: #b8c5d8;
+      color: #b8d8c3;
 
       max-width: 800px;
 
@@ -1290,7 +1295,9 @@
           Home
         </a>
 
-        <a href="stocks.html">
+        <!-- DIPERBAIKI:
+             sebelumnya stocks.html menyebabkan 404 -->
+        <a href="index.html#market">
           Stocks
         </a>
 
@@ -1326,7 +1333,9 @@
 
       <span>/</span>
 
-      <a href="stocks.html">
+      <!-- DIPERBAIKI:
+           sebelumnya stocks.html menyebabkan 404 -->
+      <a href="index.html#market">
         Stocks
       </a>
 
@@ -2249,9 +2258,6 @@
 
   <!-- =========================================
        OPTIONAL FALLBACK DATABASE
-
-       Jika punya stocks.js:
-       <script src="stocks.js"></script>
   ========================================= -->
 
   <script>
@@ -2620,9 +2626,7 @@
         return fallback;
       }
 
-      for (
-        const field of fields
-      ) {
+      for (const field of fields) {
 
         if (
           object[field] !== undefined &&
