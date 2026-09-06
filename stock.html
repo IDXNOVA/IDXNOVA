@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+
   <meta charset="UTF-8">
 
   <meta
@@ -15,6 +16,7 @@
 
   <title>Stock Analysis | IDXNOVA</title>
 
+
   <style>
 
     /* =========================================
@@ -27,24 +29,58 @@
       padding: 0;
     }
 
+
+    /* =========================================
+       IDXNOVA COLOR SYSTEM
+    ========================================= */
+
     :root {
+
       --bg: #07111f;
-      --bg-soft: #0b1728;
+      --bg-soft: #0a1626;
+
       --card: #0d1b2d;
       --card-2: #102238;
-      --border: rgba(255,255,255,0.08);
+
+      --border:
+        rgba(59, 130, 246, 0.12);
+
+      --border-hover:
+        rgba(59, 130, 246, 0.30);
+
       --text: #f5f7fb;
       --muted: #8fa0b7;
-      --primary: #4f8cff;
-      --primary-soft: rgba(79,140,255,0.15);
-      --green: #28d17c;
-      --red: #ff5c70;
-      --yellow: #ffbd4a;
-      --shadow: 0 20px 60px rgba(0,0,0,0.25);
+
+      /* IDXNOVA BLUE */
+
+      --primary: #3b82f6;
+      --primary-light: #60a5fa;
+      --primary-dark: #2563eb;
+
+      --primary-soft:
+        rgba(59, 130, 246, 0.12);
+
+      --primary-glow:
+        rgba(59, 130, 246, 0.22);
+
+      /* STATUS */
+
+      --green: #22c55e;
+      --red: #ef4444;
+      --yellow: #f59e0b;
+
+      --shadow:
+        0 20px 60px rgba(0, 0, 0, 0.28);
+
     }
 
 
+    /* =========================================
+       BODY
+    ========================================= */
+
     body {
+
       font-family:
         Inter,
         ui-sans-serif,
@@ -55,11 +91,19 @@
         sans-serif;
 
       background:
+
         radial-gradient(
           circle at top left,
-          rgba(79,140,255,0.12),
-          transparent 30%
+          rgba(59, 130, 246, 0.14),
+          transparent 32%
         ),
+
+        radial-gradient(
+          circle at top right,
+          rgba(37, 99, 235, 0.06),
+          transparent 25%
+        ),
+
         var(--bg);
 
       color: var(--text);
@@ -67,6 +111,7 @@
       line-height: 1.5;
 
       min-height: 100vh;
+
     }
 
 
@@ -86,103 +131,152 @@
     ========================================= */
 
     .navbar {
+
       position: sticky;
       top: 0;
       z-index: 100;
 
       width: 100%;
 
-      background: rgba(7,17,31,0.88);
+      background:
+        rgba(7, 17, 31, 0.88);
 
-      backdrop-filter: blur(18px);
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
 
       border-bottom:
         1px solid var(--border);
+
     }
 
 
     .nav-container {
-      width: min(1180px, calc(100% - 32px));
+
+      width:
+        min(1180px, calc(100% - 32px));
 
       margin: auto;
 
       min-height: 72px;
 
       display: flex;
+
       align-items: center;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
 
       gap: 20px;
+
     }
 
 
+    /* =========================================
+       LOGO
+    ========================================= */
+
     .logo {
+
       display: flex;
+
       align-items: center;
+
       gap: 10px;
 
       font-size: 22px;
+
       font-weight: 800;
+
       letter-spacing: -0.5px;
+
     }
 
 
     .logo-icon {
+
       width: 34px;
       height: 34px;
 
       display: grid;
+
       place-items: center;
 
       border-radius: 10px;
 
       background:
+
         linear-gradient(
           135deg,
-          var(--primary),
-          #7c5cff
+          var(--primary-light),
+          var(--primary-dark)
         );
+
+      box-shadow:
+        0 8px 24px
+        rgba(59, 130, 246, 0.28);
 
       color: white;
 
       font-size: 14px;
+
       font-weight: 900;
+
     }
 
 
     .logo span {
-      color: var(--primary);
+      color: var(--primary-light);
     }
 
 
+    /* =========================================
+       NAVIGATION
+    ========================================= */
+
     .nav-menu {
+
       display: flex;
+
       align-items: center;
+
       gap: 24px;
+
     }
 
 
     .nav-menu a {
+
       color: var(--muted);
+
       font-size: 14px;
+
       font-weight: 600;
 
-      transition: 0.2s;
+      transition:
+        color 0.2s ease;
+
     }
 
 
     .nav-menu a:hover {
-      color: var(--text);
+      color: var(--primary-light);
     }
 
 
     .menu-btn {
+
       display: none;
 
-      background: transparent;
-      border: 1px solid var(--border);
+      background:
+        rgba(255,255,255,0.03);
 
-      color: white;
+      border:
+        1px solid var(--border);
+
+      color: var(--text);
 
       width: 42px;
       height: 42px;
@@ -190,6 +284,7 @@
       border-radius: 10px;
 
       cursor: pointer;
+
     }
 
 
@@ -198,12 +293,16 @@
     ========================================= */
 
     .container {
-      width: min(1180px, calc(100% - 32px));
+
+      width:
+        min(1180px, calc(100% - 32px));
+
       margin: auto;
 
       padding:
         42px 0
         70px;
+
     }
 
 
@@ -212,8 +311,11 @@
     ========================================= */
 
     .breadcrumb {
+
       display: flex;
+
       align-items: center;
+
       gap: 9px;
 
       color: var(--muted);
@@ -221,22 +323,38 @@
       font-size: 13px;
 
       margin-bottom: 24px;
+
+      flex-wrap: wrap;
+
+    }
+
+
+    .breadcrumb a {
+
+      transition:
+        color 0.2s ease;
+
     }
 
 
     .breadcrumb a:hover {
-      color: var(--primary);
+      color: var(--primary-light);
     }
 
 
     /* =========================================
-       HERO STOCK
+       STOCK HERO
     ========================================= */
 
     .stock-hero {
+
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        flex-start;
 
       gap: 30px;
 
@@ -244,62 +362,89 @@
 
       border-bottom:
         1px solid var(--border);
+
     }
 
 
     .stock-sector {
+
       display: inline-flex;
+
       align-items: center;
 
-      padding: 7px 11px;
+      padding:
+        7px 11px;
 
       border-radius: 999px;
 
-      background: var(--primary-soft);
+      background:
+        var(--primary-soft);
 
-      color: #9fc0ff;
+      border:
+        1px solid
+        rgba(59, 130, 246, 0.16);
+
+      color:
+        var(--primary-light);
 
       font-size: 12px;
+
       font-weight: 700;
 
       margin-bottom: 15px;
+
     }
 
 
     .stock-title {
-      font-size: clamp(32px, 6vw, 54px);
+
+      font-size:
+        clamp(32px, 6vw, 54px);
+
       line-height: 1;
-      letter-spacing: -2px;
+
+      letter-spacing:
+        -2px;
 
       margin-bottom: 12px;
+
     }
 
 
     .stock-title span {
-      color: var(--primary);
+      color: var(--primary-light);
     }
 
 
     .stock-name {
+
       color: var(--muted);
+
       font-size: 16px;
+
     }
 
 
     .stock-meta {
+
       display: flex;
+
       flex-wrap: wrap;
 
       gap: 10px;
 
       margin-top: 20px;
+
     }
 
 
     .meta-item {
-      padding: 8px 12px;
 
-      background: rgba(255,255,255,0.04);
+      padding:
+        8px 12px;
+
+      background:
+        rgba(255,255,255,0.035);
 
       border:
         1px solid var(--border);
@@ -307,24 +452,34 @@
       border-radius: 10px;
 
       font-size: 13px;
+
     }
 
 
     .meta-label {
+
       color: var(--muted);
+
       margin-right: 5px;
+
     }
 
 
+    /* =========================================
+       HERO PRICE
+    ========================================= */
+
     .hero-price {
+
       min-width: 250px;
 
       padding: 22px;
 
       background:
+
         linear-gradient(
           145deg,
-          rgba(79,140,255,0.12),
+          rgba(59, 130, 246, 0.13),
           rgba(255,255,255,0.02)
         );
 
@@ -333,11 +488,14 @@
 
       border-radius: 20px;
 
-      box-shadow: var(--shadow);
+      box-shadow:
+        var(--shadow);
+
     }
 
 
     .hero-price small {
+
       display: block;
 
       color: var(--muted);
@@ -345,16 +503,21 @@
       font-size: 12px;
 
       margin-bottom: 8px;
+
     }
 
 
     .price-value {
+
       font-size: 30px;
+
       font-weight: 800;
 
-      letter-spacing: -1px;
+      letter-spacing:
+        -1px;
 
       margin-bottom: 8px;
+
     }
 
 
@@ -378,25 +541,41 @@
 
 
     .section-header {
+
       display: flex;
+
       align-items: center;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
 
       gap: 15px;
 
       margin-bottom: 18px;
+
     }
 
 
     .section-title {
+
       font-size: 20px;
+
       font-weight: 800;
+
+      letter-spacing:
+        -0.3px;
+
     }
 
 
     .section-subtitle {
+
       color: var(--muted);
+
       font-size: 13px;
+
+      margin-top: 3px;
+
     }
 
 
@@ -405,26 +584,35 @@
     ========================================= */
 
     .grid {
+
       display: grid;
+
       gap: 16px;
+
     }
 
 
     .grid-2 {
+
       grid-template-columns:
         repeat(2, minmax(0, 1fr));
+
     }
 
 
     .grid-3 {
+
       grid-template-columns:
         repeat(3, minmax(0, 1fr));
+
     }
 
 
     .grid-4 {
+
       grid-template-columns:
         repeat(4, minmax(0, 1fr));
+
     }
 
 
@@ -433,11 +621,13 @@
     ========================================= */
 
     .card {
+
       background:
+
         linear-gradient(
           145deg,
           rgba(255,255,255,0.045),
-          rgba(255,255,255,0.018)
+          rgba(255,255,255,0.015)
         );
 
       border:
@@ -448,7 +638,30 @@
       padding: 20px;
 
       box-shadow:
-        0 12px 35px rgba(0,0,0,0.12);
+        0 12px 35px
+        rgba(0,0,0,0.12);
+
+      transition:
+
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+    }
+
+
+    .card:hover {
+
+      transform:
+        translateY(-3px);
+
+      border-color:
+        var(--border-hover);
+
+      box-shadow:
+        0 18px 45px
+        rgba(0,0,0,0.18);
+
     }
 
 
@@ -457,13 +670,18 @@
     ========================================= */
 
     .overall-card {
+
       display: flex;
+
       align-items: center;
+
       gap: 24px;
+
     }
 
 
     .score-circle {
+
       width: 150px;
       height: 150px;
 
@@ -472,27 +690,38 @@
       border-radius: 50%;
 
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
+
       justify-content: center;
 
       background:
+
         radial-gradient(
           circle,
           var(--card) 58%,
           transparent 59%
         ),
+
         conic-gradient(
-          var(--primary) 0deg,
-          #7c5cff 220deg,
+          var(--primary-light) 0deg,
+          var(--primary-dark) 220deg,
           rgba(255,255,255,0.08) 220deg
         );
 
       position: relative;
+
+      box-shadow:
+        0 10px 35px
+        rgba(59,130,246,0.12);
+
     }
 
 
     .score-circle::before {
+
       content: "";
 
       position: absolute;
@@ -501,63 +730,92 @@
 
       border-radius: 50%;
 
-      background: var(--card);
+      background:
+        var(--card);
+
     }
 
 
     .score-value {
+
       position: relative;
+
       z-index: 1;
 
       font-size: 36px;
+
       font-weight: 900;
 
-      letter-spacing: -2px;
+      letter-spacing:
+        -2px;
+
     }
 
 
     .score-value span {
+
       font-size: 13px;
+
       color: var(--muted);
+
       font-weight: 600;
 
       letter-spacing: 0;
+
     }
 
 
     .score-info h3 {
+
       font-size: 22px;
+
       margin-bottom: 8px;
+
     }
 
 
     .score-info p {
+
       color: var(--muted);
+
       font-size: 14px;
+
     }
 
 
     .score-badges {
+
       display: flex;
+
       flex-wrap: wrap;
 
       gap: 10px;
 
       margin-top: 16px;
+
     }
 
 
     .badge {
-      padding: 7px 10px;
+
+      padding:
+        7px 10px;
 
       border-radius: 8px;
 
-      background: rgba(255,255,255,0.05);
+      background:
+        var(--primary-soft);
 
-      color: #dce5f4;
+      border:
+        1px solid
+        rgba(59,130,246,0.10);
+
+      color: #dcecff;
 
       font-size: 12px;
+
       font-weight: 700;
+
     }
 
 
@@ -566,18 +824,26 @@
     ========================================= */
 
     .summary-card small {
+
       color: var(--muted);
+
       display: block;
 
       margin-bottom: 8px;
 
       font-size: 12px;
+
     }
 
 
     .summary-card strong {
+
       font-size: 24px;
+
       display: block;
+
+      color: var(--primary-light);
+
     }
 
 
@@ -586,49 +852,73 @@
     ========================================= */
 
     .analysis-card {
+
       position: relative;
 
       overflow: hidden;
+
     }
 
 
     .analysis-top {
+
       display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+
+      justify-content:
+        space-between;
+
+      align-items:
+        flex-start;
 
       gap: 15px;
 
       margin-bottom: 16px;
+
     }
 
 
     .analysis-name {
+
       font-size: 18px;
+
       font-weight: 800;
+
     }
 
 
     .analysis-outlook {
-      color: #9fc0ff;
+
+      color:
+        var(--primary-light);
 
       font-size: 13px;
+
       font-weight: 700;
 
       margin-top: 4px;
+
     }
 
 
     .analysis-score {
+
       font-size: 18px;
+
       font-weight: 800;
 
       white-space: nowrap;
+
     }
 
 
+    /* =========================================
+       PROGRESS
+    ========================================= */
+
     .progress {
+
       width: 100%;
+
       height: 8px;
 
       border-radius: 99px;
@@ -637,24 +927,33 @@
         rgba(255,255,255,0.07);
 
       overflow: hidden;
+
     }
 
 
     .progress-bar {
+
       width: 0%;
+
       height: 100%;
 
       border-radius: inherit;
 
       background:
+
         linear-gradient(
           90deg,
-          var(--primary),
-          #7c5cff
+          var(--primary-dark),
+          var(--primary-light)
         );
+
+      box-shadow:
+        0 0 15px
+        rgba(59,130,246,0.35);
 
       transition:
         width 0.8s ease;
+
     }
 
 
@@ -663,48 +962,75 @@
     ========================================= */
 
     .fundamental-main {
+
       display: flex;
+
       align-items: center;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
 
       gap: 25px;
+
     }
 
 
     .fundamental-score {
+
       font-size: 46px;
+
       font-weight: 900;
 
-      letter-spacing: -2px;
+      letter-spacing:
+        -2px;
+
+      color:
+        var(--primary-light);
+
     }
 
 
     .fundamental-score span {
+
       font-size: 16px;
+
       color: var(--muted);
+
       letter-spacing: 0;
+
     }
 
 
     .fundamental-label {
+
       display: inline-block;
 
       margin-top: 8px;
 
-      padding: 6px 10px;
+      padding:
+        6px 10px;
 
       border-radius: 8px;
 
-      background: var(--primary-soft);
+      background:
+        var(--primary-soft);
 
-      color: #9fc0ff;
+      border:
+        1px solid
+        rgba(59,130,246,0.12);
+
+      color:
+        var(--primary-light);
 
       font-size: 12px;
+
       font-weight: 800;
+
     }
 
 
     .fundamental-description {
+
       color: var(--muted);
 
       font-size: 14px;
@@ -712,19 +1038,27 @@
       margin-top: 14px;
 
       max-width: 680px;
+
     }
 
 
     .fundamental-status {
+
       text-align: right;
+
       min-width: 140px;
+
     }
 
 
     .fundamental-status small {
+
       display: block;
+
       color: var(--muted);
+
       margin-bottom: 5px;
+
     }
 
 
@@ -734,7 +1068,7 @@
 
 
     /* =========================================
-       METRIC
+       METRIC CARD
     ========================================= */
 
     .metric-card {
@@ -743,6 +1077,7 @@
 
 
     .metric-card small {
+
       display: block;
 
       color: var(--muted);
@@ -750,15 +1085,21 @@
       margin-bottom: 9px;
 
       font-size: 12px;
+
     }
 
 
     .metric-card strong {
+
       font-size: 24px;
 
       display: block;
 
       word-break: break-word;
+
+      color:
+        var(--primary-light);
+
     }
 
 
@@ -767,6 +1108,7 @@
     ========================================= */
 
     .cta {
+
       margin-top: 40px;
 
       padding: 30px;
@@ -774,30 +1116,41 @@
       border-radius: 22px;
 
       background:
+
         linear-gradient(
           135deg,
-          rgba(79,140,255,0.18),
-          rgba(124,92,255,0.12)
+          rgba(59,130,246,0.16),
+          rgba(37,99,235,0.08)
         );
 
       border:
-        1px solid rgba(79,140,255,0.22);
+        1px solid
+        rgba(59,130,246,0.22);
+
+      box-shadow:
+        0 15px 45px
+        rgba(0,0,0,0.14);
+
     }
 
 
     .cta h2 {
+
       font-size: 24px;
 
       margin-bottom: 10px;
+
     }
 
 
     .cta p {
+
       color: #b8c5d8;
 
       max-width: 800px;
 
       font-size: 14px;
+
     }
 
 
@@ -806,15 +1159,20 @@
     ========================================= */
 
     .data-info {
+
       margin-top: 24px;
 
       display: flex;
+
       flex-wrap: wrap;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
 
       gap: 10px;
 
-      padding: 15px 18px;
+      padding:
+        15px 18px;
 
       background:
         rgba(255,255,255,0.025);
@@ -827,12 +1185,17 @@
       font-size: 12px;
 
       color: var(--muted);
+
     }
 
 
     #dataMode {
-      color: var(--primary);
+
+      color:
+        var(--primary-light);
+
       font-weight: 800;
+
     }
 
 
@@ -841,16 +1204,19 @@
     ========================================= */
 
     footer {
+
       border-top:
         1px solid var(--border);
 
-      padding: 30px 16px;
+      padding:
+        30px 16px;
 
       text-align: center;
 
       color: var(--muted);
 
       font-size: 12px;
+
     }
 
 
@@ -869,13 +1235,17 @@
       }
 
       .grid-4 {
+
         grid-template-columns:
           repeat(2, minmax(0, 1fr));
+
       }
 
       .grid-3 {
+
         grid-template-columns:
           repeat(2, minmax(0, 1fr));
+
       }
 
     }
@@ -884,78 +1254,119 @@
     @media (max-width: 650px) {
 
       .container {
-        width: min(100% - 24px, 1180px);
+
+        width:
+          min(100% - 24px, 1180px);
 
         padding-top: 28px;
+
       }
 
+
       .nav-container {
-        width: min(100% - 24px, 1180px);
+
+        width:
+          min(100% - 24px, 1180px);
+
       }
+
 
       .menu-btn {
         display: block;
       }
 
+
       .nav-menu {
+
         display: none;
 
         position: absolute;
 
         top: 72px;
+
         left: 12px;
         right: 12px;
 
         flex-direction: column;
+
         align-items: stretch;
 
         gap: 0;
 
         padding: 12px;
 
-        background: #0b1728;
+        background:
+          var(--bg-soft);
 
         border:
           1px solid var(--border);
 
         border-radius: 14px;
+
+        box-shadow:
+          var(--shadow);
+
       }
+
 
       .nav-menu.active {
         display: flex;
       }
 
+
       .nav-menu a {
         padding: 12px;
       }
 
+
       .grid-2,
       .grid-3,
       .grid-4 {
-        grid-template-columns: 1fr;
+
+        grid-template-columns:
+          1fr;
+
       }
+
 
       .overall-card {
+
         flex-direction: column;
-        align-items: flex-start;
+
+        align-items:
+          flex-start;
+
       }
 
+
       .fundamental-main {
+
         flex-direction: column;
-        align-items: flex-start;
+
+        align-items:
+          flex-start;
+
       }
+
 
       .fundamental-status {
         text-align: left;
       }
 
+
       .stock-title {
         letter-spacing: -1px;
       }
 
+
       .section-header {
-        align-items: flex-start;
-        flex-direction: column;
+
+        align-items:
+          flex-start;
+
+        flex-direction:
+          column;
+
       }
 
     }
@@ -968,9 +1379,7 @@
 <body>
 
 
-  <!-- =========================================
-       NAVBAR
-  ========================================= -->
+  <!-- NAVBAR -->
 
   <header class="navbar">
 
@@ -1028,9 +1437,7 @@
   </header>
 
 
-  <!-- =========================================
-       MAIN
-  ========================================= -->
+  <!-- MAIN -->
 
   <main class="container">
 
@@ -1051,26 +1458,21 @@
 
       <span>/</span>
 
-      <span id="stockSector">
+      <span class="stock-sector-text">
         Loading...
       </span>
 
     </div>
 
 
-    <!-- =====================================
-         STOCK HERO
-    ====================================== -->
+    <!-- STOCK HERO -->
 
     <section class="stock-hero">
 
 
       <div>
 
-        <div
-          class="stock-sector"
-          id="stockSector"
-        >
+        <div class="stock-sector">
           Loading...
         </div>
 
@@ -1136,9 +1538,7 @@
           -
         </div>
 
-        <div
-          id="stockChange"
-        >
+        <div id="stockChange">
           -
         </div>
 
@@ -1148,9 +1548,7 @@
     </section>
 
 
-    <!-- =====================================
-         OVERALL ANALYSIS
-    ====================================== -->
+    <!-- OVERALL ANALYSIS -->
 
     <section class="section">
 
@@ -1276,9 +1674,7 @@
     </section>
 
 
-    <!-- =====================================
-         TIMEFRAME ANALYSIS
-    ====================================== -->
+    <!-- STRATEGY OUTLOOK -->
 
     <section class="section">
 
@@ -1302,8 +1698,6 @@
       <div class="grid grid-2">
 
 
-        <!-- TRADING -->
-
         <div class="card analysis-card">
 
           <div class="analysis-top">
@@ -1323,7 +1717,6 @@
 
             </div>
 
-
             <div
               class="analysis-score"
               id="tradingScore"
@@ -1333,20 +1726,15 @@
 
           </div>
 
-
           <div class="progress">
-
             <div
               class="progress-bar"
               id="tradingBar"
             ></div>
-
           </div>
 
         </div>
 
-
-        <!-- SWING -->
 
         <div class="card analysis-card">
 
@@ -1367,7 +1755,6 @@
 
             </div>
 
-
             <div
               class="analysis-score"
               id="swingScore"
@@ -1377,20 +1764,15 @@
 
           </div>
 
-
           <div class="progress">
-
             <div
               class="progress-bar"
               id="swingBar"
             ></div>
-
           </div>
 
         </div>
 
-
-        <!-- MEDIUM -->
 
         <div class="card analysis-card">
 
@@ -1411,7 +1793,6 @@
 
             </div>
 
-
             <div
               class="analysis-score"
               id="mediumScore"
@@ -1421,20 +1802,15 @@
 
           </div>
 
-
           <div class="progress">
-
             <div
               class="progress-bar"
               id="mediumBar"
             ></div>
-
           </div>
 
         </div>
 
-
-        <!-- LONG -->
 
         <div class="card analysis-card">
 
@@ -1455,7 +1831,6 @@
 
             </div>
 
-
             <div
               class="analysis-score"
               id="longScore"
@@ -1465,27 +1840,21 @@
 
           </div>
 
-
           <div class="progress">
-
             <div
               class="progress-bar"
               id="longBar"
             ></div>
-
           </div>
 
         </div>
-
 
       </div>
 
     </section>
 
 
-    <!-- =====================================
-         FUNDAMENTAL SCORE
-    ====================================== -->
+    <!-- FUNDAMENTAL SCORE -->
 
     <section class="section">
 
@@ -1510,7 +1879,6 @@
 
 
         <div class="fundamental-main">
-
 
           <div>
 
@@ -1550,9 +1918,7 @@
               0 Metrics
             </strong>
 
-
             <br>
-
 
             <small>
               Status
@@ -1563,7 +1929,6 @@
             </strong>
 
           </div>
-
 
         </div>
 
@@ -1586,21 +1951,16 @@
           id="fundamentalRating"
         ></div>
 
-
       </div>
 
 
-      <!-- ===================================
-           FUNDAMENTAL CATEGORY
-      ==================================== -->
+      <!-- FUNDAMENTAL CATEGORY -->
 
       <div
         class="grid grid-2"
         style="margin-top: 16px;"
       >
 
-
-        <!-- PROFITABILITY -->
 
         <div class="card analysis-card">
 
@@ -1621,7 +1981,6 @@
 
             </div>
 
-
             <div
               class="analysis-score"
               id="profitabilityScore"
@@ -1631,20 +1990,15 @@
 
           </div>
 
-
           <div class="progress">
-
             <div
               class="progress-bar"
               id="profitabilityBar"
             ></div>
-
           </div>
 
         </div>
 
-
-        <!-- GROWTH -->
 
         <div class="card analysis-card">
 
@@ -1665,7 +2019,6 @@
 
             </div>
 
-
             <div
               class="analysis-score"
               id="growthScore"
@@ -1675,20 +2028,15 @@
 
           </div>
 
-
           <div class="progress">
-
             <div
               class="progress-bar"
               id="growthBar"
             ></div>
-
           </div>
 
         </div>
 
-
-        <!-- HEALTH -->
 
         <div class="card analysis-card">
 
@@ -1709,7 +2057,6 @@
 
             </div>
 
-
             <div
               class="analysis-score"
               id="healthScore"
@@ -1719,20 +2066,15 @@
 
           </div>
 
-
           <div class="progress">
-
             <div
               class="progress-bar"
               id="healthBar"
             ></div>
-
           </div>
 
         </div>
 
-
-        <!-- VALUATION -->
 
         <div class="card analysis-card">
 
@@ -1753,7 +2095,6 @@
 
             </div>
 
-
             <div
               class="analysis-score"
               id="valuationScore"
@@ -1763,20 +2104,15 @@
 
           </div>
 
-
           <div class="progress">
-
             <div
               class="progress-bar"
               id="valuationBar"
             ></div>
-
           </div>
 
         </div>
 
-
-        <!-- DIVIDEND -->
 
         <div class="card analysis-card">
 
@@ -1797,7 +2133,6 @@
 
             </div>
 
-
             <div
               class="analysis-score"
               id="dividendScore"
@@ -1807,27 +2142,21 @@
 
           </div>
 
-
           <div class="progress">
-
             <div
               class="progress-bar"
               id="dividendBar"
             ></div>
-
           </div>
 
         </div>
-
 
       </div>
 
     </section>
 
 
-    <!-- =====================================
-         FUNDAMENTAL SNAPSHOT
-    ====================================== -->
+    <!-- FUNDAMENTAL SNAPSHOT -->
 
     <section class="section">
 
@@ -1928,15 +2257,12 @@
 
         </div>
 
-
       </div>
 
     </section>
 
 
-    <!-- =====================================
-         DATA STATUS
-    ====================================== -->
+    <!-- DATA STATUS -->
 
     <div class="data-info">
 
@@ -1950,18 +2276,14 @@
       </div>
 
 
-      <div
-        id="dataNote"
-      >
+      <div id="dataNote">
         Mengambil data dari IDXNOVA...
       </div>
 
     </div>
 
 
-    <!-- =====================================
-         CTA
-    ====================================== -->
+    <!-- CTA -->
 
     <section class="cta">
 
@@ -1979,9 +2301,7 @@
   </main>
 
 
-  <!-- =========================================
-       FOOTER
-  ========================================= -->
+  <!-- FOOTER -->
 
   <footer>
 
@@ -1991,13 +2311,7 @@
   </footer>
 
 
-  <!-- =========================================
-       FALLBACK DATABASE
-
-       Jika kamu sudah punya stocks.js,
-       hapus bagian ini dan gunakan:
-       <script src="stocks.js"></script>
-  ========================================= -->
+  <!-- FALLBACK DATABASE -->
 
   <script>
 
@@ -2009,9 +2323,7 @@
   </script>
 
 
-  <!-- =========================================
-       IDXNOVA SCRIPT
-  ========================================= -->
+  <!-- IDXNOVA SCRIPT -->
 
   <script>
 
@@ -2149,9 +2461,7 @@
     function clampScore(value) {
 
       if (!Number.isFinite(value)) {
-
         return 0;
-
       }
 
       return Math.min(
@@ -2178,9 +2488,7 @@
         !Number.isFinite(value) ||
         value <= 0
       ) {
-
         return "-";
-
       }
 
       return "Rp" +
@@ -2206,9 +2514,7 @@
         Number(value);
 
       if (!Number.isFinite(number)) {
-
         return String(value);
-
       }
 
       return number.toFixed(2) + "%";
@@ -2290,7 +2596,8 @@
       ];
 
       scores.sort(
-        (a, b) => b.value - a.value
+        (a, b) =>
+          b.value - a.value
       );
 
       return scores[0].name;
@@ -2310,9 +2617,7 @@
         result.fundamental &&
         typeof result.fundamental === "object"
       ) {
-
         return result.fundamental;
-
       }
 
       if (
@@ -2320,9 +2625,7 @@
         result.data.fundamental &&
         typeof result.data.fundamental === "object"
       ) {
-
         return result.data.fundamental;
-
       }
 
       if (
@@ -2330,9 +2633,7 @@
         typeof result.data === "object" &&
         !Array.isArray(result.data)
       ) {
-
         return result.data;
-
       }
 
       return result;
@@ -2346,15 +2647,26 @@
 
     function normalizeStock(stock) {
 
-      const overall = safeScore(stock.overall);
-      const trading = safeScore(stock.trading);
-      const swing = safeScore(stock.swing);
-      const medium = safeScore(stock.medium);
-      const long = safeScore(stock.long);
+      const overall =
+        safeScore(stock.overall);
+
+      const trading =
+        safeScore(stock.trading);
+
+      const swing =
+        safeScore(stock.swing);
+
+      const medium =
+        safeScore(stock.medium);
+
+      const long =
+        safeScore(stock.long);
+
 
       return {
 
         ticker:
+
           String(
             stock.ticker ||
             stock.StockCode ||
@@ -2363,29 +2675,38 @@
           .trim()
           .toUpperCase(),
 
+
         name:
+
           stock.name ||
           stock.StockName ||
           "-",
 
+
         sector:
+
           stock.sector ||
           stock.Sector ||
           "IDX Listed Company",
 
+
         price:
+
           stock.price ??
           stock.LastPrice ??
           stock.Close ??
           stock.close ??
           0,
 
+
         change:
+
           stock.change ??
           stock.Change ??
           stock.changePercent ??
           stock.ChangePercent ??
           0,
+
 
         overall,
         trading,
@@ -2393,8 +2714,11 @@
         medium,
         long,
 
+
         bestFit:
+
           stock.bestFit ||
+
           getBestFit({
             trading,
             swing,
@@ -2402,101 +2726,141 @@
             long
           }),
 
+
         label:
+
           stock.label ||
           getOutlook(overall),
 
+
         risk:
+
           stock.risk ||
           getRisk(overall),
 
+
         valuation:
+
           stock.valuation ||
           getValuation(overall),
 
+
         tradingOutlook:
+
           stock.tradingOutlook ||
           getOutlook(trading),
 
+
         swingOutlook:
+
           stock.swingOutlook ||
           getOutlook(swing),
 
+
         mediumOutlook:
+
           stock.mediumOutlook ||
           getOutlook(medium),
 
+
         longOutlook:
+
           stock.longOutlook ||
           getOutlook(long),
 
+
         revenueGrowth:
+
           stock.revenueGrowth ??
           stock.revenue_growth ??
           null,
 
+
         profitGrowth:
+
           stock.profitGrowth ??
           stock.profit_growth ??
           null,
 
+
         roe:
+
           stock.roe ??
           stock.ROE ??
           null,
 
+
         roa:
+
           stock.roa ??
           stock.ROA ??
           null,
 
+
         netMargin:
+
           stock.netMargin ??
           stock.net_margin ??
           stock.netProfitMargin ??
           null,
 
+
         debtToEquity:
+
           stock.debtToEquity ??
           stock.debt_to_equity ??
           stock.der ??
           stock.DER ??
           null,
 
+
         currentRatio:
+
           stock.currentRatio ??
           stock.current_ratio ??
           null,
 
+
         pe:
+
           stock.pe ??
           stock.PE ??
           stock.per ??
           stock.PER ??
           null,
 
+
         pb:
+
           stock.pb ??
           stock.PB ??
           stock.pbv ??
           stock.PBV ??
           null,
 
+
         dividendYield:
+
           stock.dividendYield ??
           stock.dividend_yield ??
           null,
 
+
         debtLevel:
+
           stock.debtLevel ??
           stock.debt_level ??
           "-",
 
+
         dividend:
+
           stock.dividend ??
           "-",
 
+
         businessQuality:
+
           stock.businessQuality ??
           stock.business_quality ??
           getOutlook(long)
@@ -2520,7 +2884,10 @@
             Number.isFinite(score)
         );
 
-      if (validScores.length === 0) {
+
+      if (
+        validScores.length === 0
+      ) {
 
         return {
           score: null,
@@ -2529,12 +2896,14 @@
 
       }
 
+
       const total =
         validScores.reduce(
           (sum, score) =>
             sum + score,
           0
         );
+
 
       return {
 
@@ -2752,11 +3121,13 @@
           scoreNetMargin(stock.netMargin)
         ]);
 
+
       const growth =
         calculateAverageScore([
           scoreRevenueGrowth(stock.revenueGrowth),
           scoreProfitGrowth(stock.profitGrowth)
         ]);
+
 
       const health =
         calculateAverageScore([
@@ -2764,16 +3135,19 @@
           scoreCurrentRatio(stock.currentRatio)
         ]);
 
+
       const valuation =
         calculateAverageScore([
           scorePE(stock.pe),
           scorePB(stock.pb)
         ]);
 
+
       const dividend =
         calculateAverageScore([
           scoreDividendYield(stock.dividendYield)
         ]);
+
 
       const categories =
         [
@@ -2789,6 +3163,7 @@
             category.metrics > 0
         );
 
+
       const totalMetrics =
         categories.reduce(
           (total, category) =>
@@ -2796,12 +3171,16 @@
           0
         );
 
-      if (categories.length === 0) {
+
+      if (
+        categories.length === 0
+      ) {
 
         return {
 
           overall: null,
           metrics: 0,
+
           profitability,
           growth,
           health,
@@ -2812,10 +3191,14 @@
 
       }
 
+
       let weightedTotal = 0;
       let totalWeight = 0;
 
-      if (profitability.score !== null) {
+
+      if (
+        profitability.score !== null
+      ) {
 
         weightedTotal +=
           profitability.score * 0.30;
@@ -2824,7 +3207,10 @@
 
       }
 
-      if (growth.score !== null) {
+
+      if (
+        growth.score !== null
+      ) {
 
         weightedTotal +=
           growth.score * 0.25;
@@ -2833,7 +3219,10 @@
 
       }
 
-      if (health.score !== null) {
+
+      if (
+        health.score !== null
+      ) {
 
         weightedTotal +=
           health.score * 0.20;
@@ -2842,7 +3231,10 @@
 
       }
 
-      if (valuation.score !== null) {
+
+      if (
+        valuation.score !== null
+      ) {
 
         weightedTotal +=
           valuation.score * 0.15;
@@ -2851,7 +3243,10 @@
 
       }
 
-      if (dividend.score !== null) {
+
+      if (
+        dividend.score !== null
+      ) {
 
         weightedTotal +=
           dividend.score * 0.10;
@@ -2859,6 +3254,7 @@
         totalWeight += 0.10;
 
       }
+
 
       const overall =
         totalWeight > 0
@@ -2868,10 +3264,12 @@
             )
           : null;
 
+
       return {
 
         overall,
         metrics: totalMetrics,
+
         profitability,
         growth,
         health,
@@ -2910,6 +3308,7 @@
 
       }
 
+
       if (score >= 85) {
 
         return "Fundamental sangat kuat berdasarkan " +
@@ -2917,6 +3316,7 @@
           " metrik yang tersedia.";
 
       }
+
 
       if (score >= 75) {
 
@@ -2926,6 +3326,7 @@
 
       }
 
+
       if (score >= 60) {
 
         return "Fundamental cukup sehat berdasarkan " +
@@ -2934,6 +3335,7 @@
 
       }
 
+
       if (score >= 45) {
 
         return "Fundamental berada pada kondisi moderat berdasarkan " +
@@ -2941,6 +3343,7 @@
           " metrik yang tersedia.";
 
       }
+
 
       return "Fundamental memerlukan perhatian berdasarkan " +
         metrics +
@@ -2964,30 +3367,36 @@
           ? category.score
           : null;
 
+
       const scoreText =
         score === null
           ? "Data belum tersedia"
           : score + " / 100";
+
 
       const outlook =
         score === null
           ? "Data belum cukup"
           : getOutlook(score);
 
+
       setText(
         prefix + "Outlook",
         outlook
       );
+
 
       setText(
         prefix + "Score",
         scoreText
       );
 
+
       const bar =
         document.getElementById(
           prefix + "Bar"
         );
+
 
       if (bar) {
 
@@ -3012,20 +3421,24 @@
       const label =
         getFundamentalLabel(score);
 
+
       setText(
         "fundamentalLabel",
         label
       );
+
 
       setText(
         "fundamentalRating",
         label
       );
 
+
       const scoreElement =
         document.getElementById(
           "fundamentalScore"
         );
+
 
       if (scoreElement) {
 
@@ -3039,6 +3452,7 @@
 
       }
 
+
       setText(
         "fundamentalDescription",
         getFundamentalDescription(
@@ -3047,10 +3461,12 @@
         )
       );
 
+
       setText(
         "fundamentalMetrics",
         result.metrics + " Metrics"
       );
+
 
       setText(
         "fundamentalStatus",
@@ -3059,10 +3475,12 @@
           : "Calculated"
       );
 
+
       const scoreBar =
         document.getElementById(
           "fundamentalScoreBar"
         );
+
 
       if (scoreBar) {
 
@@ -3072,6 +3490,7 @@
             : score + "%";
 
       }
+
 
       renderFundamentalCategory(
         "profitability",
@@ -3119,7 +3538,9 @@
 
       ];
 
+
       let lastError = null;
+
 
       for (const url of urls) {
 
@@ -3130,12 +3551,14 @@
               url,
               {
                 method: "GET",
+
                 headers: {
                   "Accept":
                     "application/json"
                 }
               }
             );
+
 
           if (!response.ok) {
 
@@ -3146,8 +3569,10 @@
 
           }
 
+
           const result =
             await response.json();
+
 
           if (
             result.status &&
@@ -3160,8 +3585,10 @@
 
           }
 
+
           const fundamental =
             extractFundamental(result);
+
 
           if (
             fundamental &&
@@ -3186,6 +3613,7 @@
 
       }
 
+
       throw (
         lastError ||
         new Error(
@@ -3204,8 +3632,9 @@
 
       const sectors =
         document.querySelectorAll(
-          "#stockSector"
+          ".stock-sector-text, .stock-sector"
         );
+
 
       sectors.forEach(
         element => {
@@ -3216,10 +3645,12 @@
         }
       );
 
+
       const tickerElement =
         document.getElementById(
           "stockTicker"
         );
+
 
       if (tickerElement) {
 
@@ -3228,15 +3659,18 @@
 
       }
 
+
       setText(
         "stockName",
         message ||
         "Ticker tidak tersedia dalam database IDXNOVA."
       );
 
+
       setText("stockBestFit", "-");
       setText("stockLabel", "ERROR");
       setText("dataMode", "ERROR");
+
 
       setText(
         "dataNote",
@@ -3250,10 +3684,14 @@
        RENDER STOCK
     ========================================= */
 
-    function renderStock(rawStock, mode) {
+    function renderStock(
+      rawStock,
+      mode
+    ) {
 
       const stock =
         normalizeStock(rawStock);
+
 
       if (!stock.ticker) {
 
@@ -3262,6 +3700,7 @@
 
       }
 
+
       document.title =
         stock.ticker +
         " | IDXNOVA";
@@ -3269,8 +3708,9 @@
 
       const sectors =
         document.querySelectorAll(
-          "#stockSector"
+          ".stock-sector-text, .stock-sector"
         );
+
 
       sectors.forEach(
         element => {
@@ -3287,6 +3727,7 @@
           "stockTicker"
         );
 
+
       if (tickerElement) {
 
         tickerElement.innerHTML =
@@ -3296,15 +3737,27 @@
       }
 
 
-      setText("stockName", stock.name);
-      setText("stockBestFit", stock.bestFit);
-      setText("stockLabel", stock.label);
+      setText(
+        "stockName",
+        stock.name
+      );
+
+      setText(
+        "stockBestFit",
+        stock.bestFit
+      );
+
+      setText(
+        "stockLabel",
+        stock.label
+      );
 
 
       const overallElement =
         document.getElementById(
           "stockOverall"
         );
+
 
       if (overallElement) {
 
@@ -3315,7 +3768,12 @@
       }
 
 
-      setText("stockRisk", stock.risk);
+      setText(
+        "stockRisk",
+        stock.risk
+      );
+
+
       setText(
         "stockValuation",
         stock.valuation
@@ -3331,17 +3789,22 @@
       const change =
         safeNumber(stock.change);
 
+
       const changeElement =
         document.getElementById(
           "stockChange"
         );
 
+
       if (changeElement) {
 
         changeElement.textContent =
-          (change >= 0 ? "▲ +" : "▼ ") +
+          (change >= 0
+            ? "▲ +"
+            : "▼ ") +
           Math.abs(change).toFixed(2) +
           "%";
+
 
         changeElement.className =
           change >= 0
@@ -3356,10 +3819,12 @@
         stock.trading + "/100"
       );
 
+
       setText(
         "stockSwing",
         stock.swing + "/100"
       );
+
 
       setText(
         "stockMedium",
@@ -3404,15 +3869,18 @@
             item.outlook
           );
 
+
           setText(
             item.name + "Score",
             item.score + " / 100"
           );
 
+
           const bar =
             document.getElementById(
               item.name + "Bar"
             );
+
 
           if (bar) {
 
@@ -3432,12 +3900,14 @@
         )
       );
 
+
       setText(
         "profitGrowth",
         formatPercent(
           stock.profitGrowth
         )
       );
+
 
       setText(
         "stockRoe",
@@ -3449,6 +3919,7 @@
 
       setText(
         "debtLevel",
+
         stock.debtLevel !== "-"
           ? stock.debtLevel
           : (
@@ -3465,6 +3936,7 @@
 
       setText(
         "stockDividend",
+
         stock.dividend !== "-"
           ? stock.dividend
           : (
@@ -3480,6 +3952,7 @@
 
       setText(
         "businessQuality",
+
         stock.businessQuality ||
         "Data belum tersedia"
       );
@@ -3490,6 +3963,7 @@
 
       setText(
         "dataMode",
+
         mode === "API"
           ? "LIVE API"
           : "FALLBACK"
@@ -3498,6 +3972,7 @@
 
       setText(
         "dataNote",
+
         mode === "API"
           ? "Market dan fundamental dimuat dari IDXNOVA API."
           : "API tidak tersedia — menggunakan database cadangan."
@@ -3506,6 +3981,7 @@
 
       setText(
         "ctaTitle",
+
         stock.ticker +
         ". Analyze Before You Act."
       );
@@ -3513,6 +3989,7 @@
 
       setText(
         "ctaText",
+
         "Analisis " +
         stock.ticker +
         " berdasarkan data yang tersedia di IDXNOVA. Selalu lakukan riset tambahan sebelum mengambil keputusan investasi atau trading."
@@ -3545,6 +4022,7 @@
             STOCK_API,
             {
               method: "GET",
+
               headers: {
                 "Accept":
                   "application/json"
@@ -3620,6 +4098,7 @@
 
         let fundamentalStock = {};
 
+
         try {
 
           fundamentalStock =
@@ -3647,103 +4126,153 @@
           ...marketStock,
           ...fundamental,
 
+
           ticker:
+
             marketStock.ticker ||
             fallbackStock.ticker ||
             ticker,
 
+
           name:
+
             marketStock.name ||
             fundamental.name ||
             fundamental.companyName ||
             fallbackStock.name ||
             "-",
 
+
           sector:
+
             marketStock.sector ||
             fundamental.sector ||
             fallbackStock.sector ||
             "IDX Listed Company",
 
+
           price:
-            safeNumber(marketStock.price) > 0
+
+            safeNumber(
+              marketStock.price
+            ) > 0
               ? marketStock.price
               : (
-                  fallbackStock.price ?? 0
+                  fallbackStock.price ??
+                  0
                 ),
 
+
           change:
+
             marketStock.change ??
             fallbackStock.change ??
             0,
 
+
           overall:
-            safeNumber(marketStock.overall) > 0
+
+            safeNumber(
+              marketStock.overall
+            ) > 0
               ? marketStock.overall
               : (
-                  fallbackStock.overall ?? 0
+                  fallbackStock.overall ??
+                  0
                 ),
+
 
           trading:
-            safeNumber(marketStock.trading) > 0
+
+            safeNumber(
+              marketStock.trading
+            ) > 0
               ? marketStock.trading
               : (
-                  fallbackStock.trading ?? 0
+                  fallbackStock.trading ??
+                  0
                 ),
+
 
           swing:
-            safeNumber(marketStock.swing) > 0
+
+            safeNumber(
+              marketStock.swing
+            ) > 0
               ? marketStock.swing
               : (
-                  fallbackStock.swing ?? 0
+                  fallbackStock.swing ??
+                  0
                 ),
+
 
           medium:
-            safeNumber(marketStock.medium) > 0
+
+            safeNumber(
+              marketStock.medium
+            ) > 0
               ? marketStock.medium
               : (
-                  fallbackStock.medium ?? 0
+                  fallbackStock.medium ??
+                  0
                 ),
+
 
           long:
-            safeNumber(marketStock.long) > 0
+
+            safeNumber(
+              marketStock.long
+            ) > 0
               ? marketStock.long
               : (
-                  fallbackStock.long ?? 0
+                  fallbackStock.long ??
+                  0
                 ),
 
+
           revenueGrowth:
+
             fundamental.revenueGrowth ??
             fundamental.revenue_growth ??
             fallbackStock.revenueGrowth ??
             null,
 
+
           profitGrowth:
+
             fundamental.profitGrowth ??
             fundamental.profit_growth ??
             fallbackStock.profitGrowth ??
             null,
 
+
           roe:
+
             fundamental.roe ??
             fundamental.ROE ??
             fallbackStock.roe ??
             null,
 
+
           roa:
+
             fundamental.roa ??
             fundamental.ROA ??
             fallbackStock.roa ??
             null,
 
+
           netMargin:
+
             fundamental.netMargin ??
             fundamental.net_margin ??
             fundamental.netProfitMargin ??
             fallbackStock.netMargin ??
             null,
 
+
           debtToEquity:
+
             fundamental.debtToEquity ??
             fundamental.debt_to_equity ??
             fundamental.der ??
@@ -3751,13 +4280,17 @@
             fallbackStock.debtToEquity ??
             null,
 
+
           currentRatio:
+
             fundamental.currentRatio ??
             fundamental.current_ratio ??
             fallbackStock.currentRatio ??
             null,
 
+
           pe:
+
             fundamental.pe ??
             fundamental.PE ??
             fundamental.per ??
@@ -3765,7 +4298,9 @@
             fallbackStock.pe ??
             null,
 
+
           pb:
+
             fundamental.pb ??
             fundamental.PB ??
             fundamental.pbv ??
@@ -3773,65 +4308,89 @@
             fallbackStock.pb ??
             null,
 
+
           dividendYield:
+
             fundamental.dividendYield ??
             fundamental.dividend_yield ??
             fallbackStock.dividendYield ??
             null,
 
+
           debtLevel:
+
             fundamental.debtLevel ??
             fundamental.debt_level ??
             fallbackStock.debtLevel ??
             "-",
 
+
           dividend:
+
             fundamental.dividend ??
             fallbackStock.dividend ??
             "-",
 
+
           businessQuality:
+
             fundamental.businessQuality ??
             fundamental.business_quality ??
             fallbackStock.businessQuality ??
             "",
 
+
           bestFit:
+
             marketStock.bestFit ||
             fallbackStock.bestFit ||
             "",
 
+
           label:
+
             marketStock.label ||
             fallbackStock.label ||
             "",
 
+
           risk:
+
             marketStock.risk ||
             fallbackStock.risk ||
             "",
 
+
           valuation:
+
             marketStock.valuation ||
             fallbackStock.valuation ||
             "",
 
+
           tradingOutlook:
+
             marketStock.tradingOutlook ||
             fallbackStock.tradingOutlook ||
             "",
 
+
           swingOutlook:
+
             marketStock.swingOutlook ||
             fallbackStock.swingOutlook ||
             "",
 
+
           mediumOutlook:
+
             marketStock.mediumOutlook ||
             fallbackStock.mediumOutlook ||
             "",
 
+
           longOutlook:
+
             marketStock.longOutlook ||
             fallbackStock.longOutlook ||
             ""
