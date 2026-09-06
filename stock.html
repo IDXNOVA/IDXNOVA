@@ -1,2653 +1,3897 @@
-<script>
-
-/* =========================================
-   IDXNOVA API CONFIG
-========================================= */
-
-const API_BASE =
-  "https://idxnova-api.rendyalterio22.workers.dev";
-
-const STOCK_API =
-  API_BASE + "/api/stocks";
-
-const FUNDAMENTAL_API =
-  API_BASE + "/api/fundamental";
-
-
-/* =========================================
-   AMBIL TICKER DARI URL
-========================================= */
-
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-const ticker =
-  (params.get("ticker") || "")
-    .trim()
-    .toUpperCase();
-
-
-/* =========================================
-   MENU MOBILE
-========================================= */
-
-function toggleMenu() {
-
-  const menu =
-    document.getElementById("navMenu");
-
-  if (menu) {
-
-    menu.classList.toggle("active");
-
-  }
-
-}
-
-
-/* =========================================
-   SET TEXT AMAN
-========================================= */
-
-function setText(id, value) {
-
-  const element =
-    document.getElementById(id);
-
-  if (element) {
-
-    element.textContent =
-      value === null ||
-      value === undefined
-        ? "-"
-        : value;
-
-  }
-
-}
-
-
-/* =========================================
-   SAFE NUMBER
-========================================= */
-
-function safeNumber(value) {
-
-  const number =
-    Number(value);
-
-  return Number.isFinite(number)
-    ? number
-    : 0;
-
-}
-
-
-/* =========================================
-   VALID NUMBER
-
-   NULL jika data memang tidak tersedia.
-========================================= */
-
-function getValidNumber(value) {
-
-  if (
-    value === null ||
-    value === undefined ||
-    value === "" ||
-    value === "-"
-  ) {
-
-    return null;
-
-  }
-
-  const number =
-    Number(value);
-
-  return Number.isFinite(number)
-    ? number
-    : null;
-
-}
-
-
-/* =========================================
-   SAFE SCORE 0 - 100
-========================================= */
-
-function safeScore(value) {
-
-  return Math.min(
-    100,
-    Math.max(
-      0,
-      Math.round(
-        safeNumber(value)
-      )
-    )
-  );
-
-}
-
-
-/* =========================================
-   CLAMP SCORE
-========================================= */
-
-function clampScore(value) {
-
-  if (!Number.isFinite(value)) {
-
-    return 0;
-
-  }
-
-  return Math.min(
-    100,
-    Math.max(
-      0,
-      Math.round(value)
-    )
-  );
-
-}
-
-
-/* =========================================
-   FORMAT HARGA
-========================================= */
-
-function formatPrice(price) {
-
-  const value =
-    Number(price);
-
-  if (
-    !Number.isFinite(value) ||
-    value <= 0
-  ) {
-
-    return "-";
-
-  }
-
-  return "Rp" +
-    value.toLocaleString("id-ID");
-
-}
-
-
-/* =========================================
-   FORMAT PERSEN
-========================================= */
-
-function formatPercent(value) {
-
-  if (
-    value === "-" ||
-    value === null ||
-    value === undefined ||
-    value === ""
-  ) {
-
-    return "Data belum tersedia";
-
-  }
-
-  const number =
-    Number(value);
-
-  if (!Number.isFinite(number)) {
-
-    return String(value);
-
-  }
-
-  return number.toFixed(2) + "%";
-
-}
-
-
-/* =========================================
-   OUTLOOK
-========================================= */
-
-function getOutlook(score) {
-
-  const value =
-    safeScore(score);
-
-  if (value >= 85) {
-
-    return "Sangat Kuat";
-
-  }
-
-  if (value >= 75) {
-
-    return "Positif";
-
-  }
-
-  if (value >= 60) {
-
-    return "Netral Positif";
-
-  }
-
-  if (value >= 45) {
-
-    return "Netral";
-
-  }
-
-  return "Perlu Perhatian";
-
-}
-
-
-/* =========================================
-   RISK
-========================================= */
-
-function getRisk(score) {
-
-  const value =
-    safeScore(score);
-
-  if (value >= 85) {
-
-    return "Low";
-
-  }
-
-  if (value >= 70) {
-
-    return "Moderate";
-
-  }
-
-  if (value >= 55) {
-
-    return "Moderate - High";
-
-  }
-
-  return "High";
-
-}
-
-
-/* =========================================
-   VALUATION LABEL
-========================================= */
-
-function getValuation(score) {
-
-  const value =
-    safeScore(score);
-
-  if (value >= 85) {
-
-    return "Attractive";
-
-  }
-
-  if (value >= 70) {
-
-    return "Fair";
-
-  }
-
-  if (value >= 55) {
-
-    return "Neutral";
-
-  }
-
-  return "Data Pending";
-
-}
-
-
-/* =========================================
-   BEST FIT
-========================================= */
-
-function getBestFit(stock) {
-
-  const scores = [
-
-    {
-      name: "Trading",
-      value: safeScore(stock.trading)
-    },
-
-    {
-      name: "Swing",
-      value: safeScore(stock.swing)
-    },
-
-    {
-      name: "Medium Term",
-      value: safeScore(stock.medium)
-    },
-
-    {
-      name: "Long Term",
-      value: safeScore(stock.long)
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="IDXNOVA Stock Analysis"
+  >
+
+  <title>Stock Analysis | IDXNOVA</title>
+
+  <style>
+
+    /* =========================================
+       RESET
+    ========================================= */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-  ];
-
-  scores.sort(
-    function(a, b) {
-
-      return b.value - a.value;
-
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0b1728;
+      --card: #0d1b2d;
+      --card-2: #102238;
+      --border: rgba(255,255,255,0.08);
+      --text: #f5f7fb;
+      --muted: #8fa0b7;
+      --primary: #4f8cff;
+      --primary-soft: rgba(79,140,255,0.15);
+      --green: #28d17c;
+      --red: #ff5c70;
+      --yellow: #ffbd4a;
+      --shadow: 0 20px 60px rgba(0,0,0,0.25);
     }
-  );
 
-  return scores[0].name;
 
-}
+    body {
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 
+      background:
+        radial-gradient(
+          circle at top left,
+          rgba(79,140,255,0.12),
+          transparent 30%
+        ),
+        var(--bg);
 
-/* =========================================
-   EXTRACT FUNDAMENTAL
+      color: var(--text);
 
-   Mendukung beberapa struktur API.
-========================================= */
+      line-height: 1.5;
 
-function extractFundamental(result) {
+      min-height: 100vh;
+    }
 
-  if (!result) {
 
-    return {};
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-  }
 
-  if (
-    result.fundamental &&
-    typeof result.fundamental === "object"
-  ) {
+    button {
+      font: inherit;
+    }
 
-    return result.fundamental;
 
-  }
+    /* =========================================
+       NAVBAR
+    ========================================= */
 
-  if (
-    result.data &&
-    result.data.fundamental &&
-    typeof result.data.fundamental === "object"
-  ) {
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
 
-    return result.data.fundamental;
+      width: 100%;
 
-  }
+      background: rgba(7,17,31,0.88);
 
-  if (
-    result.data &&
-    typeof result.data === "object" &&
-    !Array.isArray(result.data)
-  ) {
+      backdrop-filter: blur(18px);
 
-    return result.data;
+      border-bottom:
+        1px solid var(--border);
+    }
 
-  }
 
-  return result;
+    .nav-container {
+      width: min(1180px, calc(100% - 32px));
 
-}
+      margin: auto;
 
+      min-height: 72px;
 
-/* =========================================
-   NORMALISASI STOCK
-========================================= */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-function normalizeStock(stock) {
+      gap: 20px;
+    }
 
-  const overall =
-    safeScore(stock.overall);
 
-  const trading =
-    safeScore(stock.trading);
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
 
-  const swing =
-    safeScore(stock.swing);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
 
-  const medium =
-    safeScore(stock.medium);
 
-  const long =
-    safeScore(stock.long);
+    .logo-icon {
+      width: 34px;
+      height: 34px;
 
+      display: grid;
+      place-items: center;
 
-  return {
+      border-radius: 10px;
 
-    /* =====================================
-       IDENTITAS
-    ===================================== */
-
-    ticker:
-      String(
-        stock.ticker ||
-        stock.StockCode ||
-        ""
-      )
-      .trim()
-      .toUpperCase(),
-
-    name:
-      stock.name ||
-      stock.StockName ||
-      "-",
-
-    sector:
-      stock.sector ||
-      stock.Sector ||
-      "IDX Listed Company",
-
-
-    /* =====================================
-       MARKET DATA
-    ===================================== */
-
-    price:
-      stock.price ??
-      stock.LastPrice ??
-      stock.Close ??
-      stock.close ??
-      0,
-
-    change:
-      stock.change ??
-      stock.Change ??
-      stock.changePercent ??
-      stock.ChangePercent ??
-      0,
-
-
-    /* =====================================
-       IDXNOVA SCORES
-    ===================================== */
-
-    overall:
-      overall,
-
-    trading:
-      trading,
-
-    swing:
-      swing,
-
-    medium:
-      medium,
-
-    long:
-      long,
-
-
-    /* =====================================
-       ANALYSIS LABEL
-    ===================================== */
-
-    bestFit:
-      stock.bestFit ||
-      getBestFit({
-        trading: trading,
-        swing: swing,
-        medium: medium,
-        long: long
-      }),
-
-    label:
-      stock.label ||
-      getOutlook(overall),
-
-    risk:
-      stock.risk ||
-      getRisk(overall),
-
-    valuation:
-      stock.valuation ||
-      getValuation(overall),
-
-    tradingOutlook:
-      stock.tradingOutlook ||
-      getOutlook(trading),
-
-    swingOutlook:
-      stock.swingOutlook ||
-      getOutlook(swing),
-
-    mediumOutlook:
-      stock.mediumOutlook ||
-      getOutlook(medium),
-
-    longOutlook:
-      stock.longOutlook ||
-      getOutlook(long),
-
-
-    /* =====================================
-       FUNDAMENTAL GROWTH
-    ===================================== */
-
-    revenueGrowth:
-      stock.revenueGrowth ??
-      stock.revenue_growth ??
-      null,
-
-    profitGrowth:
-      stock.profitGrowth ??
-      stock.profit_growth ??
-      null,
-
-
-    /* =====================================
-       PROFITABILITY
-    ===================================== */
-
-    roe:
-      stock.roe ??
-      stock.ROE ??
-      null,
-
-    roa:
-      stock.roa ??
-      stock.ROA ??
-      null,
-
-    netMargin:
-      stock.netMargin ??
-      stock.net_margin ??
-      stock.netProfitMargin ??
-      null,
-
-
-    /* =====================================
-       FINANCIAL HEALTH
-    ===================================== */
-
-    debtToEquity:
-      stock.debtToEquity ??
-      stock.debt_to_equity ??
-      stock.der ??
-      stock.DER ??
-      null,
-
-    currentRatio:
-      stock.currentRatio ??
-      stock.current_ratio ??
-      null,
-
-
-    /* =====================================
-       VALUATION METRICS
-    ===================================== */
-
-    pe:
-      stock.pe ??
-      stock.PE ??
-      stock.per ??
-      stock.PER ??
-      null,
-
-    pb:
-      stock.pb ??
-      stock.PB ??
-      stock.pbv ??
-      stock.PBV ??
-      null,
-
-
-    /* =====================================
-       DIVIDEND
-    ===================================== */
-
-    dividendYield:
-      stock.dividendYield ??
-      stock.dividend_yield ??
-      null,
-
-    dividendPerShare:
-      stock.dividendPerShare ??
-      stock.dps ??
-      null,
-
-
-    /* =====================================
-       ADDITIONAL FUNDAMENTAL
-    ===================================== */
-
-    eps:
-      stock.eps ??
-      stock.EPS ??
-      null,
-
-    bvps:
-      stock.bvps ??
-      stock.BVPS ??
-      null,
-
-    revenue:
-      stock.revenue ??
-      null,
-
-    netIncome:
-      stock.netIncome ??
-      stock.net_income ??
-      null,
-
-    grossProfit:
-      stock.grossProfit ??
-      stock.gross_profit ??
-      null,
-
-
-    /* =====================================
-       DISPLAY SNAPSHOT
-    ===================================== */
-
-    debtLevel:
-      stock.debtLevel ??
-      stock.debt_level ??
-      "-",
-
-    dividend:
-      stock.dividend ??
-      "-",
-
-    businessQuality:
-      stock.businessQuality ??
-      stock.business_quality ??
-      getOutlook(long)
-
-  };
-
-}
-
-
-/* =========================================
-   NOVA FUNDAMENTAL SCORE ENGINE
-========================================= */
-
-
-/* =========================================
-   RATA-RATA SCORE YANG TERSEDIA
-========================================= */
-
-function calculateAverageScore(scores) {
-
-  const validScores =
-    scores.filter(
-      function(score) {
-
-        return (
-          score !== null &&
-          score !== undefined &&
-          Number.isFinite(score)
+      background:
+        linear-gradient(
+          135deg,
+          var(--primary),
+          #7c5cff
         );
 
-      }
-    );
+      color: white;
 
-
-  if (validScores.length === 0) {
-
-    return {
-
-      score: null,
-      metrics: 0
-
-    };
-
-  }
-
-
-  const total =
-    validScores.reduce(
-      function(sum, score) {
-
-        return sum + score;
-
-      },
-      0
-    );
-
-
-  return {
-
-    score:
-      clampScore(
-        total /
-        validScores.length
-      ),
-
-    metrics:
-      validScores.length
-
-  };
-
-}
-
-
-/* =========================================
-   SCORE ROE
-========================================= */
-
-function scoreROE(value) {
-
-  const roe =
-    getValidNumber(value);
-
-  if (roe === null) {
-
-    return null;
-
-  }
-
-  if (roe >= 20) return 100;
-  if (roe >= 15) return 85;
-  if (roe >= 10) return 70;
-  if (roe >= 5) return 50;
-  if (roe > 0) return 30;
-
-  return 0;
-
-}
-
-
-/* =========================================
-   SCORE ROA
-========================================= */
-
-function scoreROA(value) {
-
-  const roa =
-    getValidNumber(value);
-
-  if (roa === null) {
-
-    return null;
-
-  }
-
-  if (roa >= 10) return 100;
-  if (roa >= 7) return 85;
-  if (roa >= 5) return 70;
-  if (roa >= 2) return 50;
-  if (roa > 0) return 30;
-
-  return 0;
-
-}
-
-
-/* =========================================
-   SCORE NET MARGIN
-========================================= */
-
-function scoreNetMargin(value) {
-
-  const margin =
-    getValidNumber(value);
-
-  if (margin === null) {
-
-    return null;
-
-  }
-
-  if (margin >= 20) return 100;
-  if (margin >= 15) return 85;
-  if (margin >= 10) return 70;
-  if (margin >= 5) return 50;
-  if (margin > 0) return 30;
-
-  return 0;
-
-}
-
-
-/* =========================================
-   SCORE REVENUE GROWTH
-========================================= */
-
-function scoreRevenueGrowth(value) {
-
-  const growth =
-    getValidNumber(value);
-
-  if (growth === null) {
-
-    return null;
-
-  }
-
-  if (growth >= 20) return 100;
-  if (growth >= 15) return 85;
-  if (growth >= 10) return 70;
-  if (growth >= 5) return 55;
-  if (growth >= 0) return 40;
-  if (growth >= -10) return 25;
-
-  return 0;
-
-}
-
-
-/* =========================================
-   SCORE PROFIT GROWTH
-========================================= */
-
-function scoreProfitGrowth(value) {
-
-  const growth =
-    getValidNumber(value);
-
-  if (growth === null) {
-
-    return null;
-
-  }
-
-  if (growth >= 30) return 100;
-  if (growth >= 20) return 85;
-  if (growth >= 10) return 70;
-  if (growth >= 5) return 55;
-  if (growth >= 0) return 40;
-  if (growth >= -10) return 20;
-
-  return 0;
-
-}
-
-
-/* =========================================
-   SCORE DEBT TO EQUITY
-========================================= */
-
-function scoreDebtToEquity(value) {
-
-  const debt =
-    getValidNumber(value);
-
-  if (debt === null) {
-
-    return null;
-
-  }
-
-  if (debt <= 0.3) return 100;
-  if (debt <= 0.5) return 85;
-  if (debt <= 1) return 70;
-  if (debt <= 1.5) return 50;
-  if (debt <= 2) return 30;
-
-  return 10;
-
-}
-
-
-/* =========================================
-   SCORE CURRENT RATIO
-========================================= */
-
-function scoreCurrentRatio(value) {
-
-  const ratio =
-    getValidNumber(value);
-
-  if (ratio === null) {
-
-    return null;
-
-  }
-
-  if (
-    ratio >= 1.5 &&
-    ratio <= 3
-  ) return 100;
-
-  if (
-    ratio >= 1.2 &&
-    ratio < 1.5
-  ) return 80;
-
-  if (
-    ratio > 3 &&
-    ratio <= 5
-  ) return 75;
-
-  if (
-    ratio >= 1 &&
-    ratio < 1.2
-  ) return 60;
-
-  if (ratio >= 0.8) return 35;
-
-  return 15;
-
-}
-
-
-/* =========================================
-   SCORE PER
-========================================= */
-
-function scorePE(value) {
-
-  const pe =
-    getValidNumber(value);
-
-  if (pe === null) {
-
-    return null;
-
-  }
-
-  if (pe <= 0) return 10;
-  if (pe <= 10) return 100;
-  if (pe <= 15) return 85;
-  if (pe <= 20) return 70;
-  if (pe <= 30) return 50;
-  if (pe <= 50) return 30;
-
-  return 15;
-
-}
-
-
-/* =========================================
-   SCORE PBV
-========================================= */
-
-function scorePB(value) {
-
-  const pb =
-    getValidNumber(value);
-
-  if (pb === null) {
-
-    return null;
-
-  }
-
-  if (pb <= 0) return 10;
-  if (pb <= 1) return 100;
-  if (pb <= 1.5) return 85;
-  if (pb <= 2) return 70;
-  if (pb <= 3) return 50;
-  if (pb <= 5) return 30;
-
-  return 15;
-
-}
-
-
-/* =========================================
-   SCORE DIVIDEND YIELD
-========================================= */
-
-function scoreDividendYield(value) {
-
-  const dividend =
-    getValidNumber(value);
-
-  if (dividend === null) {
-
-    return null;
-
-  }
-
-  if (dividend >= 7) return 100;
-  if (dividend >= 5) return 85;
-  if (dividend >= 3) return 70;
-  if (dividend >= 1) return 50;
-  if (dividend > 0) return 30;
-
-  return 10;
-
-}
-
-
-/* =========================================
-   HITUNG FUNDAMENTAL SCORE
-========================================= */
-
-function calculateFundamentalScore(stock) {
-
-  const profitability =
-    calculateAverageScore([
-      scoreROE(stock.roe),
-      scoreROA(stock.roa),
-      scoreNetMargin(stock.netMargin)
-    ]);
-
-
-  const growth =
-    calculateAverageScore([
-      scoreRevenueGrowth(
-        stock.revenueGrowth
-      ),
-
-      scoreProfitGrowth(
-        stock.profitGrowth
-      )
-    ]);
-
-
-  const health =
-    calculateAverageScore([
-      scoreDebtToEquity(
-        stock.debtToEquity
-      ),
-
-      scoreCurrentRatio(
-        stock.currentRatio
-      )
-    ]);
-
-
-  const valuation =
-    calculateAverageScore([
-      scorePE(stock.pe),
-      scorePB(stock.pb)
-    ]);
-
-
-  const dividend =
-    calculateAverageScore([
-      scoreDividendYield(
-        stock.dividendYield
-      )
-    ]);
-
-
-  const categories = [
-
-    profitability,
-    growth,
-    health,
-    valuation,
-    dividend
-
-  ].filter(
-    function(category) {
-
-      return (
-        category.score !== null &&
-        category.metrics > 0
-      );
-
+      font-size: 14px;
+      font-weight: 900;
     }
-  );
 
 
-  const totalMetrics =
-    categories.reduce(
-      function(total, category) {
+    .logo span {
+      color: var(--primary);
+    }
 
-        return total +
-          category.metrics;
 
-      },
-      0
-    );
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
 
 
-  if (categories.length === 0) {
+    .nav-menu a {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
 
-    return {
+      transition: 0.2s;
+    }
 
-      overall: null,
-      metrics: 0,
-      profitability: profitability,
-      growth: growth,
-      health: health,
-      valuation: valuation,
-      dividend: dividend
 
-    };
+    .nav-menu a:hover {
+      color: var(--text);
+    }
 
-  }
 
+    .menu-btn {
+      display: none;
 
-  let weightedTotal = 0;
-  let totalWeight = 0;
+      background: transparent;
+      border: 1px solid var(--border);
 
+      color: white;
 
-  if (
-    profitability.score !== null
-  ) {
+      width: 42px;
+      height: 42px;
 
-    weightedTotal +=
-      profitability.score * 0.30;
+      border-radius: 10px;
 
-    totalWeight += 0.30;
+      cursor: pointer;
+    }
 
-  }
 
+    /* =========================================
+       MAIN
+    ========================================= */
 
-  if (
-    growth.score !== null
-  ) {
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: auto;
 
-    weightedTotal +=
-      growth.score * 0.25;
+      padding:
+        42px 0
+        70px;
+    }
 
-    totalWeight += 0.25;
 
-  }
+    /* =========================================
+       BREADCRUMB
+    ========================================= */
 
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 9px;
 
-  if (
-    health.score !== null
-  ) {
+      color: var(--muted);
 
-    weightedTotal +=
-      health.score * 0.20;
+      font-size: 13px;
 
-    totalWeight += 0.20;
+      margin-bottom: 24px;
+    }
 
-  }
 
+    .breadcrumb a:hover {
+      color: var(--primary);
+    }
 
-  if (
-    valuation.score !== null
-  ) {
 
-    weightedTotal +=
-      valuation.score * 0.15;
+    /* =========================================
+       HERO STOCK
+    ========================================= */
 
-    totalWeight += 0.15;
+    .stock-hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
 
-  }
+      gap: 30px;
 
+      padding-bottom: 30px;
 
-  if (
-    dividend.score !== null
-  ) {
+      border-bottom:
+        1px solid var(--border);
+    }
 
-    weightedTotal +=
-      dividend.score * 0.10;
 
-    totalWeight += 0.10;
+    .stock-sector {
+      display: inline-flex;
+      align-items: center;
 
-  }
+      padding: 7px 11px;
 
+      border-radius: 999px;
 
-  const overall =
-    totalWeight > 0
-      ? clampScore(
-          weightedTotal /
-          totalWeight
-        )
-      : null;
+      background: var(--primary-soft);
 
+      color: #9fc0ff;
 
-  return {
+      font-size: 12px;
+      font-weight: 700;
 
-    overall: overall,
-    metrics: totalMetrics,
-    profitability: profitability,
-    growth: growth,
-    health: health,
-    valuation: valuation,
-    dividend: dividend
+      margin-bottom: 15px;
+    }
 
-  };
 
-}
+    .stock-title {
+      font-size: clamp(32px, 6vw, 54px);
+      line-height: 1;
+      letter-spacing: -2px;
 
+      margin-bottom: 12px;
+    }
 
-/* =========================================
-   FUNDAMENTAL LABEL
-========================================= */
 
-function getFundamentalLabel(score) {
+    .stock-title span {
+      color: var(--primary);
+    }
 
-  if (score === null) {
 
-    return "DATA PENDING";
+    .stock-name {
+      color: var(--muted);
+      font-size: 16px;
+    }
 
-  }
 
-  if (score >= 85) {
+    .stock-meta {
+      display: flex;
+      flex-wrap: wrap;
 
-    return "EXCELLENT";
+      gap: 10px;
 
-  }
+      margin-top: 20px;
+    }
 
-  if (score >= 75) {
 
-    return "STRONG";
+    .meta-item {
+      padding: 8px 12px;
 
-  }
+      background: rgba(255,255,255,0.04);
 
-  if (score >= 60) {
+      border:
+        1px solid var(--border);
 
-    return "HEALTHY";
+      border-radius: 10px;
 
-  }
+      font-size: 13px;
+    }
 
-  if (score >= 45) {
 
-    return "MODERATE";
+    .meta-label {
+      color: var(--muted);
+      margin-right: 5px;
+    }
 
-  }
 
-  return "WEAK";
+    .hero-price {
+      min-width: 250px;
 
-}
+      padding: 22px;
 
-
-/* =========================================
-   FUNDAMENTAL DESCRIPTION
-========================================= */
-
-function getFundamentalDescription(
-  score,
-  metrics
-) {
-
-  if (
-    score === null ||
-    metrics === 0
-  ) {
-
-    return "Data fundamental belum cukup untuk menghitung NOVA Fundamental Score.";
-
-  }
-
-  if (score >= 85) {
-
-    return (
-      "Fundamental sangat kuat berdasarkan " +
-      metrics +
-      " metrik yang tersedia."
-    );
-
-  }
-
-  if (score >= 75) {
-
-    return (
-      "Fundamental kuat berdasarkan " +
-      metrics +
-      " metrik yang tersedia."
-    );
-
-  }
-
-  if (score >= 60) {
-
-    return (
-      "Fundamental cukup sehat berdasarkan " +
-      metrics +
-      " metrik yang tersedia."
-    );
-
-  }
-
-  if (score >= 45) {
-
-    return (
-      "Fundamental berada pada kondisi moderat berdasarkan " +
-      metrics +
-      " metrik yang tersedia."
-    );
-
-  }
-
-  return (
-    "Fundamental memerlukan perhatian berdasarkan " +
-    metrics +
-    " metrik yang tersedia."
-  );
-
-}
-
-
-/* =========================================
-   RENDER KATEGORI FUNDAMENTAL
-========================================= */
-
-function renderFundamentalCategory(
-  prefix,
-  category
-) {
-
-  const score =
-    category &&
-    category.score !== null
-      ? category.score
-      : null;
-
-
-  const scoreText =
-    score === null
-      ? "Data belum tersedia"
-      : score + " / 100";
-
-
-  const outlook =
-    score === null
-      ? "Data belum cukup"
-      : getOutlook(score);
-
-
-  setText(
-    prefix + "Outlook",
-    outlook
-  );
-
-
-  setText(
-    prefix + "Score",
-    scoreText
-  );
-
-
-  const bar =
-    document.getElementById(
-      prefix + "Bar"
-    );
-
-
-  if (bar) {
-
-    bar.style.width =
-      score === null
-        ? "0%"
-        : score + "%";
-
-  }
-
-}
-
-
-/* =========================================
-   RENDER FUNDAMENTAL ANALYSIS
-========================================= */
-
-function renderFundamentalAnalysis(stock) {
-
-  const result =
-    calculateFundamentalScore(stock);
-
-
-  const score =
-    result.overall;
-
-
-  const label =
-    getFundamentalLabel(score);
-
-
-  setText(
-    "fundamentalLabel",
-    label
-  );
-
-
-  setText(
-    "fundamentalRating",
-    label
-  );
-
-
-  const scoreElement =
-    document.getElementById(
-      "fundamentalScore"
-    );
-
-
-  if (scoreElement) {
-
-    scoreElement.innerHTML =
-      (
-        score === null
-          ? "-"
-          : score
-      ) +
-      "<span>/100</span>";
-
-  }
-
-
-  setText(
-    "fundamentalDescription",
-    getFundamentalDescription(
-      score,
-      result.metrics
-    )
-  );
-
-
-  setText(
-    "fundamentalMetrics",
-    result.metrics + " Metrics"
-  );
-
-
-  setText(
-    "fundamentalStatus",
-    score === null
-      ? "Insufficient Data"
-      : "Calculated"
-  );
-
-
-  const scoreBar =
-    document.getElementById(
-      "fundamentalScoreBar"
-    );
-
-
-  if (scoreBar) {
-
-    scoreBar.style.width =
-      score === null
-        ? "0%"
-        : score + "%";
-
-  }
-
-
-  renderFundamentalCategory(
-    "profitability",
-    result.profitability
-  );
-
-
-  renderFundamentalCategory(
-    "growth",
-    result.growth
-  );
-
-
-  renderFundamentalCategory(
-    "health",
-    result.health
-  );
-
-
-  renderFundamentalCategory(
-    "valuation",
-    result.valuation
-  );
-
-
-  renderFundamentalCategory(
-    "dividend",
-    result.dividend
-  );
-
-}
-
-
-/* =========================================
-   AMBIL FUNDAMENTAL API
-========================================= */
-
-async function fetchFundamentalData() {
-
-  const urls = [
-
-    FUNDAMENTAL_API +
-    "?ticker=" +
-    encodeURIComponent(ticker),
-
-    FUNDAMENTAL_API +
-    "/" +
-    encodeURIComponent(ticker)
-
-  ];
-
-
-  let lastError = null;
-
-
-  for (const url of urls) {
-
-    try {
-
-      const response =
-        await fetch(
-          url,
-          {
-            method: "GET",
-
-            headers: {
-              "Accept":
-                "application/json"
-            }
-          }
+      background:
+        linear-gradient(
+          145deg,
+          rgba(79,140,255,0.12),
+          rgba(255,255,255,0.02)
         );
 
+      border:
+        1px solid var(--border);
 
-      if (!response.ok) {
+      border-radius: 20px;
 
-        throw new Error(
-          "Fundamental HTTP " +
-          response.status
+      box-shadow: var(--shadow);
+    }
+
+
+    .hero-price small {
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      margin-bottom: 8px;
+    }
+
+
+    .price-value {
+      font-size: 30px;
+      font-weight: 800;
+
+      letter-spacing: -1px;
+
+      margin-bottom: 8px;
+    }
+
+
+    .positive {
+      color: var(--green);
+    }
+
+
+    .negative {
+      color: var(--red);
+    }
+
+
+    /* =========================================
+       SECTION
+    ========================================= */
+
+    .section {
+      margin-top: 34px;
+    }
+
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      margin-bottom: 18px;
+    }
+
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+
+    .section-subtitle {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+
+    /* =========================================
+       GRID
+    ========================================= */
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+
+    .grid-2 {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    }
+
+
+    .grid-3 {
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+    }
+
+
+    .grid-4 {
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+    }
+
+
+    /* =========================================
+       CARD
+    ========================================= */
+
+    .card {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,0.045),
+          rgba(255,255,255,0.018)
         );
 
-      }
+      border:
+        1px solid var(--border);
+
+      border-radius: 18px;
+
+      padding: 20px;
+
+      box-shadow:
+        0 12px 35px rgba(0,0,0,0.12);
+    }
 
 
-      const result =
-        await response.json();
+    /* =========================================
+       OVERALL SCORE
+    ========================================= */
+
+    .overall-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
 
 
-      if (
-        result.status &&
-        result.status !== "success"
-      ) {
+    .score-circle {
+      width: 150px;
+      height: 150px;
 
-        throw new Error(
-          "Fundamental API status error"
+      flex-shrink: 0;
+
+      border-radius: 50%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        radial-gradient(
+          circle,
+          var(--card) 58%,
+          transparent 59%
+        ),
+        conic-gradient(
+          var(--primary) 0deg,
+          #7c5cff 220deg,
+          rgba(255,255,255,0.08) 220deg
         );
 
+      position: relative;
+    }
+
+
+    .score-circle::before {
+      content: "";
+
+      position: absolute;
+
+      inset: 9px;
+
+      border-radius: 50%;
+
+      background: var(--card);
+    }
+
+
+    .score-value {
+      position: relative;
+      z-index: 1;
+
+      font-size: 36px;
+      font-weight: 900;
+
+      letter-spacing: -2px;
+    }
+
+
+    .score-value span {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+
+      letter-spacing: 0;
+    }
+
+
+    .score-info h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+
+    .score-info p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+
+    .score-badges {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+      margin-top: 16px;
+    }
+
+
+    .badge {
+      padding: 7px 10px;
+
+      border-radius: 8px;
+
+      background: rgba(255,255,255,0.05);
+
+      color: #dce5f4;
+
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+
+    /* =========================================
+       SCORE SUMMARY
+    ========================================= */
+
+    .summary-card small {
+      color: var(--muted);
+      display: block;
+
+      margin-bottom: 8px;
+
+      font-size: 12px;
+    }
+
+
+    .summary-card strong {
+      font-size: 24px;
+      display: block;
+    }
+
+
+    /* =========================================
+       ANALYSIS CARD
+    ========================================= */
+
+    .analysis-card {
+      position: relative;
+
+      overflow: hidden;
+    }
+
+
+    .analysis-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      gap: 15px;
+
+      margin-bottom: 16px;
+    }
+
+
+    .analysis-name {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+
+    .analysis-outlook {
+      color: #9fc0ff;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      margin-top: 4px;
+    }
+
+
+    .analysis-score {
+      font-size: 18px;
+      font-weight: 800;
+
+      white-space: nowrap;
+    }
+
+
+    .progress {
+      width: 100%;
+      height: 8px;
+
+      border-radius: 99px;
+
+      background:
+        rgba(255,255,255,0.07);
+
+      overflow: hidden;
+    }
+
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+
+      border-radius: inherit;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--primary),
+          #7c5cff
+        );
+
+      transition:
+        width 0.8s ease;
+    }
+
+
+    /* =========================================
+       FUNDAMENTAL SCORE
+    ========================================= */
+
+    .fundamental-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 25px;
+    }
+
+
+    .fundamental-score {
+      font-size: 46px;
+      font-weight: 900;
+
+      letter-spacing: -2px;
+    }
+
+
+    .fundamental-score span {
+      font-size: 16px;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+
+
+    .fundamental-label {
+      display: inline-block;
+
+      margin-top: 8px;
+
+      padding: 6px 10px;
+
+      border-radius: 8px;
+
+      background: var(--primary-soft);
+
+      color: #9fc0ff;
+
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+
+    .fundamental-description {
+      color: var(--muted);
+
+      font-size: 14px;
+
+      margin-top: 14px;
+
+      max-width: 680px;
+    }
+
+
+    .fundamental-status {
+      text-align: right;
+      min-width: 140px;
+    }
+
+
+    .fundamental-status small {
+      display: block;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+
+    .fundamental-status strong {
+      font-size: 14px;
+    }
+
+
+    /* =========================================
+       METRIC
+    ========================================= */
+
+    .metric-card {
+      min-height: 118px;
+    }
+
+
+    .metric-card small {
+      display: block;
+
+      color: var(--muted);
+
+      margin-bottom: 9px;
+
+      font-size: 12px;
+    }
+
+
+    .metric-card strong {
+      font-size: 24px;
+
+      display: block;
+
+      word-break: break-word;
+    }
+
+
+    /* =========================================
+       CTA
+    ========================================= */
+
+    .cta {
+      margin-top: 40px;
+
+      padding: 30px;
+
+      border-radius: 22px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(79,140,255,0.18),
+          rgba(124,92,255,0.12)
+        );
+
+      border:
+        1px solid rgba(79,140,255,0.22);
+    }
+
+
+    .cta h2 {
+      font-size: 24px;
+
+      margin-bottom: 10px;
+    }
+
+
+    .cta p {
+      color: #b8c5d8;
+
+      max-width: 800px;
+
+      font-size: 14px;
+    }
+
+
+    /* =========================================
+       DATA INFO
+    ========================================= */
+
+    .data-info {
+      margin-top: 24px;
+
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      gap: 10px;
+
+      padding: 15px 18px;
+
+      background:
+        rgba(255,255,255,0.025);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 12px;
+
+      font-size: 12px;
+
+      color: var(--muted);
+    }
+
+
+    #dataMode {
+      color: var(--primary);
+      font-weight: 800;
+    }
+
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    footer {
+      border-top:
+        1px solid var(--border);
+
+      padding: 30px 16px;
+
+      text-align: center;
+
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media (max-width: 850px) {
+
+      .stock-hero {
+        flex-direction: column;
       }
 
-
-      const fundamental =
-        extractFundamental(result);
-
-
-      if (
-        fundamental &&
-        typeof fundamental === "object"
-      ) {
-
-        return fundamental;
-
+      .hero-price {
+        width: 100%;
       }
 
-    } catch (error) {
-
-      lastError = error;
-
-      console.warn(
-        "Fundamental URL gagal:",
-        url,
-        error
-      );
-
-    }
-
-  }
-
-
-  throw (
-    lastError ||
-    new Error(
-      "Fundamental API gagal"
-    )
-  );
-
-}
-
-
-/* =========================================
-   TAMPILKAN ERROR
-========================================= */
-
-function showError(message) {
-
-  setText(
-    "stockSector",
-    "DATA NOT FOUND"
-  );
-
-
-  const tickerElement =
-    document.getElementById(
-      "stockTicker"
-    );
-
-
-  if (tickerElement) {
-
-    tickerElement.innerHTML =
-      "Saham <span>Tidak Ditemukan</span>";
-
-  }
-
-
-  setText(
-    "stockName",
-    message ||
-    "Ticker tidak tersedia dalam database IDXNOVA."
-  );
-
-
-  setText(
-    "stockBestFit",
-    "-"
-  );
-
-
-  setText(
-    "stockLabel",
-    "ERROR"
-  );
-
-
-  setText(
-    "dataMode",
-    "ERROR"
-  );
-
-
-  setText(
-    "dataNote",
-    "Data saham tidak dapat dimuat."
-  );
-
-}
-
-
-/* =========================================
-   RENDER SAHAM
-========================================= */
-
-function renderStock(rawStock, mode) {
-
-  const stock =
-    normalizeStock(rawStock);
-
-
-  if (!stock.ticker) {
-
-    showError();
-
-    return;
-
-  }
-
-
-  document.title =
-    stock.ticker +
-    " | IDXNOVA";
-
-
-  /* =====================================
-     HEADER
-  ===================================== */
-
-  setText(
-    "stockSector",
-    stock.sector
-  );
-
-
-  const tickerElement =
-    document.getElementById(
-      "stockTicker"
-    );
-
-
-  if (tickerElement) {
-
-    tickerElement.innerHTML =
-      stock.ticker +
-      " <span>Analysis</span>";
-
-  }
-
-
-  setText(
-    "stockName",
-    stock.name
-  );
-
-
-  setText(
-    "stockBestFit",
-    stock.bestFit
-  );
-
-
-  setText(
-    "stockLabel",
-    stock.label
-  );
-
-
-  /* =====================================
-     OVERALL SCORE
-  ===================================== */
-
-  const overallElement =
-    document.getElementById(
-      "stockOverall"
-    );
-
-
-  if (overallElement) {
-
-    overallElement.innerHTML =
-      stock.overall +
-      "<span>/100</span>";
-
-  }
-
-
-  const overallBar =
-    document.getElementById(
-      "stockOverallBar"
-    );
-
-
-  if (overallBar) {
-
-    overallBar.style.width =
-      stock.overall + "%";
-
-  }
-
-
-  setText(
-    "stockRisk",
-    stock.risk
-  );
-
-
-  setText(
-    "stockValuation",
-    stock.valuation
-  );
-
-
-  /* =====================================
-     PRICE
-  ===================================== */
-
-  setText(
-    "stockPrice",
-    formatPrice(stock.price)
-  );
-
-
-  const change =
-    safeNumber(stock.change);
-
-
-  const changeElement =
-    document.getElementById(
-      "stockChange"
-    );
-
-
-  if (changeElement) {
-
-    changeElement.textContent =
-      (change >= 0 ? "▲ +" : "▼ ") +
-      Math.abs(change).toFixed(2) +
-      "%";
-
-
-    changeElement.className =
-      change >= 0
-        ? "positive"
-        : "negative";
-
-  }
-
-
-  /* =====================================
-     SCORE SUMMARY
-  ===================================== */
-
-  setText(
-    "stockTrading",
-    stock.trading + "/100"
-  );
-
-
-  setText(
-    "stockSwing",
-    stock.swing + "/100"
-  );
-
-
-  setText(
-    "stockMedium",
-    stock.medium + "/100"
-  );
-
-
-  /* =====================================
-     TRADING
-  ===================================== */
-
-  setText(
-    "tradingOutlook",
-    stock.tradingOutlook
-  );
-
-
-  setText(
-    "tradingScore",
-    stock.trading + " / 100"
-  );
-
-
-  const tradingBar =
-    document.getElementById(
-      "tradingBar"
-    );
-
-
-  if (tradingBar) {
-
-    tradingBar.style.width =
-      stock.trading + "%";
-
-  }
-
-
-  /* =====================================
-     SWING
-  ===================================== */
-
-  setText(
-    "swingOutlook",
-    stock.swingOutlook
-  );
-
-
-  setText(
-    "swingScore",
-    stock.swing + " / 100"
-  );
-
-
-  const swingBar =
-    document.getElementById(
-      "swingBar"
-    );
-
-
-  if (swingBar) {
-
-    swingBar.style.width =
-      stock.swing + "%";
-
-  }
-
-
-  /* =====================================
-     MEDIUM TERM
-  ===================================== */
-
-  setText(
-    "mediumOutlook",
-    stock.mediumOutlook
-  );
-
-
-  setText(
-    "mediumScore",
-    stock.medium + " / 100"
-  );
-
-
-  const mediumBar =
-    document.getElementById(
-      "mediumBar"
-    );
-
-
-  if (mediumBar) {
-
-    mediumBar.style.width =
-      stock.medium + "%";
-
-  }
-
-
-  /* =====================================
-     LONG TERM
-  ===================================== */
-
-  setText(
-    "longOutlook",
-    stock.longOutlook
-  );
-
-
-  setText(
-    "longScore",
-    stock.long + " / 100"
-  );
-
-
-  const longBar =
-    document.getElementById(
-      "longBar"
-    );
-
-
-  if (longBar) {
-
-    longBar.style.width =
-      stock.long + "%";
-
-  }
-
-
-  /* =====================================
-     FUNDAMENTAL SNAPSHOT
-  ===================================== */
-
-  setText(
-    "revenueGrowth",
-    formatPercent(
-      stock.revenueGrowth
-    )
-  );
-
-
-  setText(
-    "profitGrowth",
-    formatPercent(
-      stock.profitGrowth
-    )
-  );
-
-
-  setText(
-    "stockRoe",
-    formatPercent(
-      stock.roe
-    )
-  );
-
-
-  setText(
-    "debtLevel",
-    stock.debtLevel !== "-"
-      ? stock.debtLevel
-      : (
-          stock.debtToEquity !== null
-            ? "D/E " +
-              Number(
-                stock.debtToEquity
-              ).toFixed(2) +
-              "x"
-            : "Data belum tersedia"
-        )
-  );
-
-
-  setText(
-    "stockDividend",
-    stock.dividend !== "-"
-      ? stock.dividend
-      : (
-          stock.dividendYield !== null
-            ? Number(
-                stock.dividendYield
-              ).toFixed(2) +
-              "%"
-            : "Data belum tersedia"
-        )
-  );
-
-
-  setText(
-    "businessQuality",
-    stock.businessQuality ||
-    "Data belum tersedia"
-  );
-
-
-  /* =====================================
-     NOVA FUNDAMENTAL SCORE
-
-     PENTING:
-     Gunakan "stock" yang sudah dinormalisasi,
-     bukan rawStock.
-  ===================================== */
-
-  renderFundamentalAnalysis(
-    stock
-  );
-
-
-  /* =====================================
-     STATUS DATA
-  ===================================== */
-
-  setText(
-    "dataMode",
-    mode === "API"
-      ? "LIVE API"
-      : "FALLBACK"
-  );
-
-
-  setText(
-    "dataNote",
-    mode === "API"
-      ? "Market dan fundamental dimuat dari IDXNOVA API."
-      : "API tidak tersedia — menggunakan database cadangan."
-  );
-
-
-  /* =====================================
-     CTA
-  ===================================== */
-
-  setText(
-    "ctaTitle",
-    stock.ticker +
-    ". Analyze Before You Act."
-  );
-
-
-  setText(
-    "ctaText",
-    "Analisis " +
-    stock.ticker +
-    " berdasarkan data yang tersedia di IDXNOVA. Selalu lakukan riset tambahan sebelum mengambil keputusan investasi atau trading."
-  );
-
-}
-
-
-/* =========================================
-   LOAD SAHAM
-========================================= */
-
-async function loadStock() {
-
-
-  if (!ticker) {
-
-    showError(
-      "Ticker saham tidak ditemukan pada alamat halaman."
-    );
-
-    return;
-
-  }
-
-
-  try {
-
-
-    /* =====================================
-       MARKET API
-    ===================================== */
-
-    const marketResponse =
-      await fetch(
-        STOCK_API,
-        {
-          method: "GET",
-
-          headers: {
-            "Accept":
-              "application/json"
-          }
-        }
-      );
-
-
-    if (!marketResponse.ok) {
-
-      throw new Error(
-        "Market API HTTP " +
-        marketResponse.status
-      );
+      .grid-4 {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-3 {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
 
     }
 
 
-    const marketResult =
-      await marketResponse.json();
+    @media (max-width: 650px) {
 
+      .container {
+        width: min(100% - 24px, 1180px);
 
-    if (
-      marketResult.status !== "success" ||
-      !Array.isArray(
-        marketResult.data
-      )
-    ) {
+        padding-top: 28px;
+      }
 
-      throw new Error(
-        "Format Market API tidak valid"
-      );
+      .nav-container {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .nav-menu {
+        display: none;
+
+        position: absolute;
+
+        top: 72px;
+        left: 12px;
+        right: 12px;
+
+        flex-direction: column;
+        align-items: stretch;
+
+        gap: 0;
+
+        padding: 12px;
+
+        background: #0b1728;
+
+        border:
+          1px solid var(--border);
+
+        border-radius: 14px;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .nav-menu a {
+        padding: 12px;
+      }
+
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      .overall-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .fundamental-main {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .fundamental-status {
+        text-align: left;
+      }
+
+      .stock-title {
+        letter-spacing: -1px;
+      }
+
+      .section-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
 
     }
 
+  </style>
 
-    /* =====================================
-       CARI TICKER
-    ===================================== */
-
-    const marketStock =
-      marketResult.data.find(
-        function(stock) {
-
-          const stockTicker =
-            String(
-              stock.ticker ||
-              stock.StockCode ||
-              ""
-            )
-            .trim()
-            .toUpperCase();
+</head>
 
 
-          return stockTicker === ticker;
-
-        }
-      );
+<body>
 
 
-    if (!marketStock) {
+  <!-- =========================================
+       NAVBAR
+  ========================================= -->
 
-      throw new Error(
-        "Ticker " +
-        ticker +
-        " tidak ditemukan di Market API"
-      );
+  <header class="navbar">
 
-    }
+    <div class="nav-container">
+
+      <a
+        href="index.html"
+        class="logo"
+      >
+
+        <div class="logo-icon">
+          N
+        </div>
+
+        IDX<span>NOVA</span>
+
+      </a>
 
 
-    /* =====================================
-       FALLBACK STOCKS.JS
-    ===================================== */
+      <button
+        class="menu-btn"
+        type="button"
+        onclick="toggleMenu()"
+        aria-label="Toggle Menu"
+      >
+        ☰
+      </button>
 
-    const fallbackStock =
-      typeof STOCKS !== "undefined" &&
-      STOCKS &&
-      STOCKS[ticker]
-        ? STOCKS[ticker]
+
+      <nav
+        class="nav-menu"
+        id="navMenu"
+      >
+
+        <a href="index.html">
+          Home
+        </a>
+
+        <a href="stocks.html">
+          Stocks
+        </a>
+
+        <a href="index.html#market">
+          Market
+        </a>
+
+        <a href="index.html#about">
+          About
+        </a>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================================
+       MAIN
+  ========================================= -->
+
+  <main class="container">
+
+
+    <!-- BREADCRUMB -->
+
+    <div class="breadcrumb">
+
+      <a href="index.html">
+        IDXNOVA
+      </a>
+
+      <span>/</span>
+
+      <a href="stocks.html">
+        Stocks
+      </a>
+
+      <span>/</span>
+
+      <span id="stockSector">
+        Loading...
+      </span>
+
+    </div>
+
+
+    <!-- =====================================
+         STOCK HERO
+    ====================================== -->
+
+    <section class="stock-hero">
+
+
+      <div>
+
+        <div
+          class="stock-sector"
+          id="stockSector"
+        >
+          Loading...
+        </div>
+
+
+        <h1
+          class="stock-title"
+          id="stockTicker"
+        >
+          Loading <span>Analysis</span>
+        </h1>
+
+
+        <p
+          class="stock-name"
+          id="stockName"
+        >
+          Mengambil data saham...
+        </p>
+
+
+        <div class="stock-meta">
+
+          <div class="meta-item">
+
+            <span class="meta-label">
+              Best Fit:
+            </span>
+
+            <strong id="stockBestFit">
+              -
+            </strong>
+
+          </div>
+
+
+          <div class="meta-item">
+
+            <span class="meta-label">
+              Outlook:
+            </span>
+
+            <strong id="stockLabel">
+              -
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-price">
+
+        <small>
+          Latest Price
+        </small>
+
+        <div
+          class="price-value"
+          id="stockPrice"
+        >
+          -
+        </div>
+
+        <div
+          id="stockChange"
+        >
+          -
+        </div>
+
+      </div>
+
+
+    </section>
+
+
+    <!-- =====================================
+         OVERALL ANALYSIS
+    ====================================== -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <div>
+
+          <h2 class="section-title">
+            IDXNOVA Analysis
+          </h2>
+
+          <p class="section-subtitle">
+            Ringkasan skor analisis saham berdasarkan data yang tersedia.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="grid grid-2">
+
+
+        <div class="card overall-card">
+
+          <div class="score-circle">
+
+            <div
+              class="score-value"
+              id="stockOverall"
+            >
+              -<span>/100</span>
+            </div>
+
+          </div>
+
+
+          <div class="score-info">
+
+            <h3>
+              Overall Score
+            </h3>
+
+            <p>
+              Kombinasi analisis trading, swing, medium term,
+              long term, dan data fundamental yang tersedia.
+            </p>
+
+
+            <div class="score-badges">
+
+              <div class="badge">
+
+                Risk:
+                <span id="stockRisk">
+                  -
+                </span>
+
+              </div>
+
+
+              <div class="badge">
+
+                Valuation:
+                <span id="stockValuation">
+                  -
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="grid grid-3">
+
+
+          <div class="card summary-card">
+
+            <small>
+              Trading Score
+            </small>
+
+            <strong id="stockTrading">
+              -
+            </strong>
+
+          </div>
+
+
+          <div class="card summary-card">
+
+            <small>
+              Swing Score
+            </small>
+
+            <strong id="stockSwing">
+              -
+            </strong>
+
+          </div>
+
+
+          <div class="card summary-card">
+
+            <small>
+              Medium Score
+            </small>
+
+            <strong id="stockMedium">
+              -
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         TIMEFRAME ANALYSIS
+    ====================================== -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <div>
+
+          <h2 class="section-title">
+            Strategy Outlook
+          </h2>
+
+          <p class="section-subtitle">
+            Kesesuaian saham berdasarkan horizon investasi dan trading.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="grid grid-2">
+
+
+        <!-- TRADING -->
+
+        <div class="card analysis-card">
+
+          <div class="analysis-top">
+
+            <div>
+
+              <div class="analysis-name">
+                Trading
+              </div>
+
+              <div
+                class="analysis-outlook"
+                id="tradingOutlook"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              class="analysis-score"
+              id="tradingScore"
+            >
+              -
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              id="tradingBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- SWING -->
+
+        <div class="card analysis-card">
+
+          <div class="analysis-top">
+
+            <div>
+
+              <div class="analysis-name">
+                Swing
+              </div>
+
+              <div
+                class="analysis-outlook"
+                id="swingOutlook"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              class="analysis-score"
+              id="swingScore"
+            >
+              -
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              id="swingBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- MEDIUM -->
+
+        <div class="card analysis-card">
+
+          <div class="analysis-top">
+
+            <div>
+
+              <div class="analysis-name">
+                Medium Term
+              </div>
+
+              <div
+                class="analysis-outlook"
+                id="mediumOutlook"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              class="analysis-score"
+              id="mediumScore"
+            >
+              -
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              id="mediumBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- LONG -->
+
+        <div class="card analysis-card">
+
+          <div class="analysis-top">
+
+            <div>
+
+              <div class="analysis-name">
+                Long Term
+              </div>
+
+              <div
+                class="analysis-outlook"
+                id="longOutlook"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              class="analysis-score"
+              id="longScore"
+            >
+              -
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              id="longBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         FUNDAMENTAL SCORE
+    ====================================== -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <div>
+
+          <h2 class="section-title">
+            NOVA Fundamental Score
+          </h2>
+
+          <p class="section-subtitle">
+            Fundamental dihitung dari metrik yang tersedia.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="card">
+
+
+        <div class="fundamental-main">
+
+
+          <div>
+
+            <div
+              class="fundamental-score"
+              id="fundamentalScore"
+            >
+              -<span>/100</span>
+            </div>
+
+
+            <div
+              class="fundamental-label"
+              id="fundamentalLabel"
+            >
+              DATA PENDING
+            </div>
+
+
+            <p
+              class="fundamental-description"
+              id="fundamentalDescription"
+            >
+              Menghitung data fundamental...
+            </p>
+
+          </div>
+
+
+          <div class="fundamental-status">
+
+            <small>
+              Metrics Used
+            </small>
+
+            <strong id="fundamentalMetrics">
+              0 Metrics
+            </strong>
+
+
+            <br>
+
+
+            <small>
+              Status
+            </small>
+
+            <strong id="fundamentalStatus">
+              Pending
+            </strong>
+
+          </div>
+
+
+        </div>
+
+
+        <div
+          class="progress"
+          style="margin-top: 22px;"
+        >
+
+          <div
+            class="progress-bar"
+            id="fundamentalScoreBar"
+          ></div>
+
+        </div>
+
+
+        <div
+          style="margin-top: 16px;"
+          id="fundamentalRating"
+        ></div>
+
+
+      </div>
+
+
+      <!-- ===================================
+           FUNDAMENTAL CATEGORY
+      ==================================== -->
+
+      <div
+        class="grid grid-2"
+        style="margin-top: 16px;"
+      >
+
+
+        <!-- PROFITABILITY -->
+
+        <div class="card analysis-card">
+
+          <div class="analysis-top">
+
+            <div>
+
+              <div class="analysis-name">
+                Profitability
+              </div>
+
+              <div
+                class="analysis-outlook"
+                id="profitabilityOutlook"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              class="analysis-score"
+              id="profitabilityScore"
+            >
+              -
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              id="profitabilityBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- GROWTH -->
+
+        <div class="card analysis-card">
+
+          <div class="analysis-top">
+
+            <div>
+
+              <div class="analysis-name">
+                Growth
+              </div>
+
+              <div
+                class="analysis-outlook"
+                id="growthOutlook"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              class="analysis-score"
+              id="growthScore"
+            >
+              -
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              id="growthBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- HEALTH -->
+
+        <div class="card analysis-card">
+
+          <div class="analysis-top">
+
+            <div>
+
+              <div class="analysis-name">
+                Financial Health
+              </div>
+
+              <div
+                class="analysis-outlook"
+                id="healthOutlook"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              class="analysis-score"
+              id="healthScore"
+            >
+              -
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              id="healthBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- VALUATION -->
+
+        <div class="card analysis-card">
+
+          <div class="analysis-top">
+
+            <div>
+
+              <div class="analysis-name">
+                Valuation
+              </div>
+
+              <div
+                class="analysis-outlook"
+                id="valuationOutlook"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              class="analysis-score"
+              id="valuationScore"
+            >
+              -
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              id="valuationBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+        <!-- DIVIDEND -->
+
+        <div class="card analysis-card">
+
+          <div class="analysis-top">
+
+            <div>
+
+              <div class="analysis-name">
+                Dividend
+              </div>
+
+              <div
+                class="analysis-outlook"
+                id="dividendOutlook"
+              >
+                -
+              </div>
+
+            </div>
+
+
+            <div
+              class="analysis-score"
+              id="dividendScore"
+            >
+              -
+            </div>
+
+          </div>
+
+
+          <div class="progress">
+
+            <div
+              class="progress-bar"
+              id="dividendBar"
+            ></div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         FUNDAMENTAL SNAPSHOT
+    ====================================== -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <div>
+
+          <h2 class="section-title">
+            Fundamental Snapshot
+          </h2>
+
+          <p class="section-subtitle">
+            Ringkasan metrik fundamental utama.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="grid grid-4">
+
+
+        <div class="card metric-card">
+
+          <small>
+            Revenue Growth
+          </small>
+
+          <strong id="revenueGrowth">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="card metric-card">
+
+          <small>
+            Profit Growth
+          </small>
+
+          <strong id="profitGrowth">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="card metric-card">
+
+          <small>
+            Return On Equity
+          </small>
+
+          <strong id="stockRoe">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="card metric-card">
+
+          <small>
+            Debt Level
+          </small>
+
+          <strong id="debtLevel">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="card metric-card">
+
+          <small>
+            Dividend
+          </small>
+
+          <strong id="stockDividend">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="card metric-card">
+
+          <small>
+            Business Quality
+          </small>
+
+          <strong id="businessQuality">
+            -
+          </strong>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         DATA STATUS
+    ====================================== -->
+
+    <div class="data-info">
+
+      <div>
+
+        Data Source:
+        <span id="dataMode">
+          LOADING
+        </span>
+
+      </div>
+
+
+      <div
+        id="dataNote"
+      >
+        Mengambil data dari IDXNOVA...
+      </div>
+
+    </div>
+
+
+    <!-- =====================================
+         CTA
+    ====================================== -->
+
+    <section class="cta">
+
+      <h2 id="ctaTitle">
+        Analyze Before You Act.
+      </h2>
+
+      <p id="ctaText">
+        IDXNOVA membantu menyederhanakan analisis saham menggunakan data dan metrik yang tersedia.
+      </p>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- =========================================
+       FOOTER
+  ========================================= -->
+
+  <footer>
+
+    © 2026 IDXNOVA.
+    Stock Analysis Platform.
+
+  </footer>
+
+
+  <!-- =========================================
+       FALLBACK DATABASE
+
+       Jika kamu sudah punya stocks.js,
+       hapus bagian ini dan gunakan:
+       <script src="stocks.js"></script>
+  ========================================= -->
+
+  <script>
+
+    const STOCKS =
+      typeof STOCKS !== "undefined"
+        ? STOCKS
         : {};
 
-
-    /* =====================================
-       FUNDAMENTAL API
-
-       Gagal fundamental tidak boleh
-       membuat market data gagal.
-    ===================================== */
-
-    let fundamentalStock = {};
+  </script>
 
 
-    try {
+  <!-- =========================================
+       IDXNOVA SCRIPT
+  ========================================= -->
 
-      fundamentalStock =
-        await fetchFundamentalData();
+  <script>
 
-    } catch (fundamentalError) {
+    /* =========================================
+       IDXNOVA API CONFIG
+    ========================================= */
 
-      console.warn(
-        "Fundamental belum dapat dimuat:",
-        fundamentalError
+    const API_BASE =
+      "https://idxnova-api.rendyalterio22.workers.dev";
+
+    const STOCK_API =
+      API_BASE + "/api/stocks";
+
+    const FUNDAMENTAL_API =
+      API_BASE + "/api/fundamental";
+
+
+    /* =========================================
+       AMBIL TICKER DARI URL
+    ========================================= */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const ticker =
+      (params.get("ticker") || "")
+        .trim()
+        .toUpperCase();
+
+
+    /* =========================================
+       MENU MOBILE
+    ========================================= */
+
+    function toggleMenu() {
+
+      const menu =
+        document.getElementById("navMenu");
+
+      if (menu) {
+
+        menu.classList.toggle("active");
+
+      }
+
+    }
+
+
+    /* =========================================
+       SET TEXT AMAN
+    ========================================= */
+
+    function setText(id, value) {
+
+      const element =
+        document.getElementById(id);
+
+      if (element) {
+
+        element.textContent =
+          value === null ||
+          value === undefined
+            ? "-"
+            : value;
+
+      }
+
+    }
+
+
+    /* =========================================
+       SAFE NUMBER
+    ========================================= */
+
+    function safeNumber(value) {
+
+      const number =
+        Number(value);
+
+      return Number.isFinite(number)
+        ? number
+        : 0;
+
+    }
+
+
+    /* =========================================
+       VALID NUMBER
+    ========================================= */
+
+    function getValidNumber(value) {
+
+      if (
+        value === null ||
+        value === undefined ||
+        value === "" ||
+        value === "-"
+      ) {
+
+        return null;
+
+      }
+
+      const number =
+        Number(value);
+
+      return Number.isFinite(number)
+        ? number
+        : null;
+
+    }
+
+
+    /* =========================================
+       SAFE SCORE
+    ========================================= */
+
+    function safeScore(value) {
+
+      return Math.min(
+        100,
+        Math.max(
+          0,
+          Math.round(
+            safeNumber(value)
+          )
+        )
       );
 
     }
 
 
-    const fundamental =
-      extractFundamental(
-        fundamentalStock
+    function clampScore(value) {
+
+      if (!Number.isFinite(value)) {
+
+        return 0;
+
+      }
+
+      return Math.min(
+        100,
+        Math.max(
+          0,
+          Math.round(value)
+        )
       );
 
-
-    /* =====================================
-       GABUNGKAN DATA
-
-       Prioritas:
-       1. Fundamental API
-       2. Market API
-       3. stocks.js fallback
-    ===================================== */
-
-    const mergedStock = {
-
-      ...fallbackStock,
-
-      ...marketStock,
-
-      ...fundamental,
+    }
 
 
-      /* =================================
-         IDENTITAS
-      ================================= */
+    /* =========================================
+       FORMAT
+    ========================================= */
 
-      ticker:
-        marketStock.ticker ||
-        fallbackStock.ticker ||
-        ticker,
+    function formatPrice(price) {
+
+      const value =
+        Number(price);
+
+      if (
+        !Number.isFinite(value) ||
+        value <= 0
+      ) {
+
+        return "-";
+
+      }
+
+      return "Rp" +
+        value.toLocaleString("id-ID");
+
+    }
 
 
-      name:
-        marketStock.name ||
-        fallbackStock.name ||
-        fundamental.name ||
-        fundamental.companyName ||
-        "-",
+    function formatPercent(value) {
+
+      if (
+        value === "-" ||
+        value === null ||
+        value === undefined ||
+        value === ""
+      ) {
+
+        return "Data belum tersedia";
+
+      }
+
+      const number =
+        Number(value);
+
+      if (!Number.isFinite(number)) {
+
+        return String(value);
+
+      }
+
+      return number.toFixed(2) + "%";
+
+    }
 
 
-      sector:
-        marketStock.sector ||
-        fallbackStock.sector ||
-        fundamental.sector ||
-        "IDX Listed Company",
+    /* =========================================
+       LABEL ENGINE
+    ========================================= */
+
+    function getOutlook(score) {
+
+      const value =
+        safeScore(score);
+
+      if (value >= 85) return "Sangat Kuat";
+      if (value >= 75) return "Positif";
+      if (value >= 60) return "Netral Positif";
+      if (value >= 45) return "Netral";
+
+      return "Perlu Perhatian";
+
+    }
 
 
-      /* =================================
-         MARKET
-      ================================= */
+    function getRisk(score) {
 
-      price:
-        safeNumber(
-          marketStock.price
-        ) > 0
-          ? marketStock.price
-          : (
-            fallbackStock.price ?? 0
+      const value =
+        safeScore(score);
+
+      if (value >= 85) return "Low";
+      if (value >= 70) return "Moderate";
+      if (value >= 55) return "Moderate - High";
+
+      return "High";
+
+    }
+
+
+    function getValuation(score) {
+
+      const value =
+        safeScore(score);
+
+      if (value >= 85) return "Attractive";
+      if (value >= 70) return "Fair";
+      if (value >= 55) return "Neutral";
+
+      return "Data Pending";
+
+    }
+
+
+    function getBestFit(stock) {
+
+      const scores = [
+
+        {
+          name: "Trading",
+          value: safeScore(stock.trading)
+        },
+
+        {
+          name: "Swing",
+          value: safeScore(stock.swing)
+        },
+
+        {
+          name: "Medium Term",
+          value: safeScore(stock.medium)
+        },
+
+        {
+          name: "Long Term",
+          value: safeScore(stock.long)
+        }
+
+      ];
+
+      scores.sort(
+        (a, b) => b.value - a.value
+      );
+
+      return scores[0].name;
+
+    }
+
+
+    /* =========================================
+       EXTRACT FUNDAMENTAL
+    ========================================= */
+
+    function extractFundamental(result) {
+
+      if (!result) return {};
+
+      if (
+        result.fundamental &&
+        typeof result.fundamental === "object"
+      ) {
+
+        return result.fundamental;
+
+      }
+
+      if (
+        result.data &&
+        result.data.fundamental &&
+        typeof result.data.fundamental === "object"
+      ) {
+
+        return result.data.fundamental;
+
+      }
+
+      if (
+        result.data &&
+        typeof result.data === "object" &&
+        !Array.isArray(result.data)
+      ) {
+
+        return result.data;
+
+      }
+
+      return result;
+
+    }
+
+
+    /* =========================================
+       NORMALISASI
+    ========================================= */
+
+    function normalizeStock(stock) {
+
+      const overall = safeScore(stock.overall);
+      const trading = safeScore(stock.trading);
+      const swing = safeScore(stock.swing);
+      const medium = safeScore(stock.medium);
+      const long = safeScore(stock.long);
+
+      return {
+
+        ticker:
+          String(
+            stock.ticker ||
+            stock.StockCode ||
+            ""
+          )
+          .trim()
+          .toUpperCase(),
+
+        name:
+          stock.name ||
+          stock.StockName ||
+          "-",
+
+        sector:
+          stock.sector ||
+          stock.Sector ||
+          "IDX Listed Company",
+
+        price:
+          stock.price ??
+          stock.LastPrice ??
+          stock.Close ??
+          stock.close ??
+          0,
+
+        change:
+          stock.change ??
+          stock.Change ??
+          stock.changePercent ??
+          stock.ChangePercent ??
+          0,
+
+        overall,
+        trading,
+        swing,
+        medium,
+        long,
+
+        bestFit:
+          stock.bestFit ||
+          getBestFit({
+            trading,
+            swing,
+            medium,
+            long
+          }),
+
+        label:
+          stock.label ||
+          getOutlook(overall),
+
+        risk:
+          stock.risk ||
+          getRisk(overall),
+
+        valuation:
+          stock.valuation ||
+          getValuation(overall),
+
+        tradingOutlook:
+          stock.tradingOutlook ||
+          getOutlook(trading),
+
+        swingOutlook:
+          stock.swingOutlook ||
+          getOutlook(swing),
+
+        mediumOutlook:
+          stock.mediumOutlook ||
+          getOutlook(medium),
+
+        longOutlook:
+          stock.longOutlook ||
+          getOutlook(long),
+
+        revenueGrowth:
+          stock.revenueGrowth ??
+          stock.revenue_growth ??
+          null,
+
+        profitGrowth:
+          stock.profitGrowth ??
+          stock.profit_growth ??
+          null,
+
+        roe:
+          stock.roe ??
+          stock.ROE ??
+          null,
+
+        roa:
+          stock.roa ??
+          stock.ROA ??
+          null,
+
+        netMargin:
+          stock.netMargin ??
+          stock.net_margin ??
+          stock.netProfitMargin ??
+          null,
+
+        debtToEquity:
+          stock.debtToEquity ??
+          stock.debt_to_equity ??
+          stock.der ??
+          stock.DER ??
+          null,
+
+        currentRatio:
+          stock.currentRatio ??
+          stock.current_ratio ??
+          null,
+
+        pe:
+          stock.pe ??
+          stock.PE ??
+          stock.per ??
+          stock.PER ??
+          null,
+
+        pb:
+          stock.pb ??
+          stock.PB ??
+          stock.pbv ??
+          stock.PBV ??
+          null,
+
+        dividendYield:
+          stock.dividendYield ??
+          stock.dividend_yield ??
+          null,
+
+        debtLevel:
+          stock.debtLevel ??
+          stock.debt_level ??
+          "-",
+
+        dividend:
+          stock.dividend ??
+          "-",
+
+        businessQuality:
+          stock.businessQuality ??
+          stock.business_quality ??
+          getOutlook(long)
+
+      };
+
+    }
+
+
+    /* =========================================
+       FUNDAMENTAL SCORE ENGINE
+    ========================================= */
+
+    function calculateAverageScore(scores) {
+
+      const validScores =
+        scores.filter(
+          score =>
+            score !== null &&
+            score !== undefined &&
+            Number.isFinite(score)
+        );
+
+      if (validScores.length === 0) {
+
+        return {
+          score: null,
+          metrics: 0
+        };
+
+      }
+
+      const total =
+        validScores.reduce(
+          (sum, score) =>
+            sum + score,
+          0
+        );
+
+      return {
+
+        score:
+          clampScore(
+            total /
+            validScores.length
           ),
 
+        metrics:
+          validScores.length
 
-      change:
-        marketStock.change !== undefined &&
-        marketStock.change !== null
-          ? marketStock.change
-          : (
-            fallbackStock.change ?? 0
-          ),
+      };
+
+    }
 
 
-      /* =================================
-         SCORE
-      ================================= */
+    function scoreROE(value) {
 
-      overall:
-        safeNumber(
-          marketStock.overall
-        ) > 0
-          ? marketStock.overall
-          : (
-            fallbackStock.overall ?? 0
-          ),
+      const roe =
+        getValidNumber(value);
 
+      if (roe === null) return null;
+      if (roe >= 20) return 100;
+      if (roe >= 15) return 85;
+      if (roe >= 10) return 70;
+      if (roe >= 5) return 50;
+      if (roe > 0) return 30;
 
-      trading:
-        safeNumber(
-          marketStock.trading
-        ) > 0
-          ? marketStock.trading
-          : (
-            fallbackStock.trading ?? 0
-          ),
+      return 0;
+
+    }
 
 
-      swing:
-        safeNumber(
-          marketStock.swing
-        ) > 0
-          ? marketStock.swing
-          : (
-            fallbackStock.swing ?? 0
-          ),
+    function scoreROA(value) {
+
+      const roa =
+        getValidNumber(value);
+
+      if (roa === null) return null;
+      if (roa >= 10) return 100;
+      if (roa >= 7) return 85;
+      if (roa >= 5) return 70;
+      if (roa >= 2) return 50;
+      if (roa > 0) return 30;
+
+      return 0;
+
+    }
 
 
-      medium:
-        safeNumber(
-          marketStock.medium
-        ) > 0
-          ? marketStock.medium
-          : (
-            fallbackStock.medium ?? 0
-          ),
+    function scoreNetMargin(value) {
+
+      const margin =
+        getValidNumber(value);
+
+      if (margin === null) return null;
+      if (margin >= 20) return 100;
+      if (margin >= 15) return 85;
+      if (margin >= 10) return 70;
+      if (margin >= 5) return 50;
+      if (margin > 0) return 30;
+
+      return 0;
+
+    }
 
 
-      long:
-        safeNumber(
-          marketStock.long
-        ) > 0
-          ? marketStock.long
-          : (
-            fallbackStock.long ?? 0
-          ),
+    function scoreRevenueGrowth(value) {
+
+      const growth =
+        getValidNumber(value);
+
+      if (growth === null) return null;
+      if (growth >= 20) return 100;
+      if (growth >= 15) return 85;
+      if (growth >= 10) return 70;
+      if (growth >= 5) return 55;
+      if (growth >= 0) return 40;
+      if (growth >= -10) return 25;
+
+      return 0;
+
+    }
 
 
-      /* =================================
-         FUNDAMENTAL GROWTH
-      ================================= */
+    function scoreProfitGrowth(value) {
 
-      revenueGrowth:
-        fundamental.revenueGrowth ??
-        fundamental.revenue_growth ??
-        fallbackStock.revenueGrowth ??
-        null,
+      const growth =
+        getValidNumber(value);
 
+      if (growth === null) return null;
+      if (growth >= 30) return 100;
+      if (growth >= 20) return 85;
+      if (growth >= 10) return 70;
+      if (growth >= 5) return 55;
+      if (growth >= 0) return 40;
+      if (growth >= -10) return 20;
 
-      profitGrowth:
-        fundamental.profitGrowth ??
-        fundamental.profit_growth ??
-        fallbackStock.profitGrowth ??
-        null,
+      return 0;
 
-
-      /* =================================
-         PROFITABILITY
-      ================================= */
-
-      roe:
-        fundamental.roe ??
-        fundamental.ROE ??
-        fallbackStock.roe ??
-        null,
+    }
 
 
-      roa:
-        fundamental.roa ??
-        fundamental.ROA ??
-        fallbackStock.roa ??
-        null,
+    function scoreDebtToEquity(value) {
+
+      const debt =
+        getValidNumber(value);
+
+      if (debt === null) return null;
+      if (debt <= 0.3) return 100;
+      if (debt <= 0.5) return 85;
+      if (debt <= 1) return 70;
+      if (debt <= 1.5) return 50;
+      if (debt <= 2) return 30;
+
+      return 10;
+
+    }
 
 
-      netMargin:
-        fundamental.netMargin ??
-        fundamental.net_margin ??
-        fundamental.netProfitMargin ??
-        fallbackStock.netMargin ??
-        null,
+    function scoreCurrentRatio(value) {
+
+      const ratio =
+        getValidNumber(value);
+
+      if (ratio === null) return null;
+
+      if (
+        ratio >= 1.5 &&
+        ratio <= 3
+      ) return 100;
+
+      if (
+        ratio >= 1.2 &&
+        ratio < 1.5
+      ) return 80;
+
+      if (
+        ratio > 3 &&
+        ratio <= 5
+      ) return 75;
+
+      if (
+        ratio >= 1 &&
+        ratio < 1.2
+      ) return 60;
+
+      if (ratio >= 0.8) return 35;
+
+      return 15;
+
+    }
 
 
-      /* =================================
-         FINANCIAL HEALTH
-      ================================= */
+    function scorePE(value) {
 
-      debtToEquity:
-        fundamental.debtToEquity ??
-        fundamental.debt_to_equity ??
-        fundamental.der ??
-        fundamental.DER ??
-        fallbackStock.debtToEquity ??
-        null,
+      const pe =
+        getValidNumber(value);
 
+      if (pe === null) return null;
+      if (pe <= 0) return 10;
+      if (pe <= 10) return 100;
+      if (pe <= 15) return 85;
+      if (pe <= 20) return 70;
+      if (pe <= 30) return 50;
+      if (pe <= 50) return 30;
 
-      currentRatio:
-        fundamental.currentRatio ??
-        fundamental.current_ratio ??
-        fallbackStock.currentRatio ??
-        null,
+      return 15;
+
+    }
 
 
-      /* =================================
-         VALUATION
-      ================================= */
+    function scorePB(value) {
 
-      pe:
-        fundamental.pe ??
-        fundamental.PE ??
-        fundamental.per ??
-        fundamental.PER ??
-        fallbackStock.pe ??
-        null,
+      const pb =
+        getValidNumber(value);
 
+      if (pb === null) return null;
+      if (pb <= 0) return 10;
+      if (pb <= 1) return 100;
+      if (pb <= 1.5) return 85;
+      if (pb <= 2) return 70;
+      if (pb <= 3) return 50;
+      if (pb <= 5) return 30;
 
-      pb:
-        fundamental.pb ??
-        fundamental.PB ??
-        fundamental.pbv ??
-        fundamental.PBV ??
-        fallbackStock.pb ??
-        null,
+      return 15;
+
+    }
 
 
-      /* =================================
-         DIVIDEND
-      ================================= */
+    function scoreDividendYield(value) {
 
-      dividendYield:
-        fundamental.dividendYield ??
-        fundamental.dividend_yield ??
-        fallbackStock.dividendYield ??
-        null,
+      const dividend =
+        getValidNumber(value);
 
+      if (dividend === null) return null;
+      if (dividend >= 7) return 100;
+      if (dividend >= 5) return 85;
+      if (dividend >= 3) return 70;
+      if (dividend >= 1) return 50;
+      if (dividend > 0) return 30;
 
-      dividendPerShare:
-        fundamental.dividendPerShare ??
-        fundamental.dps ??
-        fallbackStock.dividendPerShare ??
-        null,
+      return 10;
 
-
-      /* =================================
-         OTHER FUNDAMENTAL
-      ================================= */
-
-      eps:
-        fundamental.eps ??
-        fundamental.EPS ??
-        fallbackStock.eps ??
-        null,
+    }
 
 
-      bvps:
-        fundamental.bvps ??
-        fundamental.BVPS ??
-        fallbackStock.bvps ??
-        null,
+    function calculateFundamentalScore(stock) {
 
+      const profitability =
+        calculateAverageScore([
+          scoreROE(stock.roe),
+          scoreROA(stock.roa),
+          scoreNetMargin(stock.netMargin)
+        ]);
 
-      revenue:
-        fundamental.revenue ??
-        fallbackStock.revenue ??
-        null,
+      const growth =
+        calculateAverageScore([
+          scoreRevenueGrowth(stock.revenueGrowth),
+          scoreProfitGrowth(stock.profitGrowth)
+        ]);
 
+      const health =
+        calculateAverageScore([
+          scoreDebtToEquity(stock.debtToEquity),
+          scoreCurrentRatio(stock.currentRatio)
+        ]);
 
-      netIncome:
-        fundamental.netIncome ??
-        fundamental.net_income ??
-        fallbackStock.netIncome ??
-        null,
+      const valuation =
+        calculateAverageScore([
+          scorePE(stock.pe),
+          scorePB(stock.pb)
+        ]);
 
+      const dividend =
+        calculateAverageScore([
+          scoreDividendYield(stock.dividendYield)
+        ]);
 
-      grossProfit:
-        fundamental.grossProfit ??
-        fundamental.gross_profit ??
-        fallbackStock.grossProfit ??
-        null,
+      const categories =
+        [
+          profitability,
+          growth,
+          health,
+          valuation,
+          dividend
+        ]
+        .filter(
+          category =>
+            category.score !== null &&
+            category.metrics > 0
+        );
 
+      const totalMetrics =
+        categories.reduce(
+          (total, category) =>
+            total + category.metrics,
+          0
+        );
 
-      /* =================================
-         FUNDAMENTAL SNAPSHOT DISPLAY
-      ================================= */
+      if (categories.length === 0) {
 
-      debtLevel:
-        fundamental.debtLevel ??
-        fundamental.debt_level ??
-        (
-          fundamental.debtToEquity !== null &&
-          fundamental.debtToEquity !== undefined
-            ? "D/E " +
-              Number(
-                fundamental.debtToEquity
-              ).toFixed(2) +
-              "x"
-            : (
-              fallbackStock.debtLevel ??
-              "-"
+        return {
+
+          overall: null,
+          metrics: 0,
+          profitability,
+          growth,
+          health,
+          valuation,
+          dividend
+
+        };
+
+      }
+
+      let weightedTotal = 0;
+      let totalWeight = 0;
+
+      if (profitability.score !== null) {
+
+        weightedTotal +=
+          profitability.score * 0.30;
+
+        totalWeight += 0.30;
+
+      }
+
+      if (growth.score !== null) {
+
+        weightedTotal +=
+          growth.score * 0.25;
+
+        totalWeight += 0.25;
+
+      }
+
+      if (health.score !== null) {
+
+        weightedTotal +=
+          health.score * 0.20;
+
+        totalWeight += 0.20;
+
+      }
+
+      if (valuation.score !== null) {
+
+        weightedTotal +=
+          valuation.score * 0.15;
+
+        totalWeight += 0.15;
+
+      }
+
+      if (dividend.score !== null) {
+
+        weightedTotal +=
+          dividend.score * 0.10;
+
+        totalWeight += 0.10;
+
+      }
+
+      const overall =
+        totalWeight > 0
+          ? clampScore(
+              weightedTotal /
+              totalWeight
             )
-        ),
+          : null;
+
+      return {
+
+        overall,
+        metrics: totalMetrics,
+        profitability,
+        growth,
+        health,
+        valuation,
+        dividend
+
+      };
+
+    }
 
 
-      dividend:
-        fundamental.dividend ??
-        (
-          fundamental.dividendYield !== null &&
-          fundamental.dividendYield !== undefined
-            ? Number(
-                fundamental.dividendYield
-              ).toFixed(2) +
-              "%"
-            : (
-              fallbackStock.dividend ??
-              "-"
-            )
-        ),
+    function getFundamentalLabel(score) {
+
+      if (score === null) return "DATA PENDING";
+      if (score >= 85) return "EXCELLENT";
+      if (score >= 75) return "STRONG";
+      if (score >= 60) return "HEALTHY";
+      if (score >= 45) return "MODERATE";
+
+      return "WEAK";
+
+    }
 
 
-      businessQuality:
-        fundamental.businessQuality ??
-        fundamental.business_quality ??
-        fallbackStock.businessQuality ??
-        "",
-
-
-      /* =================================
-         ANALYSIS TEXT
-      ================================= */
-
-      bestFit:
-        marketStock.bestFit ||
-        fallbackStock.bestFit ||
-        "",
-
-
-      label:
-        marketStock.label ||
-        fallbackStock.label ||
-        "",
-
-
-      risk:
-        marketStock.risk ||
-        fallbackStock.risk ||
-        "",
-
-
-      valuation:
-        marketStock.valuation ||
-        fallbackStock.valuation ||
-        "",
-
-
-      tradingOutlook:
-        marketStock.tradingOutlook ||
-        fallbackStock.tradingOutlook ||
-        "",
-
-
-      swingOutlook:
-        marketStock.swingOutlook ||
-        fallbackStock.swingOutlook ||
-        "",
-
-
-      mediumOutlook:
-        marketStock.mediumOutlook ||
-        fallbackStock.mediumOutlook ||
-        "",
-
-
-      longOutlook:
-        marketStock.longOutlook ||
-        fallbackStock.longOutlook ||
-        ""
-
-    };
-
-
-    /* =====================================
-       RENDER SEMUA DATA
-    ===================================== */
-
-    renderStock(
-      mergedStock,
-      "API"
-    );
-
-
-    console.log(
-      "IDXNOVA SUCCESS:",
-      ticker
-    );
-
-
-    console.log(
-      "Market Data:",
-      marketStock
-    );
-
-
-    console.log(
-      "Fundamental Data:",
-      fundamental
-    );
-
-
-    console.log(
-      "Merged Data:",
-      mergedStock
-    );
-
-
-  } catch (error) {
-
-
-    console.error(
-      "IDXNOVA API gagal:",
-      error
-    );
-
-
-    /* =====================================
-       FALLBACK
-    ===================================== */
-
-    if (
-      typeof STOCKS !== "undefined" &&
-      STOCKS &&
-      STOCKS[ticker]
+    function getFundamentalDescription(
+      score,
+      metrics
     ) {
 
-      renderStock(
-        STOCKS[ticker],
-        "FALLBACK"
+      if (
+        score === null ||
+        metrics === 0
+      ) {
+
+        return "Data fundamental belum cukup untuk menghitung NOVA Fundamental Score.";
+
+      }
+
+      if (score >= 85) {
+
+        return "Fundamental sangat kuat berdasarkan " +
+          metrics +
+          " metrik yang tersedia.";
+
+      }
+
+      if (score >= 75) {
+
+        return "Fundamental kuat berdasarkan " +
+          metrics +
+          " metrik yang tersedia.";
+
+      }
+
+      if (score >= 60) {
+
+        return "Fundamental cukup sehat berdasarkan " +
+          metrics +
+          " metrik yang tersedia.";
+
+      }
+
+      if (score >= 45) {
+
+        return "Fundamental berada pada kondisi moderat berdasarkan " +
+          metrics +
+          " metrik yang tersedia.";
+
+      }
+
+      return "Fundamental memerlukan perhatian berdasarkan " +
+        metrics +
+        " metrik yang tersedia.";
+
+    }
+
+
+    /* =========================================
+       RENDER FUNDAMENTAL
+    ========================================= */
+
+    function renderFundamentalCategory(
+      prefix,
+      category
+    ) {
+
+      const score =
+        category &&
+        category.score !== null
+          ? category.score
+          : null;
+
+      const scoreText =
+        score === null
+          ? "Data belum tersedia"
+          : score + " / 100";
+
+      const outlook =
+        score === null
+          ? "Data belum cukup"
+          : getOutlook(score);
+
+      setText(
+        prefix + "Outlook",
+        outlook
       );
 
-    } else {
+      setText(
+        prefix + "Score",
+        scoreText
+      );
 
-      showError(
-        "Ticker " +
-        ticker +
-        " tidak ditemukan atau IDXNOVA API sedang tidak dapat dihubungi."
+      const bar =
+        document.getElementById(
+          prefix + "Bar"
+        );
+
+      if (bar) {
+
+        bar.style.width =
+          score === null
+            ? "0%"
+            : score + "%";
+
+      }
+
+    }
+
+
+    function renderFundamentalAnalysis(stock) {
+
+      const result =
+        calculateFundamentalScore(stock);
+
+      const score =
+        result.overall;
+
+      const label =
+        getFundamentalLabel(score);
+
+      setText(
+        "fundamentalLabel",
+        label
+      );
+
+      setText(
+        "fundamentalRating",
+        label
+      );
+
+      const scoreElement =
+        document.getElementById(
+          "fundamentalScore"
+        );
+
+      if (scoreElement) {
+
+        scoreElement.innerHTML =
+          (
+            score === null
+              ? "-"
+              : score
+          ) +
+          "<span>/100</span>";
+
+      }
+
+      setText(
+        "fundamentalDescription",
+        getFundamentalDescription(
+          score,
+          result.metrics
+        )
+      );
+
+      setText(
+        "fundamentalMetrics",
+        result.metrics + " Metrics"
+      );
+
+      setText(
+        "fundamentalStatus",
+        score === null
+          ? "Insufficient Data"
+          : "Calculated"
+      );
+
+      const scoreBar =
+        document.getElementById(
+          "fundamentalScoreBar"
+        );
+
+      if (scoreBar) {
+
+        scoreBar.style.width =
+          score === null
+            ? "0%"
+            : score + "%";
+
+      }
+
+      renderFundamentalCategory(
+        "profitability",
+        result.profitability
+      );
+
+      renderFundamentalCategory(
+        "growth",
+        result.growth
+      );
+
+      renderFundamentalCategory(
+        "health",
+        result.health
+      );
+
+      renderFundamentalCategory(
+        "valuation",
+        result.valuation
+      );
+
+      renderFundamentalCategory(
+        "dividend",
+        result.dividend
       );
 
     }
 
-  }
 
-}
+    /* =========================================
+       FETCH FUNDAMENTAL
+    ========================================= */
+
+    async function fetchFundamentalData() {
+
+      const urls = [
+
+        FUNDAMENTAL_API +
+        "?ticker=" +
+        encodeURIComponent(ticker),
+
+        FUNDAMENTAL_API +
+        "/" +
+        encodeURIComponent(ticker)
+
+      ];
+
+      let lastError = null;
+
+      for (const url of urls) {
+
+        try {
+
+          const response =
+            await fetch(
+              url,
+              {
+                method: "GET",
+                headers: {
+                  "Accept":
+                    "application/json"
+                }
+              }
+            );
+
+          if (!response.ok) {
+
+            throw new Error(
+              "Fundamental HTTP " +
+              response.status
+            );
+
+          }
+
+          const result =
+            await response.json();
+
+          if (
+            result.status &&
+            result.status !== "success"
+          ) {
+
+            throw new Error(
+              "Fundamental API status error"
+            );
+
+          }
+
+          const fundamental =
+            extractFundamental(result);
+
+          if (
+            fundamental &&
+            typeof fundamental === "object"
+          ) {
+
+            return fundamental;
+
+          }
+
+        } catch (error) {
+
+          lastError = error;
+
+          console.warn(
+            "Fundamental URL gagal:",
+            url,
+            error
+          );
+
+        }
+
+      }
+
+      throw (
+        lastError ||
+        new Error(
+          "Fundamental API gagal"
+        )
+      );
+
+    }
 
 
-/* =========================================
-   JALANKAN
-========================================= */
+    /* =========================================
+       ERROR
+    ========================================= */
 
-loadStock();
+    function showError(message) {
 
-</script>
+      const sectors =
+        document.querySelectorAll(
+          "#stockSector"
+        );
+
+      sectors.forEach(
+        element => {
+
+          element.textContent =
+            "DATA NOT FOUND";
+
+        }
+      );
+
+      const tickerElement =
+        document.getElementById(
+          "stockTicker"
+        );
+
+      if (tickerElement) {
+
+        tickerElement.innerHTML =
+          "Saham <span>Tidak Ditemukan</span>";
+
+      }
+
+      setText(
+        "stockName",
+        message ||
+        "Ticker tidak tersedia dalam database IDXNOVA."
+      );
+
+      setText("stockBestFit", "-");
+      setText("stockLabel", "ERROR");
+      setText("dataMode", "ERROR");
+
+      setText(
+        "dataNote",
+        "Data saham tidak dapat dimuat."
+      );
+
+    }
+
+
+    /* =========================================
+       RENDER STOCK
+    ========================================= */
+
+    function renderStock(rawStock, mode) {
+
+      const stock =
+        normalizeStock(rawStock);
+
+      if (!stock.ticker) {
+
+        showError();
+        return;
+
+      }
+
+      document.title =
+        stock.ticker +
+        " | IDXNOVA";
+
+
+      const sectors =
+        document.querySelectorAll(
+          "#stockSector"
+        );
+
+      sectors.forEach(
+        element => {
+
+          element.textContent =
+            stock.sector;
+
+        }
+      );
+
+
+      const tickerElement =
+        document.getElementById(
+          "stockTicker"
+        );
+
+      if (tickerElement) {
+
+        tickerElement.innerHTML =
+          stock.ticker +
+          " <span>Analysis</span>";
+
+      }
+
+
+      setText("stockName", stock.name);
+      setText("stockBestFit", stock.bestFit);
+      setText("stockLabel", stock.label);
+
+
+      const overallElement =
+        document.getElementById(
+          "stockOverall"
+        );
+
+      if (overallElement) {
+
+        overallElement.innerHTML =
+          stock.overall +
+          "<span>/100</span>";
+
+      }
+
+
+      setText("stockRisk", stock.risk);
+      setText(
+        "stockValuation",
+        stock.valuation
+      );
+
+
+      setText(
+        "stockPrice",
+        formatPrice(stock.price)
+      );
+
+
+      const change =
+        safeNumber(stock.change);
+
+      const changeElement =
+        document.getElementById(
+          "stockChange"
+        );
+
+      if (changeElement) {
+
+        changeElement.textContent =
+          (change >= 0 ? "▲ +" : "▼ ") +
+          Math.abs(change).toFixed(2) +
+          "%";
+
+        changeElement.className =
+          change >= 0
+            ? "positive"
+            : "negative";
+
+      }
+
+
+      setText(
+        "stockTrading",
+        stock.trading + "/100"
+      );
+
+      setText(
+        "stockSwing",
+        stock.swing + "/100"
+      );
+
+      setText(
+        "stockMedium",
+        stock.medium + "/100"
+      );
+
+
+      const analyses = [
+
+        {
+          name: "trading",
+          score: stock.trading,
+          outlook: stock.tradingOutlook
+        },
+
+        {
+          name: "swing",
+          score: stock.swing,
+          outlook: stock.swingOutlook
+        },
+
+        {
+          name: "medium",
+          score: stock.medium,
+          outlook: stock.mediumOutlook
+        },
+
+        {
+          name: "long",
+          score: stock.long,
+          outlook: stock.longOutlook
+        }
+
+      ];
+
+
+      analyses.forEach(
+        item => {
+
+          setText(
+            item.name + "Outlook",
+            item.outlook
+          );
+
+          setText(
+            item.name + "Score",
+            item.score + " / 100"
+          );
+
+          const bar =
+            document.getElementById(
+              item.name + "Bar"
+            );
+
+          if (bar) {
+
+            bar.style.width =
+              item.score + "%";
+
+          }
+
+        }
+      );
+
+
+      setText(
+        "revenueGrowth",
+        formatPercent(
+          stock.revenueGrowth
+        )
+      );
+
+      setText(
+        "profitGrowth",
+        formatPercent(
+          stock.profitGrowth
+        )
+      );
+
+      setText(
+        "stockRoe",
+        formatPercent(
+          stock.roe
+        )
+      );
+
+
+      setText(
+        "debtLevel",
+        stock.debtLevel !== "-"
+          ? stock.debtLevel
+          : (
+              stock.debtToEquity !== null
+                ? "D/E " +
+                  Number(
+                    stock.debtToEquity
+                  ).toFixed(2) +
+                  "x"
+                : "Data belum tersedia"
+            )
+      );
+
+
+      setText(
+        "stockDividend",
+        stock.dividend !== "-"
+          ? stock.dividend
+          : (
+              stock.dividendYield !== null
+                ? Number(
+                    stock.dividendYield
+                  ).toFixed(2) +
+                  "%"
+                : "Data belum tersedia"
+            )
+      );
+
+
+      setText(
+        "businessQuality",
+        stock.businessQuality ||
+        "Data belum tersedia"
+      );
+
+
+      renderFundamentalAnalysis(stock);
+
+
+      setText(
+        "dataMode",
+        mode === "API"
+          ? "LIVE API"
+          : "FALLBACK"
+      );
+
+
+      setText(
+        "dataNote",
+        mode === "API"
+          ? "Market dan fundamental dimuat dari IDXNOVA API."
+          : "API tidak tersedia — menggunakan database cadangan."
+      );
+
+
+      setText(
+        "ctaTitle",
+        stock.ticker +
+        ". Analyze Before You Act."
+      );
+
+
+      setText(
+        "ctaText",
+        "Analisis " +
+        stock.ticker +
+        " berdasarkan data yang tersedia di IDXNOVA. Selalu lakukan riset tambahan sebelum mengambil keputusan investasi atau trading."
+      );
+
+    }
+
+
+    /* =========================================
+       LOAD STOCK
+    ========================================= */
+
+    async function loadStock() {
+
+      if (!ticker) {
+
+        showError(
+          "Ticker saham tidak ditemukan pada alamat halaman. Contoh: stock.html?ticker=BBRI"
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        const marketResponse =
+          await fetch(
+            STOCK_API,
+            {
+              method: "GET",
+              headers: {
+                "Accept":
+                  "application/json"
+              }
+            }
+          );
+
+
+        if (!marketResponse.ok) {
+
+          throw new Error(
+            "Market API HTTP " +
+            marketResponse.status
+          );
+
+        }
+
+
+        const marketResult =
+          await marketResponse.json();
+
+
+        if (
+          marketResult.status !== "success" ||
+          !Array.isArray(
+            marketResult.data
+          )
+        ) {
+
+          throw new Error(
+            "Format Market API tidak valid"
+          );
+
+        }
+
+
+        const marketStock =
+          marketResult.data.find(
+            stock => {
+
+              const stockTicker =
+                String(
+                  stock.ticker ||
+                  stock.StockCode ||
+                  ""
+                )
+                .trim()
+                .toUpperCase();
+
+              return stockTicker === ticker;
+
+            }
+          );
+
+
+        if (!marketStock) {
+
+          throw new Error(
+            "Ticker " +
+            ticker +
+            " tidak ditemukan di Market API"
+          );
+
+        }
+
+
+        const fallbackStock =
+          STOCKS &&
+          STOCKS[ticker]
+            ? STOCKS[ticker]
+            : {};
+
+
+        let fundamentalStock = {};
+
+        try {
+
+          fundamentalStock =
+            await fetchFundamentalData();
+
+        } catch (fundamentalError) {
+
+          console.warn(
+            "Fundamental belum dapat dimuat:",
+            fundamentalError
+          );
+
+        }
+
+
+        const fundamental =
+          extractFundamental(
+            fundamentalStock
+          );
+
+
+        const mergedStock = {
+
+          ...fallbackStock,
+          ...marketStock,
+          ...fundamental,
+
+          ticker:
+            marketStock.ticker ||
+            fallbackStock.ticker ||
+            ticker,
+
+          name:
+            marketStock.name ||
+            fundamental.name ||
+            fundamental.companyName ||
+            fallbackStock.name ||
+            "-",
+
+          sector:
+            marketStock.sector ||
+            fundamental.sector ||
+            fallbackStock.sector ||
+            "IDX Listed Company",
+
+          price:
+            safeNumber(marketStock.price) > 0
+              ? marketStock.price
+              : (
+                  fallbackStock.price ?? 0
+                ),
+
+          change:
+            marketStock.change ??
+            fallbackStock.change ??
+            0,
+
+          overall:
+            safeNumber(marketStock.overall) > 0
+              ? marketStock.overall
+              : (
+                  fallbackStock.overall ?? 0
+                ),
+
+          trading:
+            safeNumber(marketStock.trading) > 0
+              ? marketStock.trading
+              : (
+                  fallbackStock.trading ?? 0
+                ),
+
+          swing:
+            safeNumber(marketStock.swing) > 0
+              ? marketStock.swing
+              : (
+                  fallbackStock.swing ?? 0
+                ),
+
+          medium:
+            safeNumber(marketStock.medium) > 0
+              ? marketStock.medium
+              : (
+                  fallbackStock.medium ?? 0
+                ),
+
+          long:
+            safeNumber(marketStock.long) > 0
+              ? marketStock.long
+              : (
+                  fallbackStock.long ?? 0
+                ),
+
+          revenueGrowth:
+            fundamental.revenueGrowth ??
+            fundamental.revenue_growth ??
+            fallbackStock.revenueGrowth ??
+            null,
+
+          profitGrowth:
+            fundamental.profitGrowth ??
+            fundamental.profit_growth ??
+            fallbackStock.profitGrowth ??
+            null,
+
+          roe:
+            fundamental.roe ??
+            fundamental.ROE ??
+            fallbackStock.roe ??
+            null,
+
+          roa:
+            fundamental.roa ??
+            fundamental.ROA ??
+            fallbackStock.roa ??
+            null,
+
+          netMargin:
+            fundamental.netMargin ??
+            fundamental.net_margin ??
+            fundamental.netProfitMargin ??
+            fallbackStock.netMargin ??
+            null,
+
+          debtToEquity:
+            fundamental.debtToEquity ??
+            fundamental.debt_to_equity ??
+            fundamental.der ??
+            fundamental.DER ??
+            fallbackStock.debtToEquity ??
+            null,
+
+          currentRatio:
+            fundamental.currentRatio ??
+            fundamental.current_ratio ??
+            fallbackStock.currentRatio ??
+            null,
+
+          pe:
+            fundamental.pe ??
+            fundamental.PE ??
+            fundamental.per ??
+            fundamental.PER ??
+            fallbackStock.pe ??
+            null,
+
+          pb:
+            fundamental.pb ??
+            fundamental.PB ??
+            fundamental.pbv ??
+            fundamental.PBV ??
+            fallbackStock.pb ??
+            null,
+
+          dividendYield:
+            fundamental.dividendYield ??
+            fundamental.dividend_yield ??
+            fallbackStock.dividendYield ??
+            null,
+
+          debtLevel:
+            fundamental.debtLevel ??
+            fundamental.debt_level ??
+            fallbackStock.debtLevel ??
+            "-",
+
+          dividend:
+            fundamental.dividend ??
+            fallbackStock.dividend ??
+            "-",
+
+          businessQuality:
+            fundamental.businessQuality ??
+            fundamental.business_quality ??
+            fallbackStock.businessQuality ??
+            "",
+
+          bestFit:
+            marketStock.bestFit ||
+            fallbackStock.bestFit ||
+            "",
+
+          label:
+            marketStock.label ||
+            fallbackStock.label ||
+            "",
+
+          risk:
+            marketStock.risk ||
+            fallbackStock.risk ||
+            "",
+
+          valuation:
+            marketStock.valuation ||
+            fallbackStock.valuation ||
+            "",
+
+          tradingOutlook:
+            marketStock.tradingOutlook ||
+            fallbackStock.tradingOutlook ||
+            "",
+
+          swingOutlook:
+            marketStock.swingOutlook ||
+            fallbackStock.swingOutlook ||
+            "",
+
+          mediumOutlook:
+            marketStock.mediumOutlook ||
+            fallbackStock.mediumOutlook ||
+            "",
+
+          longOutlook:
+            marketStock.longOutlook ||
+            fallbackStock.longOutlook ||
+            ""
+
+        };
+
+
+        renderStock(
+          mergedStock,
+          "API"
+        );
+
+
+        console.log(
+          "IDXNOVA SUCCESS:",
+          ticker
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "IDXNOVA API gagal:",
+          error
+        );
+
+
+        if (
+          STOCKS &&
+          STOCKS[ticker]
+        ) {
+
+          renderStock(
+            STOCKS[ticker],
+            "FALLBACK"
+          );
+
+        } else {
+
+          showError(
+            "Ticker " +
+            ticker +
+            " tidak ditemukan atau IDXNOVA API sedang tidak dapat dihubungi."
+          );
+
+        }
+
+      }
+
+    }
+
+
+    /* =========================================
+       START
+    ========================================= */
+
+    loadStock();
+
+  </script>
+
+
+</body>
+</html>
