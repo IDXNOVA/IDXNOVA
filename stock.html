@@ -32,8 +32,6 @@
 
     :root {
 
-      /* IDXNOVA GREEN + BLACK */
-
       --bg: #06110d;
       --bg-soft: #0a1812;
 
@@ -831,6 +829,179 @@
 
 
     /* =========================================
+       RECOMMENDATION ENGINE
+    ========================================= */
+
+    .recommendation-card {
+
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 28px;
+
+      background:
+
+        linear-gradient(
+          135deg,
+          rgba(32,201,120,0.16),
+          rgba(255,255,255,0.025)
+        );
+
+      border:
+        1px solid var(--primary-border);
+
+      border-radius: 22px;
+
+      box-shadow:
+        var(--shadow);
+
+    }
+
+
+    .recommendation-top {
+
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      gap: 20px;
+
+    }
+
+
+    .recommendation-label {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1px;
+
+      margin-bottom: 10px;
+
+    }
+
+
+    .recommendation-rating {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      padding: 10px 16px;
+
+      border-radius: 10px;
+
+      background:
+        var(--primary-soft);
+
+      border:
+        1px solid var(--primary-border);
+
+      color:
+        var(--primary-light);
+
+      font-size: 24px;
+
+      font-weight: 900;
+
+      letter-spacing: -0.5px;
+
+    }
+
+
+    .recommendation-score {
+
+      text-align: right;
+
+    }
+
+
+    .recommendation-score small {
+
+      display: block;
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .recommendation-score strong {
+
+      font-size: 30px;
+
+      font-weight: 900;
+
+    }
+
+
+    .recommendation-action {
+
+      margin-top: 22px;
+
+      font-size: 18px;
+
+      font-weight: 800;
+
+    }
+
+
+    .recommendation-description {
+
+      color: var(--muted);
+
+      margin-top: 8px;
+
+      font-size: 14px;
+
+      max-width: 850px;
+
+    }
+
+
+    .recommendation-reasons {
+
+      margin-top: 20px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap: 10px;
+
+    }
+
+
+    .recommendation-reason {
+
+      padding: 12px 14px;
+
+      background:
+        rgba(255,255,255,0.035);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 12px;
+
+      color: #c7d8ce;
+
+      font-size: 13px;
+
+    }
+
+
+    /* =========================================
        FUNDAMENTAL
     ========================================= */
 
@@ -1129,7 +1300,8 @@
 
 
       .grid-2,
-      .grid-3 {
+      .grid-3,
+      .recommendation-reasons {
         grid-template-columns: 1fr;
       }
 
@@ -1144,8 +1316,14 @@
       }
 
 
-      .fundamental-status {
+      .fundamental-status,
+      .recommendation-score {
         text-align: left;
+      }
+
+
+      .recommendation-top {
+        flex-direction: column;
       }
 
 
@@ -1190,7 +1368,6 @@
 
         <a href="index.html">Home</a>
 
-        <!-- GANTI stocks.html jika nama file daftar saham berbeda -->
         <a href="stocks.html">Stocks</a>
 
         <a href="index.html#market">Market</a>
@@ -1221,6 +1398,8 @@
 
     </div>
 
+
+    <!-- STOCK HERO -->
 
     <section class="stock-hero">
 
@@ -1373,6 +1552,87 @@
 
           </div>
 
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- RECOMMENDATION -->
+
+    <section class="section">
+
+      <div class="section-header">
+
+        <div>
+
+          <h2 class="section-title">
+            IDXNOVA Recommendation
+          </h2>
+
+          <p class="section-subtitle">
+            Rating otomatis berdasarkan kombinasi overall score dan fundamental score.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="recommendation-card">
+
+        <div class="recommendation-top">
+
+          <div>
+
+            <div class="recommendation-label">
+              Current Recommendation
+            </div>
+
+            <div
+              class="recommendation-rating"
+              id="recommendationRating"
+            >
+              LOADING
+            </div>
+
+          </div>
+
+
+          <div class="recommendation-score">
+
+            <small>IDXNOVA Final Score</small>
+
+            <strong id="recommendationScore">
+              -
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="recommendation-action"
+          id="recommendationAction"
+        >
+          Menghitung rekomendasi...
+        </div>
+
+
+        <p
+          class="recommendation-description"
+          id="recommendationDescription"
+        >
+          Menunggu data analisis.
+        </p>
+
+
+        <div
+          class="recommendation-reasons"
+          id="recommendationReasons"
+        >
         </div>
 
       </div>
@@ -1897,18 +2157,6 @@
     }
 
 
-    function safeNumber(value) {
-
-      const number =
-        getValidNumber(value);
-
-      return number === null
-        ? 0
-        : number;
-
-    }
-
-
     function safeScore(value) {
 
       const number =
@@ -2039,65 +2287,6 @@
       if (value >= 55) return "Moderate - High";
 
       return "High";
-
-    }
-
-
-    function getValuationLabel(pe, pb) {
-
-      const peValue =
-        getValidNumber(pe);
-
-      const pbValue =
-        getValidNumber(pb);
-
-      if (
-        peValue === null &&
-        pbValue === null
-      ) {
-        return "Data Pending";
-      }
-
-      let score = 0;
-      let count = 0;
-
-      if (peValue !== null) {
-        score += scorePE(peValue);
-        count++;
-      }
-
-      if (pbValue !== null) {
-        score += scorePB(pbValue);
-        count++;
-      }
-
-      const average =
-        score / count;
-
-      if (average >= 85) return "Attractive";
-      if (average >= 70) return "Fair";
-      if (average >= 50) return "Neutral";
-
-      return "Expensive";
-
-    }
-
-
-    function getBestFit(stock) {
-
-      const scores = [
-        { name: "Trading", value: stock.trading },
-        { name: "Swing", value: stock.swing },
-        { name: "Medium Term", value: stock.medium },
-        { name: "Long Term", value: stock.long }
-      ];
-
-      scores.sort(
-        (a, b) =>
-          b.value - a.value
-      );
-
-      return scores[0].name;
 
     }
 
@@ -2281,13 +2470,17 @@
         );
 
       if (!valid.length) {
+
         return {
           score: null,
           metrics: 0
         };
+
       }
 
+
       return {
+
         score:
           Math.round(
             valid.reduce(
@@ -2295,7 +2488,10 @@
               0
             ) / valid.length
           ),
-        metrics: valid.length
+
+        metrics:
+          valid.length
+
       };
 
     }
@@ -2310,11 +2506,13 @@
           scoreNetMargin(stock.netMargin)
         ]);
 
+
       const growth =
         averageScores([
           scoreRevenueGrowth(stock.revenueGrowth),
           scoreProfitGrowth(stock.profitGrowth)
         ]);
+
 
       const health =
         averageScores([
@@ -2322,11 +2520,13 @@
           scoreCurrentRatio(stock.currentRatio)
         ]);
 
+
       const valuation =
         averageScores([
           scorePE(stock.pe),
           scorePB(stock.pb)
         ]);
+
 
       const dividend =
         averageScores([
@@ -2349,13 +2549,16 @@
       if (!categories.length) {
 
         return {
+
           overall: null,
           metrics: 0,
+
           profitability,
           growth,
           health,
           valuation,
           dividend
+
         };
 
       }
@@ -2369,7 +2572,8 @@
       categories.forEach(item => {
 
         weighted +=
-          item.data.score * item.weight;
+          item.data.score *
+          item.weight;
 
         weightTotal +=
           item.weight;
@@ -2414,8 +2618,252 @@
 
 
     /* =========================================
+       RECOMMENDATION ENGINE
+    ========================================= */
+
+    function getRecommendation(
+      overall,
+      fundamental,
+      stock
+    ) {
+
+      const overallScore =
+        safeScore(overall);
+
+
+      const fundamentalScore =
+        fundamental === null
+          ? null
+          : safeScore(fundamental);
+
+
+      let finalScore =
+        overallScore;
+
+
+      if (fundamentalScore !== null) {
+
+        finalScore =
+          Math.round(
+            (overallScore * 0.75) +
+            (fundamentalScore * 0.25)
+          );
+
+      }
+
+
+      let rating;
+      let action;
+      let description;
+
+
+      if (finalScore >= 85) {
+
+        rating = "STRONG BUY";
+
+        action =
+          "Kombinasi momentum dan fundamental berada pada kategori sangat kuat.";
+
+        description =
+          "IDXNOVA mendeteksi kombinasi skor analisis yang sangat positif. Saham memiliki kualitas skor tinggi, tetapi harga masuk, valuasi, dan kondisi pasar tetap harus diperhatikan.";
+
+      }
+
+      else if (finalScore >= 75) {
+
+        rating = "BUY";
+
+        action =
+          "Prospek analisis saat ini berada pada kategori positif.";
+
+        description =
+          "Mayoritas indikator IDXNOVA mendukung outlook positif. Pertimbangkan manajemen risiko dan hindari mengejar harga setelah kenaikan ekstrem.";
+
+      }
+
+      else if (finalScore >= 65) {
+
+        rating = "ACCUMULATE";
+
+        action =
+          "Saham layak dipertimbangkan untuk akumulasi secara bertahap.";
+
+        description =
+          "Kondisi analisis cukup positif, namun belum seluruh indikator berada pada level optimal. Strategi pembelian bertahap dapat membantu mengurangi risiko timing.";
+
+      }
+
+      else if (finalScore >= 50) {
+
+        rating = "HOLD";
+
+        action =
+          "Belum terdapat keunggulan yang cukup kuat untuk meningkatkan posisi.";
+
+        description =
+          "IDXNOVA melihat kondisi relatif netral. Perhatikan perkembangan fundamental, momentum harga, laporan keuangan, dan perubahan kondisi pasar.";
+
+      }
+
+      else if (finalScore >= 35) {
+
+        rating = "REDUCE";
+
+        action =
+          "Beberapa indikator menunjukkan risiko yang perlu diperhatikan.";
+
+        description =
+          "Kualitas kombinasi analisis masih terbatas. Evaluasi kembali eksposur dan pastikan posisi sesuai dengan toleransi risiko.";
+
+      }
+
+      else {
+
+        rating = "AVOID";
+
+        action =
+          "Kondisi analisis saat ini belum mendukung untuk pengambilan posisi agresif.";
+
+        description =
+          "IDXNOVA mendeteksi skor rendah pada kombinasi indikator yang tersedia. Tunggu perubahan kondisi dan konfirmasi data yang lebih baik.";
+
+      }
+
+
+      const reasons = [];
+
+
+      reasons.push(
+        "Overall Score: " +
+        overallScore +
+        "/100 (" +
+        getOutlook(overallScore) +
+        ")"
+      );
+
+
+      if (fundamentalScore !== null) {
+
+        reasons.push(
+          "Fundamental Score: " +
+          fundamentalScore +
+          "/100 (" +
+          getFundamentalLabel(fundamentalScore) +
+          ")"
+        );
+
+      } else {
+
+        reasons.push(
+          "Fundamental: data belum cukup, keputusan lebih mengandalkan Overall Score."
+        );
+
+      }
+
+
+      reasons.push(
+        "Best Strategy: " +
+        stock.bestFit +
+        " dengan skor tertinggi."
+      );
+
+
+      reasons.push(
+        "Valuation: " +
+        stock.valuation +
+        ". Risk profile: " +
+        stock.risk +
+        "."
+      );
+
+
+      return {
+
+        rating,
+        action,
+        description,
+        finalScore,
+        reasons
+
+      };
+
+    }
+
+
+    /* =========================================
        NORMALIZE API DATA
     ========================================= */
+
+    function getBestFit(stock) {
+
+      const scores = [
+        { name: "Trading", value: stock.trading },
+        { name: "Swing", value: stock.swing },
+        { name: "Medium Term", value: stock.medium },
+        { name: "Long Term", value: stock.long }
+      ];
+
+
+      scores.sort(
+        (a, b) =>
+          b.value - a.value
+      );
+
+
+      return scores[0].name;
+
+    }
+
+
+    function getValuationLabel(pe, pb) {
+
+      const peValue =
+        getValidNumber(pe);
+
+      const pbValue =
+        getValidNumber(pb);
+
+
+      if (
+        peValue === null &&
+        pbValue === null
+      ) {
+        return "Data Pending";
+      }
+
+
+      let score = 0;
+      let count = 0;
+
+
+      if (peValue !== null) {
+
+        score += scorePE(peValue);
+        count++;
+
+      }
+
+
+      if (pbValue !== null) {
+
+        score += scorePB(pbValue);
+        count++;
+
+      }
+
+
+      const average =
+        score / count;
+
+
+      if (average >= 85) return "Attractive";
+      if (average >= 70) return "Fair";
+      if (average >= 50) return "Neutral";
+
+      return "Expensive";
+
+    }
+
 
     function normalizeStock(
       market,
@@ -2493,8 +2941,15 @@
       if (overall === null) {
 
         const available =
-          [trading, swing, medium, long]
-            .filter(v => v > 0);
+          [
+            trading,
+            swing,
+            medium,
+            long
+          ].filter(
+            v => v > 0
+          );
+
 
         overall =
           available.length
@@ -2825,10 +3280,6 @@
 
     async function fetchMarketStock() {
 
-      /* PRIORITY:
-         /api/stocks/:ticker
-      */
-
       const detailURL =
         API_BASE +
         "/api/stocks/" +
@@ -2861,12 +3312,9 @@
       }
 
 
-      /* FALLBACK:
-         /api/stocks
-      */
-
       const listURL =
-        API_BASE + "/api/stocks";
+        API_BASE +
+        "/api/stocks";
 
 
       const result =
@@ -2893,14 +3341,16 @@
         Array.isArray(result.data.stocks)
       ) {
 
-        list = result.data.stocks;
+        list =
+          result.data.stocks;
 
       } else if (
         result &&
         Array.isArray(result.stocks)
       ) {
 
-        list = result.stocks;
+        list =
+          result.stocks;
 
       }
 
@@ -3157,6 +3607,81 @@
         result.dividend
       );
 
+
+      return result;
+
+    }
+
+
+    /* =========================================
+       RENDER RECOMMENDATION
+    ========================================= */
+
+    function renderRecommendation(
+      stock,
+      fundamentalResult
+    ) {
+
+      const fundamentalScore =
+        fundamentalResult &&
+        fundamentalResult.overall !== null
+          ? fundamentalResult.overall
+          : null;
+
+
+      const recommendation =
+        getRecommendation(
+          stock.overall,
+          fundamentalScore,
+          stock
+        );
+
+
+      setText(
+        "recommendationRating",
+        recommendation.rating
+      );
+
+
+      setText(
+        "recommendationScore",
+        recommendation.finalScore +
+        "/100"
+      );
+
+
+      setText(
+        "recommendationAction",
+        recommendation.action
+      );
+
+
+      setText(
+        "recommendationDescription",
+        recommendation.description
+      );
+
+
+      const reasonsElement =
+        document.getElementById(
+          "recommendationReasons"
+        );
+
+
+      if (reasonsElement) {
+
+        reasonsElement.innerHTML =
+          recommendation.reasons
+            .map(
+              reason =>
+                '<div class="recommendation-reason">' +
+                reason +
+                '</div>'
+            )
+            .join("");
+
+      }
+
     }
 
 
@@ -3291,7 +3816,9 @@
 
           changeElement.className = "";
 
-        } else if (change > 0) {
+        }
+
+        else if (change > 0) {
 
           changeElement.textContent =
             "▲ +" +
@@ -3301,7 +3828,9 @@
           changeElement.className =
             "positive";
 
-        } else if (change < 0) {
+        }
+
+        else if (change < 0) {
 
           changeElement.textContent =
             "▼ " +
@@ -3311,7 +3840,9 @@
           changeElement.className =
             "negative";
 
-        } else {
+        }
+
+        else {
 
           changeElement.textContent =
             "0.00%";
@@ -3387,8 +3918,10 @@
 
           setTimeout(
             () => {
+
               bar.style.width =
                 item.score + "%";
+
             },
             100
           );
@@ -3417,7 +3950,9 @@
 
 
       const de =
-        getValidNumber(stock.debtToEquity);
+        getValidNumber(
+          stock.debtToEquity
+        );
 
 
       setText(
@@ -3458,7 +3993,19 @@
       );
 
 
-      renderFundamental(stock);
+      /* Hitung fundamental sekali */
+
+      const fundamentalResult =
+        renderFundamental(stock);
+
+
+      /* Lalu gunakan hasilnya untuk
+         Recommendation Engine */
+
+      renderRecommendation(
+        stock,
+        fundamentalResult
+      );
 
 
       setText(
@@ -3484,7 +4031,7 @@
         "ctaText",
         "Analisis " +
         stock.ticker +
-        " berdasarkan data yang tersedia di IDXNOVA. Selalu lakukan riset tambahan sebelum mengambil keputusan investasi atau trading."
+        " berdasarkan data yang tersedia di IDXNOVA. Rating IDXNOVA bukan jaminan profit. Selalu lakukan riset tambahan sebelum mengambil keputusan investasi atau trading."
       );
 
     }
@@ -3500,6 +4047,7 @@
         "stockSector",
         "DATA NOT FOUND"
       );
+
 
       setText(
         "breadcrumbSector",
@@ -3523,6 +4071,24 @@
 
       setText(
         "stockName",
+        message
+      );
+
+
+      setText(
+        "recommendationRating",
+        "DATA ERROR"
+      );
+
+
+      setText(
+        "recommendationAction",
+        "Recommendation tidak dapat dihitung."
+      );
+
+
+      setText(
+        "recommendationDescription",
         message
       );
 
