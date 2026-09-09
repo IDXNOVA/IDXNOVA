@@ -9,8 +9,7 @@
   <!-- MIDTRANS SNAP SANDBOX -->
   <script
     type="text/javascript"
-    src="https://app.sandbox.midtrans.com/snap/snap.js"
-    data-client-key="Mid-client-eSh42a2vhM_irgPo">
+    src="https://app.sandbox.midtrans.com/snap/snap.js">
   </script>
 
   <style>
@@ -65,7 +64,6 @@
       from {
         opacity: 0;
       }
-
       to {
         opacity: 1;
       }
@@ -261,6 +259,12 @@
       box-shadow: 0 16px 35px rgba(109,40,217,.38);
     }
 
+    .premium-main-btn:disabled {
+      opacity: .7;
+      cursor: wait;
+      transform: none;
+    }
+
     .premium-secondary-btn {
       width: 100%;
       margin-top: 9px;
@@ -298,10 +302,6 @@
 
     .premium-landing {
       display: block;
-    }
-
-    .premium-purchase.active + .premium-landing {
-      display: none;
     }
 
     .purchase-title {
@@ -401,9 +401,11 @@
       padding: 11px 13px;
       border-radius: 10px;
       font-size: 12px;
-      line-height: 1.5;
+      line-height: 1.55;
       background: rgba(255,255,255,.05);
       color: rgba(255,255,255,.72);
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .payment-status.active {
@@ -456,8 +458,7 @@
     <button
       class="menu-btn"
       onclick="toggleMenu()"
-      aria-label="Buka menu"
-    >
+      aria-label="Buka menu">
       ☰
     </button>
 
@@ -473,8 +474,7 @@
       <button
         type="button"
         class="premium-nav-btn"
-        onclick="openPremiumPurchase()"
-      >
+        onclick="openPremiumPurchase()">
         💎 Premium
       </button>
     </nav>
@@ -507,8 +507,7 @@
             type="text"
             id="stockSearch"
             placeholder="Cari ticker... contoh: BBRI"
-            autocomplete="off"
-          >
+            autocomplete="off">
 
           <button onclick="searchStock()">
             Cari
@@ -565,11 +564,12 @@
         <div class="sentiment-bar">
           <span
             id="sentimentBar"
-            style="width: 0%"
-          ></span>
+            style="width: 0%">
+          </span>
         </div>
 
         <div class="sentiment-info">
+
           <div>
             <small>Risk Level</small>
 
@@ -585,6 +585,7 @@
               Loading
             </strong>
           </div>
+
         </div>
 
         <p class="demo-note" id="dataNote">
@@ -595,10 +596,7 @@
     </section>
 
     <!-- MARKET -->
-    <section
-      id="market"
-      class="section"
-    >
+    <section id="market" class="section">
 
       <div class="section-heading">
 
@@ -614,8 +612,7 @@
 
         <span
           id="marketStatus"
-          class="demo-label"
-        >
+          class="demo-label">
           LOADING...
         </span>
 
@@ -636,8 +633,7 @@
 
           <p
             id="marketAverageChange"
-            class="positive"
-          >
+            class="positive">
             Calculating...
           </p>
 
@@ -651,8 +647,7 @@
         <article
           class="market-card"
           id="topGainerCard"
-          style="cursor: pointer;"
-        >
+          style="cursor: pointer;">
 
           <div class="card-label">
             TOP GAINER
@@ -664,8 +659,7 @@
 
           <p
             id="topGainerChange"
-            class="positive"
-          >
+            class="positive">
             Loading...
           </p>
 
@@ -679,8 +673,7 @@
         <article
           class="market-card"
           id="topLoserCard"
-          style="cursor: pointer;"
-        >
+          style="cursor: pointer;">
 
           <div class="card-label">
             TOP LOSER
@@ -692,8 +685,7 @@
 
           <p
             id="topLoserChange"
-            class="negative"
-          >
+            class="negative">
             Loading...
           </p>
 
@@ -707,8 +699,7 @@
         <article
           class="market-card"
           id="topScoreCard"
-          style="cursor: pointer;"
-        >
+          style="cursor: pointer;">
 
           <div class="card-label">
             MARKET LEADER
@@ -732,10 +723,7 @@
     </section>
 
     <!-- STOCKS -->
-    <section
-      id="stocks"
-      class="section"
-    >
+    <section id="stocks" class="section">
 
       <div class="section-heading">
 
@@ -751,8 +739,7 @@
 
         <span
           id="featuredLabel"
-          class="demo-label"
-        >
+          class="demo-label">
           LOADING...
         </span>
 
@@ -760,14 +747,13 @@
 
       <div
         id="featuredStocks"
-        class="stock-grid"
-      ></div>
+        class="stock-grid">
+      </div>
 
       <div
         id="featuredEmpty"
         class="empty-watchlist"
-        style="display: none;"
-      >
+        style="display: none;">
 
         <div class="empty-icon">
           ⚠️
@@ -786,10 +772,7 @@
     </section>
 
     <!-- NOVA SCORE -->
-    <section
-      id="scores"
-      class="section"
-    >
+    <section id="scores" class="section">
 
       <div class="section-heading">
 
@@ -830,8 +813,8 @@
           <div class="score-line">
             <span
               id="avgTradingBar"
-              style="width: 0%"
-            ></span>
+              style="width: 0%">
+            </span>
           </div>
 
           <strong id="avgTradingScore">
@@ -857,8 +840,8 @@
           <div class="score-line">
             <span
               id="avgSwingBar"
-              style="width: 0%"
-            ></span>
+              style="width: 0%">
+            </span>
           </div>
 
           <strong id="avgSwingScore">
@@ -884,8 +867,8 @@
           <div class="score-line">
             <span
               id="avgMediumBar"
-              style="width: 0%"
-            ></span>
+              style="width: 0%">
+            </span>
           </div>
 
           <strong id="avgMediumScore">
@@ -911,8 +894,8 @@
           <div class="score-line">
             <span
               id="avgLongBar"
-              style="width: 0%"
-            ></span>
+              style="width: 0%">
+            </span>
           </div>
 
           <strong id="avgLongScore">
@@ -925,10 +908,7 @@
     </section>
 
     <!-- FEATURES -->
-    <section
-      id="features"
-      class="section"
-    >
+    <section id="features" class="section">
 
       <div class="section-heading">
 
@@ -948,8 +928,7 @@
 
         <article
           style="cursor: pointer;"
-          onclick="window.location.href='trading.html'"
-        >
+          onclick="window.location.href='trading.html'">
 
           <span>01</span>
 
@@ -965,8 +944,7 @@
 
         <article
           style="cursor: pointer;"
-          onclick="window.location.href='screener.html'"
-        >
+          onclick="window.location.href='screener.html'">
 
           <span>02</span>
 
@@ -982,8 +960,7 @@
 
         <article
           style="cursor: pointer;"
-          onclick="window.location.href='search.html'"
-        >
+          onclick="window.location.href='search.html'">
 
           <span>03</span>
 
@@ -999,8 +976,7 @@
 
         <article
           style="cursor: pointer;"
-          onclick="window.location.href='watchlist.html'"
-        >
+          onclick="window.location.href='watchlist.html'">
 
           <span>04</span>
 
@@ -1033,8 +1009,7 @@
       </p>
 
       <button
-        onclick="document.getElementById('stockSearch').focus()"
-      >
+        onclick="document.getElementById('stockSearch').focus()">
         Mulai Cari Saham
       </button>
 
@@ -1075,8 +1050,7 @@
   <div
     id="premiumOverlay"
     class="premium-overlay"
-    onclick="handlePremiumOverlayClick(event)"
-  >
+    onclick="handlePremiumOverlayClick(event)">
 
     <div class="premium-popup">
 
@@ -1084,16 +1058,14 @@
         type="button"
         class="premium-close"
         onclick="closePremiumPopup()"
-        aria-label="Tutup"
-      >
+        aria-label="Tutup">
         ×
       </button>
 
       <!-- LANDING -->
       <div
         id="premiumLanding"
-        class="premium-landing"
-      >
+        class="premium-landing">
 
         <span class="premium-badge">
           💎 IDXNOVA PREMIUM
@@ -1176,16 +1148,14 @@
         <button
           type="button"
           class="premium-main-btn"
-          onclick="openPremiumPurchase()"
-        >
+          onclick="openPremiumPurchase()">
           💎 Upgrade ke Premium
         </button>
 
         <button
           type="button"
           class="premium-secondary-btn"
-          onclick="closePremiumPopup()"
-        >
+          onclick="closePremiumPopup()">
           Nanti saja
         </button>
 
@@ -1198,8 +1168,7 @@
       <!-- PURCHASE -->
       <div
         id="premiumPurchase"
-        class="premium-purchase"
-      >
+        class="premium-purchase">
 
         <span class="premium-badge">
           💎 PREMIUM CHECKOUT
@@ -1263,8 +1232,7 @@
             type="text"
             id="premiumName"
             placeholder="Masukkan nama"
-            autocomplete="name"
-          >
+            autocomplete="name">
 
           <label for="premiumEmail">
             Email
@@ -1274,30 +1242,27 @@
             type="email"
             id="premiumEmail"
             placeholder="contoh@email.com"
-            autocomplete="email"
-          >
+            autocomplete="email">
 
           <button
             type="button"
             id="premiumPayBtn"
             class="premium-main-btn"
-            onclick="startPremiumPayment()"
-          >
+            onclick="startPremiumPayment()">
             🔐 Lanjutkan Pembayaran
           </button>
 
           <button
             type="button"
             class="purchase-back"
-            onclick="showPremiumLanding()"
-          >
+            onclick="showPremiumLanding()">
             ← Kembali
           </button>
 
           <div
             id="paymentStatus"
-            class="payment-status"
-          ></div>
+            class="payment-status">
+          </div>
 
         </div>
 
@@ -1308,7 +1273,6 @@
       </div>
 
     </div>
-
   </div>
 
   <!-- HOME SYSTEM -->
@@ -1317,7 +1281,7 @@
     /*
       =========================================================
       IDXNOVA API
-      =========================================================
+    =========================================================
     */
     const API_URL =
       "https://idxnova-api.rendyalterio22.workers.dev/api/stocks";
@@ -1325,7 +1289,7 @@
     /*
       =========================================================
       PAYMENT API
-      =========================================================
+    =========================================================
     */
     const PAYMENT_API_URL =
       "https://idxnova-api.rendyalterio22.workers.dev";
@@ -1333,14 +1297,14 @@
     /*
       =========================================================
       DATABASE SEMENTARA DI BROWSER
-      =========================================================
+    =========================================================
     */
     let HOME_STOCKS = [];
 
     /*
       =========================================================
       MENU
-      =========================================================
+    =========================================================
     */
     function toggleMenu() {
       const menu =
@@ -1354,7 +1318,7 @@
     /*
       =========================================================
       PREMIUM POPUP
-      =========================================================
+    =========================================================
     */
     function openPremiumPopup() {
       const overlay =
@@ -1453,8 +1417,111 @@
 
     /*
       =========================================================
-      PREMIUM PAYMENT
+      PAYMENT ERROR FORMATTER
+    =========================================================
+    */
+    function extractPaymentError(result, response) {
+
+      const details = [];
+
+      if (response && response.status) {
+        details.push(
+          "HTTP " + response.status
+        );
+      }
+
+      if (
+        result &&
+        result.status_code
+      ) {
+        details.push(
+          "Status Code: " +
+          result.status_code
+        );
+      }
+
+      if (
+        result &&
+        result.error_code
+      ) {
+        details.push(
+          "Error Code: " +
+          result.error_code
+        );
+      }
+
+      if (
+        result &&
+        result.message
+      ) {
+        details.push(
+          "Message: " +
+          result.message
+        );
+      }
+
+      if (
+        result &&
+        result.detail
+      ) {
+        details.push(
+          "Detail: " +
+          result.detail
+        );
+      }
+
+      if (
+        result &&
+        Array.isArray(result.error_messages) &&
+        result.error_messages.length
+      ) {
+        details.push(
+          "Midtrans: " +
+          result.error_messages.join(" | ")
+        );
+      }
+
+      if (
+        result &&
+        typeof result.errors === "string"
+      ) {
+        details.push(
+          "Errors: " +
+          result.errors
+        );
+      }
+
+      if (
+        result &&
+        result.provider
+      ) {
+        details.push(
+          "Provider: " +
+          result.provider
+        );
+      }
+
+      if (
+        result &&
+        result.environment
+      ) {
+        details.push(
+          "Environment: " +
+          result.environment
+        );
+      }
+
+      if (details.length === 0) {
+        return "Tidak ada detail error dari Midtrans.";
+      }
+
+      return details.join("\n");
+    }
+
+    /*
       =========================================================
+      PREMIUM PAYMENT
+    =========================================================
     */
     async function startPremiumPayment() {
 
@@ -1569,8 +1636,18 @@
           result =
             await response.json();
         } catch (jsonError) {
-          result = null;
+
+          throw new Error(
+            "Server pembayaran tidak mengembalikan JSON.\n" +
+            "HTTP " +
+            response.status
+          );
         }
+
+        console.log(
+          "IDXNOVA Midtrans Create Response:",
+          result
+        );
 
         if (
           !response.ok ||
@@ -1579,25 +1656,19 @@
           !result.token
         ) {
 
-          const detail =
-            result &&
-            result.detail
-              ? result.detail
-              : "";
+          const errorDetail =
+            extractPaymentError(
+              result,
+              response
+            );
 
           throw new Error(
-            detail ||
-            (
-              result &&
-              result.message
-                ? result.message
-                : "Gagal membuat transaksi."
-            )
+            errorDetail
           );
         }
 
         showPaymentStatus(
-          "Transaksi berhasil dibuat. Membuka halaman pembayaran...",
+          "Transaksi berhasil dibuat.\nMembuka halaman pembayaran Midtrans...",
           "success"
         );
 
@@ -1625,7 +1696,7 @@
                 );
 
                 showPaymentStatus(
-                  "Pembayaran berhasil. Status pembayaran sedang diproses oleh IDXNOVA.",
+                  "Pembayaran berhasil.\nStatus pembayaran sedang diproses oleh IDXNOVA.",
                   "success"
                 );
 
@@ -1647,8 +1718,20 @@
                   paymentResult
                 );
 
+                let detail =
+                  "Pembayaran masih menunggu penyelesaian.";
+
+                if (
+                  paymentResult &&
+                  paymentResult.status_message
+                ) {
+                  detail +=
+                    "\n" +
+                    paymentResult.status_message;
+                }
+
                 showPaymentStatus(
-                  "Pembayaran masih menunggu penyelesaian.",
+                  detail,
                   "loading"
                 );
 
@@ -1670,8 +1753,55 @@
                   paymentResult
                 );
 
+                let errorMessage =
+                  "Pembayaran gagal atau transaksi ditolak.";
+
+                if (
+                  paymentResult
+                ) {
+
+                  const detailParts = [];
+
+                  if (
+                    paymentResult.status_code
+                  ) {
+                    detailParts.push(
+                      "Status Code: " +
+                      paymentResult.status_code
+                    );
+                  }
+
+                  if (
+                    paymentResult.status_message
+                  ) {
+                    detailParts.push(
+                      paymentResult.status_message
+                    );
+                  }
+
+                  if (
+                    paymentResult.error_code
+                  ) {
+                    detailParts.push(
+                      "Error Code: " +
+                      paymentResult.error_code
+                    );
+                  }
+
+                  if (
+                    detailParts.length
+                  ) {
+
+                    errorMessage +=
+                      "\n" +
+                      detailParts.join(
+                        "\n"
+                      );
+                  }
+                }
+
                 showPaymentStatus(
-                  "Pembayaran gagal atau terjadi kesalahan.",
+                  errorMessage,
                   "error"
                 );
 
@@ -1693,7 +1823,7 @@
                 );
 
                 showPaymentStatus(
-                  "Halaman pembayaran ditutup. Kamu dapat mencoba lagi kapan saja.",
+                  "Halaman pembayaran ditutup.\nKamu dapat mencoba lagi kapan saja.",
                   "loading"
                 );
 
@@ -1706,7 +1836,6 @@
                     "🔐 Lanjutkan Pembayaran";
                 }
               }
-
           }
         );
 
@@ -1718,8 +1847,10 @@
         );
 
         showPaymentStatus(
-          error.message ||
-          "Terjadi kesalahan saat membuat pembayaran.",
+          error &&
+          error.message
+            ? error.message
+            : "Terjadi kesalahan saat membuat pembayaran.",
           "error"
         );
 
@@ -1734,6 +1865,11 @@
       }
     }
 
+    /*
+      =========================================================
+      EMAIL VALIDATION
+    =========================================================
+    */
     function isValidEmail(email) {
 
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
@@ -1741,6 +1877,11 @@
       );
     }
 
+    /*
+      =========================================================
+      PAYMENT STATUS
+    =========================================================
+    */
     function showPaymentStatus(
       message,
       type
@@ -1802,7 +1943,7 @@
     /*
       =========================================================
       SET TEXT
-      =========================================================
+    =========================================================
     */
     function setText(id, value) {
 
@@ -1819,7 +1960,7 @@
     /*
       =========================================================
       FORMAT HARGA
-      =========================================================
+    =========================================================
     */
     function formatPrice(price) {
 
@@ -1829,7 +1970,6 @@
       if (
         !Number.isFinite(number)
       ) {
-
         return "-";
       }
 
@@ -1842,7 +1982,7 @@
     /*
       =========================================================
       FORMAT CHANGE
-      =========================================================
+    =========================================================
     */
     function getChange(stock) {
 
@@ -1857,7 +1997,7 @@
     /*
       =========================================================
       BUKA DETAIL SAHAM
-      =========================================================
+    =========================================================
     */
     function openStock(ticker) {
 
@@ -1873,7 +2013,7 @@
     /*
       =========================================================
       SEARCH HOME
-      =========================================================
+    =========================================================
     */
     function searchStock() {
 
@@ -1929,7 +2069,7 @@
     /*
       =========================================================
       QUICK SEARCH
-      =========================================================
+    =========================================================
     */
     function quickSearch(ticker) {
 
@@ -1950,7 +2090,7 @@
     /*
       =========================================================
       MARKET OVERVIEW
-      =========================================================
+    =========================================================
     */
     function renderMarketOverview(stocks) {
 
@@ -1958,7 +2098,6 @@
         !Array.isArray(stocks) ||
         stocks.length === 0
       ) {
-
         return;
       }
 
@@ -1974,7 +2113,6 @@
       if (
         validStocks.length === 0
       ) {
-
         return;
       }
 
@@ -1991,7 +2129,6 @@
           function(total, change) {
 
             return total + change;
-
           },
           0
         ) / changes.length;
@@ -2172,7 +2309,7 @@
     /*
       =========================================================
       MARKET SENTIMENT
-      =========================================================
+    =========================================================
     */
     function renderMarketSentiment(stocks) {
 
@@ -2180,7 +2317,6 @@
         !Array.isArray(stocks) ||
         stocks.length === 0
       ) {
-
         return;
       }
 
@@ -2223,7 +2359,6 @@
 
             return total +
               getChange(stock);
-
           },
           0
         ) / validStocks.length;
@@ -2337,7 +2472,7 @@
     /*
       =========================================================
       FEATURED STOCKS
-      =========================================================
+    =========================================================
     */
     function renderFeaturedStocks(stocks) {
 
@@ -2474,7 +2609,7 @@
     /*
       =========================================================
       LOAD DATA API
-      =========================================================
+    =========================================================
     */
     async function loadHomeData() {
 
@@ -2639,7 +2774,7 @@
     /*
       =========================================================
       ENTER UNTUK SEARCH
-      =========================================================
+    =========================================================
     */
     const searchInput =
       document.getElementById(
@@ -2665,7 +2800,7 @@
     /*
       =========================================================
       AUTO PREMIUM POPUP
-      =========================================================
+    =========================================================
     */
     window.addEventListener(
       "load",
@@ -2685,7 +2820,7 @@
     /*
       =========================================================
       START IDXNOVA
-      =========================================================
+    =========================================================
     */
     loadHomeData();
 
