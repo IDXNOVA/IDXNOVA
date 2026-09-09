@@ -1,999 +1,1588 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>IDXNOVA | Indonesian Stock Intelligence</title>
-
   <link rel="stylesheet" href="style.css">
+  <!-- MIDTRANS SNAP SANDBOX -->
+  <script
+    type="text/javascript"
+    src="https://app.sandbox.midtrans.com/snap/snap.js">
+  </script>
+  <style>
+    /* =========================================================
+       PREMIUM NAV BUTTON
+    ========================================================= */
+    .premium-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      background: linear-gradient(135deg, #9f7aea, #6b46c1);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 8px 24px rgba(107,70,193,.25);
+      transition: .2s ease;
+      cursor: pointer;
+    }
+    .premium-nav-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(107,70,193,.35);
+    }
+    /* =========================================================
+       PREMIUM OVERLAY
+       ========================================================= */
+    .premium-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(3, 7, 18, .78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .premium-overlay.active {
+      display: flex;
+      animation: premiumFadeIn .25s ease;
+    }
+    @keyframes premiumFadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+    /* =========================================================
+       PREMIUM POPUP
+       ========================================================= */
+    .premium-popup {
+      position: relative;
+      width: min(520px, 100%);
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+      border-radius: 24px;
+      padding: 28px;
+      background:
+        radial-gradient(
+          circle at top right,
+          rgba(159,122,234,.20),
+          transparent 35%
+        ),
+        linear-gradient(
+          145deg,
+          #111827,
+          #0b1120
+        );
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow:
+        0 30px 100px rgba(0,0,0,.55),
+        0 0 60px rgba(124,58,237,.12);
+      color: #fff;
+    }
+    .premium-popup::-webkit-scrollbar {
+      width: 5px;
+    }
+    .premium-popup::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,.15);
+      border-radius: 10px;
+    }
+    .premium-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.75);
+      font-size: 22px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .premium-close:hover {
+      background: rgba(255,255,255,.14);
+      color: #fff;
+      transform: rotate(90deg);
+    }
+    .premium-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(124,58,237,.16);
+      border: 1px solid rgba(167,139,250,.25);
+      color: #c4b5fd;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+    .premium-popup h2 {
+      margin: 17px 0 8px;
+      font-size: clamp(26px, 6vw, 38px);
+      line-height: 1.1;
+      letter-spacing: -.03em;
+    }
+    .premium-popup-subtitle {
+      margin: 0;
+      color: rgba(255,255,255,.65);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    /* =========================================================
+       PRICE
+       ========================================================= */
+    .premium-price-box {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .premium-old-price {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,.42);
+      font-size: 14px;
+    }
+    .premium-old-price strong {
+      text-decoration: line-through;
+      text-decoration-thickness: 2px;
+    }
+    .premium-current-price {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 3px;
+    }
+    .premium-current-price strong {
+      font-size: clamp(34px, 9vw, 48px);
+      line-height: 1;
+      letter-spacing: -.04em;
+      color: #fff;
+    }
+    .premium-current-price span {
+      color: rgba(255,255,255,.55);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .premium-discount {
+      display: inline-flex;
+      margin-top: 12px;
+      padding: 5px 9px;
+      border-radius: 7px;
+      background: rgba(16,185,129,.12);
+      border: 1px solid rgba(16,185,129,.20);
+      color: #6ee7b7;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    /* =========================================================
+       PREMIUM BENEFITS
+       ========================================================= */
+    .premium-benefits {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+      margin-top: 18px;
+    }
+    .premium-benefit {
+      padding: 11px 12px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.035);
+      border: 1px solid rgba(255,255,255,.06);
+      color: rgba(255,255,255,.78);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .premium-benefit::first-letter {
+      color: #c4b5fd;
+    }
+    /* =========================================================
+       PREMIUM BUTTONS
+       ========================================================= */
+    .premium-main-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px 18px;
+      border: 0;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(109,40,217,.28);
+      transition: .2s ease;
+    }
+    .premium-main-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 35px rgba(109,40,217,.38);
+    }
+    .premium-secondary-btn {
+      width: 100%;
+      margin-top: 9px;
+      padding: 12px 18px;
+      border: 0;
+      background: transparent;
+      color: rgba(255,255,255,.48);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .premium-secondary-btn:hover {
+      color: rgba(255,255,255,.78);
+    }
+    .premium-secure-note {
+      margin-top: 14px;
+      text-align: center;
+      color: rgba(255,255,255,.35);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+    /* =========================================================
+       PURCHASE MODAL
+       ========================================================= */
+    .premium-purchase {
+      display: none;
+    }
+    .premium-purchase.active {
+      display: block;
+    }
+    .premium-landing {
+      display: block;
+    }
+    .premium-purchase.active + .premium-landing {
+      display: none;
+    }
+    .purchase-title {
+      margin: 18px 0 6px;
+      font-size: 27px;
+    }
+    .purchase-description {
+      margin: 0;
+      color: rgba(255,255,255,.60);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .purchase-summary {
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+    }
+    .purchase-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 6px 0;
+      font-size: 13px;
+    }
+    .purchase-row span:first-child {
+      color: rgba(255,255,255,.48);
+    }
+    .purchase-row strong {
+      color: #fff;
+    }
+    .purchase-total {
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .purchase-total strong {
+      font-size: 22px;
+      color: #c4b5fd;
+    }
+    .purchase-form {
+      margin-top: 17px;
+    }
+    .purchase-form label {
+      display: block;
+      margin-bottom: 7px;
+      color: rgba(255,255,255,.60);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .purchase-form input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      margin-bottom: 11px;
+      border-radius: 11px;
+      border: 1px solid rgba(255,255,255,.10);
+      outline: none;
+      background: rgba(255,255,255,.055);
+      color: #fff;
+      font-size: 13px;
+    }
+    .purchase-form input:focus {
+      border-color: rgba(139,92,246,.65);
+      box-shadow: 0 0 0 3px rgba(139,92,246,.10);
+    }
+    .purchase-form input::placeholder {
+      color: rgba(255,255,255,.28);
+    }
+    .purchase-back {
+      width: 100%;
+      padding: 10px;
+      border: 0;
+      background: transparent;
+      color: rgba(255,255,255,.42);
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .payment-status {
+      display: none;
+      margin-top: 13px;
+      padding: 11px 13px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.72);
+    }
+    .payment-status.active {
+      display: block;
+    }
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+    @media (max-width: 600px) {
+      .premium-overlay {
+        padding: 12px;
+        align-items: center;
+      }
+      .premium-popup {
+        padding: 22px 18px;
+        border-radius: 20px;
+        max-height: calc(100vh - 24px);
+      }
+      .premium-benefits {
+        grid-template-columns: 1fr;
+      }
+      .premium-close {
+        top: 10px;
+        right: 10px;
+      }
+      .premium-popup h2 {
+        padding-right: 35px;
+      }
+    }
+  </style>
 </head>
-
 <body>
-
   <!-- NAVBAR -->
   <header class="navbar">
-
-    <a href="index.html" class="brand">
-      <span class="brand-mark">N</span>
-
-      <span>
-        <strong>IDXNOVA</strong>
-        <small>INDONESIAN STOCK INTELLIGENCE</small>
-      </span>
-    </a>
-
-    <button
-      class="menu-btn"
-      onclick="toggleMenu()"
-      aria-label="Buka menu"
-    >
-      ☰
-    </button>
-
-    <nav id="navMenu">
-      <a href="index.html">Home</a>
-      <a href="trading.html">Trading</a>
-      <a href="swing.html">Swing</a>
-      <a href="investing.html">Investing</a>
-      <a href="screener.html">Screener</a>
-      <a href="watchlist.html">Watchlist</a>
-      <a href="search.html">🔎 Search</a>
-    </nav>
-
+<a href="index.html" class="brand">
+  <span class="brand-mark">N</span>
+  <span>
+    <strong>IDXNOVA</strong>
+    <small>INDONESIAN STOCK INTELLIGENCE</small>
+  </span>
+</a>
+<button
+  class="menu-btn"
+  onclick="toggleMenu()"
+  aria-label="Buka menu"
+>
+  ☰
+</button>
+<nav id="navMenu">
+  <a href="index.html">Home</a>
+  <a href="trading.html">Trading</a>
+  <a href="swing.html">Swing</a>
+  <a href="investing.html">Investing</a>
+  <a href="screener.html">Screener</a>
+  <a href="watchlist.html">Watchlist</a>
+  <a href="search.html">🔎 Search</a>
+  <button
+    type="button"
+    class="premium-nav-btn"
+    onclick="openPremiumPurchase()"
+  >
+    💎 Premium
+  </button>
+</nav>
   </header>
-
-
   <main>
-
-    <!-- HERO -->
-    <section class="hero">
-
-      <div class="hero-content">
-
-        <div class="badge">
-          ● INDONESIA STOCK MARKET PLATFORM
-        </div>
-
-        <h1>
-          Analisis Saham Indonesia
-          <span>Lebih Cerdas.</span>
-        </h1>
-
-        <p>
-          IDXNOVA membantu trader dan investor menganalisis saham Indonesia
-          untuk trading harian, investasi jangka pendek, menengah,
-          hingga jangka panjang.
-        </p>
-
-
-        <!-- SEARCH -->
-        <div class="search-box">
-
-          <input
-            type="text"
-            id="stockSearch"
-            placeholder="Cari ticker... contoh: BBRI"
-            autocomplete="off"
-          >
-
-          <button onclick="searchStock()">
-            Cari
-          </button>
-
-        </div>
-
-
-        <div class="popular">
-
-          <span>Populer:</span>
-
-          <button onclick="quickSearch('BBRI')">
-            BBRI
-          </button>
-
-          <button onclick="quickSearch('BBCA')">
-            BBCA
-          </button>
-
-          <button onclick="quickSearch('ANTM')">
-            ANTM
-          </button>
-
-          <button onclick="quickSearch('ELSA')">
-            ELSA
-          </button>
-
-          <button onclick="quickSearch('PWON')">
-            PWON
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- HERO PANEL -->
-      <div class="hero-panel">
-
-        <div class="panel-top">
-          <span>MARKET SENTIMENT</span>
-          <strong id="dataMode">
-            LOADING
-          </strong>
-        </div>
-
-
-        <div class="sentiment-value">
-
-          <h2 id="sentimentScore">
-            0<span>/100</span>
-          </h2>
-
-          <p id="sentimentText">
-            Loading...
-          </p>
-
-        </div>
-
-
-        <div class="sentiment-bar">
-
-          <span
-            id="sentimentBar"
-            style="width: 0%"
-          ></span>
-
-        </div>
-
-
-        <div class="sentiment-info">
-
-          <div>
-            <small>Risk Level</small>
-
-            <strong id="marketRisk">
-              Loading
-            </strong>
-          </div>
-
-
-          <div>
-            <small>Market Trend</small>
-
-            <strong id="marketTrend">
-              Loading
-            </strong>
-          </div>
-
-        </div>
-
-
-        <p class="demo-note" id="dataNote">
-          Menghubungkan ke IDXNOVA API...
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- MARKET -->
-    <section
-      id="market"
-      class="section"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="eyebrow">
-            MARKET PULSE
-          </span>
-
-          <h2>
-            Market Overview
-          </h2>
-
-        </div>
-
-
-        <span
-          id="marketStatus"
-          class="demo-label"
-        >
-          LOADING...
-        </span>
-
-      </div>
-
-
-      <div class="market-grid">
-
-
-        <!-- MARKET AVERAGE -->
-        <article class="market-card featured">
-
-          <div class="card-label">
-            MARKET AVG
-          </div>
-
-          <h3 id="marketAverage">
-            Loading...
-          </h3>
-
-          <p
-            id="marketAverageChange"
-            class="positive"
-          >
-            Calculating...
-          </p>
-
-          <small>
-            Rata-rata perubahan seluruh saham IDXNOVA
-          </small>
-
-        </article>
-
-
-        <!-- TOP GAINER -->
-        <article
-          class="market-card"
-          id="topGainerCard"
-          style="cursor: pointer;"
-        >
-
-          <div class="card-label">
-            TOP GAINER
-          </div>
-
-          <h3 id="topGainer">
-            Loading...
-          </h3>
-
-          <p
-            id="topGainerChange"
-            class="positive"
-          >
-            Loading...
-          </p>
-
-          <small>
-            Perubahan harga tertinggi
-          </small>
-
-        </article>
-
-
-        <!-- TOP LOSER -->
-        <article
-          class="market-card"
-          id="topLoserCard"
-          style="cursor: pointer;"
-        >
-
-          <div class="card-label">
-            TOP LOSER
-          </div>
-
-          <h3 id="topLoser">
-            Loading...
-          </h3>
-
-          <p
-            id="topLoserChange"
-            class="negative"
-          >
-            Loading...
-          </p>
-
-          <small>
-            Perubahan harga terendah
-          </small>
-
-        </article>
-
-
-        <!-- MARKET LEADER -->
-        <article
-          class="market-card"
-          id="topScoreCard"
-          style="cursor: pointer;"
-        >
-
-          <div class="card-label">
-            MARKET LEADER
-          </div>
-
-          <h3 id="topScore">
-            Loading...
-          </h3>
-
-          <p id="topScoreValue">
-            Loading...
-          </p>
-
-          <small>
-            Performa harga tertinggi hari ini
-          </small>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- STOCKS -->
-    <section
-      id="stocks"
-      class="section"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="eyebrow">
-            STOCK RADAR
-          </span>
-
-          <h2>
-            Featured Stocks
-          </h2>
-
-        </div>
-
-
-        <span
-          id="featuredLabel"
-          class="demo-label"
-        >
-          LOADING...
-        </span>
-
-      </div>
-
-
-      <div
-        id="featuredStocks"
-        class="stock-grid"
-      ></div>
-
-
-      <div
-        id="featuredEmpty"
-        class="empty-watchlist"
-        style="display: none;"
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="badge">
+      ● INDONESIA STOCK MARKET PLATFORM
+    </div>
+    <h1>
+      Analisis Saham Indonesia
+      <span>Lebih Cerdas.</span>
+    </h1>
+    <p>
+      IDXNOVA membantu trader dan investor menganalisis saham Indonesia
+      untuk trading harian, investasi jangka pendek, menengah,
+      hingga jangka panjang.
+    </p>
+    <!-- SEARCH -->
+    <div class="search-box">
+      <input
+        type="text"
+        id="stockSearch"
+        placeholder="Cari ticker... contoh: BBRI"
+        autocomplete="off"
       >
-
-        <div class="empty-icon">
-          ⚠️
-        </div>
-
-        <h3>
-          Data saham tidak tersedia
-        </h3>
-
-        <p>
-          IDXNOVA API sedang tidak dapat dihubungi.
-        </p>
-
-      </div>
-
-    </section>
-
-
-    <!-- NOVA SCORE -->
-    <section
-      id="scores"
-      class="section"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="eyebrow">
-            IDXNOVA INTELLIGENCE
-          </span>
-
-          <h2>
-            NOVA Score
-          </h2>
-
-        </div>
-
-      </div>
-
-
-      <p class="section-description">
-        Sistem indikator analitis IDXNOVA sedang dikembangkan untuk
-        menghitung karakteristik saham dari berbagai sudut pandang.
-        Skor bukan jaminan pergerakan harga.
-      </p>
-
-
-      <div class="score-grid">
-
-
-        <article class="score-card">
-
-          <div class="score-icon">
-            ⚡
-          </div>
-
-          <h3>
-            NOVA Trade
-          </h3>
-
-          <p>
-            Momentum, volume, volatilitas, dan struktur harga untuk analisis trading.
-          </p>
-
-          <div class="score-line">
-            <span
-              id="avgTradingBar"
-              style="width: 0%"
-            ></span>
-          </div>
-
-          <strong id="avgTradingScore">
-            Coming Soon
-          </strong>
-
-        </article>
-
-
-        <article class="score-card">
-
-          <div class="score-icon">
-            📈
-          </div>
-
-          <h3>
-            NOVA Swing
-          </h3>
-
-          <p>
-            Trend, momentum, support-resistance, dan peluang pergerakan beberapa hari.
-          </p>
-
-          <div class="score-line">
-            <span
-              id="avgSwingBar"
-              style="width: 0%"
-            ></span>
-          </div>
-
-          <strong id="avgSwingScore">
-            Coming Soon
-          </strong>
-
-        </article>
-
-
-        <article class="score-card">
-
-          <div class="score-icon">
-            📊
-          </div>
-
-          <h3>
-            NOVA Medium
-          </h3>
-
-          <p>
-            Analisis pertumbuhan bisnis, tren keuangan, valuasi, dan prospek.
-          </p>
-
-          <div class="score-line">
-            <span
-              id="avgMediumBar"
-              style="width: 0%"
-            ></span>
-          </div>
-
-          <strong id="avgMediumScore">
-            Coming Soon
-          </strong>
-
-        </article>
-
-
-        <article class="score-card">
-
-          <div class="score-icon">
-            💎
-          </div>
-
-          <h3>
-            NOVA Long-Term
-          </h3>
-
-          <p>
-            Fundamental, valuasi, kesehatan keuangan, dan potensi jangka panjang.
-          </p>
-
-          <div class="score-line">
-            <span
-              id="avgLongBar"
-              style="width: 0%"
-            ></span>
-          </div>
-
-          <strong id="avgLongScore">
-            Coming Soon
-          </strong>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- FEATURES -->
-    <section
-      id="features"
-      class="section"
-    >
-
-      <div class="section-heading">
-
-        <div>
-
-          <span class="eyebrow">
-            ONE PLATFORM
-          </span>
-
-          <h2>
-            Semua yang Kamu Butuhkan
-          </h2>
-
-        </div>
-
-      </div>
-
-
-      <div class="feature-grid">
-
-
-        <article
-          style="cursor: pointer;"
-          onclick="window.location.href='trading.html'"
-        >
-          <span>01</span>
-
-          <h3>
-            Trading Radar
-          </h3>
-
-          <p>
-            Temukan saham dengan aktivitas, momentum, dan volume menarik.
-          </p>
-        </article>
-
-
-        <article
-          style="cursor: pointer;"
-          onclick="window.location.href='screener.html'"
-        >
-          <span>02</span>
-
-          <h3>
-            Stock Screener
-          </h3>
-
-          <p>
-            Filter saham berdasarkan strategi dan karakteristik saham.
-          </p>
-        </article>
-
-
-        <article
-          style="cursor: pointer;"
-          onclick="window.location.href='search.html'"
-        >
-          <span>03</span>
-
-          <h3>
-            Stock Analysis
-          </h3>
-
-          <p>
-            Cari saham dan lihat fundamental, skor, dan karakteristiknya.
-          </p>
-        </article>
-
-
-        <article
-          style="cursor: pointer;"
-          onclick="window.location.href='watchlist.html'"
-        >
-          <span>04</span>
-
-          <h3>
-            Watchlist
-          </h3>
-
-          <p>
-            Simpan saham yang ingin dipantau dalam satu dashboard.
-          </p>
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- CTA -->
-    <section class="cta">
-
-      <span class="eyebrow">
-        IDXNOVA
-      </span>
-
-      <h2>
-        Build Your Market Intelligence.
-      </h2>
-
-      <p>
-        Satu tempat untuk memantau, menyaring, dan menganalisis saham Indonesia.
-      </p>
-
-      <button
-        onclick="document.getElementById('stockSearch').focus()"
-      >
-        Mulai Cari Saham
+      <button onclick="searchStock()">
+        Cari
       </button>
-
-    </section>
-
+    </div>
+    <div class="popular">
+      <span>Populer:</span>
+      <button onclick="quickSearch('BBRI')">
+        BBRI
+      </button>
+      <button onclick="quickSearch('BBCA')">
+        BBCA
+      </button>
+      <button onclick="quickSearch('ANTM')">
+        ANTM
+      </button>
+      <button onclick="quickSearch('ELSA')">
+        ELSA
+      </button>
+      <button onclick="quickSearch('PWON')">
+        PWON
+      </button>
+    </div>
+  </div>
+  <!-- HERO PANEL -->
+  <div class="hero-panel">
+    <div class="panel-top">
+      <span>MARKET SENTIMENT</span>
+      <strong id="dataMode">
+        LOADING
+      </strong>
+    </div>
+    <div class="sentiment-value">
+      <h2 id="sentimentScore">
+        0<span>/100</span>
+      </h2>
+      <p id="sentimentText">
+        Loading...
+      </p>
+    </div>
+    <div class="sentiment-bar">
+      <span
+        id="sentimentBar"
+        style="width: 0%"
+      ></span>
+    </div>
+    <div class="sentiment-info">
+      <div>
+        <small>Risk Level</small>
+        <strong id="marketRisk">
+          Loading
+        </strong>
+      </div>
+      <div>
+        <small>Market Trend</small>
+        <strong id="marketTrend">
+          Loading
+        </strong>
+      </div>
+    </div>
+    <p class="demo-note" id="dataNote">
+      Menghubungkan ke IDXNOVA API...
+    </p>
+  </div>
+</section>
+<!-- MARKET -->
+<section
+  id="market"
+  class="section"
+>
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        MARKET PULSE
+      </span>
+      <h2>
+        Market Overview
+      </h2>
+    </div>
+    <span
+      id="marketStatus"
+      class="demo-label"
+    >
+      LOADING...
+    </span>
+  </div>
+  <div class="market-grid">
+    <!-- MARKET AVERAGE -->
+    <article class="market-card featured">
+      <div class="card-label">
+        MARKET AVG
+      </div>
+      <h3 id="marketAverage">
+        Loading...
+      </h3>
+      <p
+        id="marketAverageChange"
+        class="positive"
+      >
+        Calculating...
+      </p>
+      <small>
+        Rata-rata perubahan seluruh saham IDXNOVA
+      </small>
+    </article>
+    <!-- TOP GAINER -->
+    <article
+      class="market-card"
+      id="topGainerCard"
+      style="cursor: pointer;"
+    >
+      <div class="card-label">
+        TOP GAINER
+      </div>
+      <h3 id="topGainer">
+        Loading...
+      </h3>
+      <p
+        id="topGainerChange"
+        class="positive"
+      >
+        Loading...
+      </p>
+      <small>
+        Perubahan harga tertinggi
+      </small>
+    </article>
+    <!-- TOP LOSER -->
+    <article
+      class="market-card"
+      id="topLoserCard"
+      style="cursor: pointer;"
+    >
+      <div class="card-label">
+        TOP LOSER
+      </div>
+      <h3 id="topLoser">
+        Loading...
+      </h3>
+      <p
+        id="topLoserChange"
+        class="negative"
+      >
+        Loading...
+      </p>
+      <small>
+        Perubahan harga terendah
+      </small>
+    </article>
+    <!-- MARKET LEADER -->
+    <article
+      class="market-card"
+      id="topScoreCard"
+      style="cursor: pointer;"
+    >
+      <div class="card-label">
+        MARKET LEADER
+      </div>
+      <h3 id="topScore">
+        Loading...
+      </h3>
+      <p id="topScoreValue">
+        Loading...
+      </p>
+      <small>
+        Performa harga tertinggi hari ini
+      </small>
+    </article>
+  </div>
+</section>
+<!-- STOCKS -->
+<section
+  id="stocks"
+  class="section"
+>
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        STOCK RADAR
+      </span>
+      <h2>
+        Featured Stocks
+      </h2>
+    </div>
+    <span
+      id="featuredLabel"
+      class="demo-label"
+    >
+      LOADING...
+    </span>
+  </div>
+  <div
+    id="featuredStocks"
+    class="stock-grid"
+  ></div>
+  <div
+    id="featuredEmpty"
+    class="empty-watchlist"
+    style="display: none;"
+  >
+    <div class="empty-icon">
+      ⚠️
+    </div>
+    <h3>
+      Data saham tidak tersedia
+    </h3>
+    <p>
+      IDXNOVA API sedang tidak dapat dihubungi.
+    </p>
+  </div>
+</section>
+<!-- NOVA SCORE -->
+<section
+  id="scores"
+  class="section"
+>
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        IDXNOVA INTELLIGENCE
+      </span>
+      <h2>
+        NOVA Score
+      </h2>
+    </div>
+  </div>
+  <p class="section-description">
+    Sistem indikator analitis IDXNOVA sedang dikembangkan untuk
+    menghitung karakteristik saham dari berbagai sudut pandang.
+    Skor bukan jaminan pergerakan harga.
+  </p>
+  <div class="score-grid">
+    <article class="score-card">
+      <div class="score-icon">
+        ⚡
+      </div>
+      <h3>
+        NOVA Trade
+      </h3>
+      <p>
+        Momentum, volume, volatilitas, dan struktur harga untuk analisis trading.
+      </p>
+      <div class="score-line">
+        <span
+          id="avgTradingBar"
+          style="width: 0%"
+        ></span>
+      </div>
+      <strong id="avgTradingScore">
+        Coming Soon
+      </strong>
+    </article>
+    <article class="score-card">
+      <div class="score-icon">
+        📈
+      </div>
+      <h3>
+        NOVA Swing
+      </h3>
+      <p>
+        Trend, momentum, support-resistance, dan peluang pergerakan beberapa hari.
+      </p>
+      <div class="score-line">
+        <span
+          id="avgSwingBar"
+          style="width: 0%"
+        ></span>
+      </div>
+      <strong id="avgSwingScore">
+        Coming Soon
+      </strong>
+    </article>
+    <article class="score-card">
+      <div class="score-icon">
+        📊
+      </div>
+      <h3>
+        NOVA Medium
+      </h3>
+      <p>
+        Analisis pertumbuhan bisnis, tren keuangan, valuasi, dan prospek.
+      </p>
+      <div class="score-line">
+        <span
+          id="avgMediumBar"
+          style="width: 0%"
+        ></span>
+      </div>
+      <strong id="avgMediumScore">
+        Coming Soon
+      </strong>
+    </article>
+    <article class="score-card">
+      <div class="score-icon">
+        💎
+      </div>
+      <h3>
+        NOVA Long-Term
+      </h3>
+      <p>
+        Fundamental, valuasi, kesehatan keuangan, dan potensi jangka panjang.
+      </p>
+      <div class="score-line">
+        <span
+          id="avgLongBar"
+          style="width: 0%"
+        ></span>
+      </div>
+      <strong id="avgLongScore">
+        Coming Soon
+      </strong>
+    </article>
+  </div>
+</section>
+<!-- FEATURES -->
+<section
+  id="features"
+  class="section"
+>
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">
+        ONE PLATFORM
+      </span>
+      <h2>
+        Semua yang Kamu Butuhkan
+      </h2>
+    </div>
+  </div>
+  <div class="feature-grid">
+    <article
+      style="cursor: pointer;"
+      onclick="window.location.href='trading.html'"
+    >
+      <span>01</span>
+      <h3>
+        Trading Radar
+      </h3>
+      <p>
+        Temukan saham dengan aktivitas, momentum, dan volume menarik.
+      </p>
+    </article>
+    <article
+      style="cursor: pointer;"
+      onclick="window.location.href='screener.html'"
+    >
+      <span>02</span>
+      <h3>
+        Stock Screener
+      </h3>
+      <p>
+        Filter saham berdasarkan strategi dan karakteristik saham.
+      </p>
+    </article>
+    <article
+      style="cursor: pointer;"
+      onclick="window.location.href='search.html'"
+    >
+      <span>03</span>
+      <h3>
+        Stock Analysis
+      </h3>
+      <p>
+        Cari saham dan lihat fundamental, skor, dan karakteristiknya.
+      </p>
+    </article>
+    <article
+      style="cursor: pointer;"
+      onclick="window.location.href='watchlist.html'"
+    >
+      <span>04</span>
+      <h3>
+        Watchlist
+      </h3>
+      <p>
+        Simpan saham yang ingin dipantau dalam satu dashboard.
+      </p>
+    </article>
+  </div>
+</section>
+<!-- CTA -->
+<section class="cta">
+  <span class="eyebrow">
+    IDXNOVA
+  </span>
+  <h2>
+    Build Your Market Intelligence.
+  </h2>
+  <p>
+    Satu tempat untuk memantau, menyaring, dan menganalisis saham Indonesia.
+  </p>
+  <button
+    onclick="document.getElementById('stockSearch').focus()"
+  >
+    Mulai Cari Saham
+  </button>
+</section>
   </main>
-
-
   <!-- FOOTER -->
   <footer>
-
-    <div class="footer-brand">
-
-      <strong>
-        IDXNOVA
-      </strong>
-
-      <span>
-        Indonesian Stock Intelligence
-      </span>
-
-    </div>
-
-
-    <p>
-      IDXNOVA adalah platform informasi dan analisis independen.
-      Seluruh informasi disediakan untuk tujuan edukasi dan informasi,
-      bukan merupakan nasihat keuangan atau rekomendasi membeli maupun menjual efek.
-    </p>
-
-
-    <small>
-      © 2026 IDXNOVA. All rights reserved.
-    </small>
-
+<div class="footer-brand">
+  <strong>
+    IDXNOVA
+  </strong>
+  <span>
+    Indonesian Stock Intelligence
+  </span>
+</div>
+<p>
+  IDXNOVA adalah platform informasi dan analisis independen.
+  Seluruh informasi disediakan untuk tujuan edukasi dan informasi,
+  bukan merupakan nasihat keuangan atau rekomendasi membeli maupun menjual efek.
+</p>
+<small>
+  © 2026 IDXNOVA. All rights reserved.
+</small>
   </footer>
-
-
+  <!-- =========================================================
+       PREMIUM POPUP
+       ========================================================= -->
+  <div
+    id="premiumOverlay"
+    class="premium-overlay"
+    onclick="handlePremiumOverlayClick(event)"
+  >
+<div class="premium-popup">
+  <button
+    type="button"
+    class="premium-close"
+    onclick="closePremiumPopup()"
+    aria-label="Tutup"
+  >
+    ×
+  </button>
+  <!-- LANDING -->
+  <div
+    id="premiumLanding"
+    class="premium-landing"
+  >
+    <span class="premium-badge">
+      💎 IDXNOVA PREMIUM
+    </span>
+    <h2>
+      Buka Kekuatan Penuh IDXNOVA.
+    </h2>
+    <p class="premium-popup-subtitle">
+      Dapatkan analisis saham yang lebih mendalam,
+      recommendation engine, momentum analysis,
+      advanced screener, dan berbagai insight Premium.
+    </p>
+    <div class="premium-price-box">
+      <div class="premium-old-price">
+        Nilai paket
+        <strong>
+          Rp399.000
+        </strong>
+      </div>
+      <div class="premium-current-price">
+        <strong>
+          Rp100.000
+        </strong>
+        <span>
+          / 30 hari
+        </span>
+      </div>
+      <span class="premium-discount">
+        🔥 HARGA PROMO
+      </span>
+    </div>
+    <div class="premium-benefits">
+      <div class="premium-benefit">
+        ✓ Full Fundamental Analysis
+      </div>
+      <div class="premium-benefit">
+        ✓ BUY / HOLD / SELL
+      </div>
+      <div class="premium-benefit">
+        ✓ Confidence Score
+      </div>
+      <div class="premium-benefit">
+        ✓ Strategy Outlook
+      </div>
+      <div class="premium-benefit">
+        ✓ Advanced Screener
+      </div>
+      <div class="premium-benefit">
+        ✓ Momentum Analysis
+      </div>
+      <div class="premium-benefit">
+        ✓ AI Stock Analysis
+      </div>
+      <div class="premium-benefit">
+        ✓ Unlimited Analysis
+      </div>
+    </div>
+    <button
+      type="button"
+      class="premium-main-btn"
+      onclick="openPremiumPurchase()"
+    >
+      💎 Upgrade ke Premium
+    </button>
+    <button
+      type="button"
+      class="premium-secondary-btn"
+      onclick="closePremiumPopup()"
+    >
+      Nanti saja
+    </button>
+    <div class="premium-secure-note">
+      🔒 Pembayaran diproses melalui Midtrans Sandbox.
+    </div>
+  </div>
+  <!-- PURCHASE -->
+  <div
+    id="premiumPurchase"
+    class="premium-purchase"
+  >
+    <span class="premium-badge">
+      💎 PREMIUM CHECKOUT
+    </span>
+    <h2 class="purchase-title">
+      Upgrade Premium
+    </h2>
+    <p class="purchase-description">
+      Isi data di bawah sebelum melanjutkan pembayaran.
+    </p>
+    <div class="purchase-summary">
+      <div class="purchase-row">
+        <span>
+          Paket
+        </span>
+        <strong>
+          IDXNOVA Premium
+        </strong>
+      </div>
+      <div class="purchase-row">
+        <span>
+          Durasi
+        </span>
+        <strong>
+          30 Hari
+        </strong>
+      </div>
+      <div class="purchase-row purchase-total">
+        <span>
+          Total
+        </span>
+        <strong>
+          Rp100.000
+        </strong>
+      </div>
+    </div>
+    <div class="purchase-form">
+      <label for="premiumName">
+        Nama
+      </label>
+      <input
+        type="text"
+        id="premiumName"
+        placeholder="Masukkan nama"
+        autocomplete="name"
+      >
+      <label for="premiumEmail">
+        Email
+      </label>
+      <input
+        type="email"
+        id="premiumEmail"
+        placeholder="contoh@email.com"
+        autocomplete="email"
+      >
+      <button
+        type="button"
+        id="premiumPayBtn"
+        class="premium-main-btn"
+        onclick="startPremiumPayment()"
+      >
+        🔐 Lanjutkan Pembayaran
+      </button>
+      <button
+        type="button"
+        class="purchase-back"
+        onclick="showPremiumLanding()"
+      >
+        ← Kembali
+      </button>
+      <div
+        id="paymentStatus"
+        class="payment-status"
+      ></div>
+    </div>
+    <div class="premium-secure-note">
+      🔒 IDXNOVA tidak menyimpan data kartu pembayaran.
+    </div>
+  </div>
+</div>
+  </div>
   <!-- HOME SYSTEM -->
   <script>
-
     /*
+      =========================================================
       IDXNOVA API
+      =========================================================
     */
     const API_URL =
       "https://idxnova-api.rendyalterio22.workers.dev/api/stocks";
-
-
     /*
+      =========================================================
+      PAYMENT API
+      =========================================================
+    */
+    const PAYMENT_API_URL =
+      "https://idxnova-api.rendyalterio22.workers.dev";
+    /*
+      =========================================================
       DATABASE SEMENTARA DI BROWSER
+      =========================================================
     */
     let HOME_STOCKS = [];
-
-
     /*
+      =========================================================
       MENU
+      =========================================================
     */
     function toggleMenu() {
-
       const menu =
         document.getElementById("navMenu");
-
       if (menu) {
-
         menu.classList.toggle("active");
-
       }
-
     }
-
-
     /*
+      =========================================================
+      PREMIUM POPUP
+      =========================================================
+    */
+    function openPremiumPopup() {
+      const overlay =
+        document.getElementById("premiumOverlay");
+      if (!overlay) {
+        return;
+      }
+      showPremiumLanding();
+      overlay.classList.add("active");
+      document.body.style.overflow =
+        "hidden";
+    }
+    function closePremiumPopup() {
+      const overlay =
+        document.getElementById("premiumOverlay");
+      if (!overlay) {
+        return;
+      }
+      overlay.classList.remove("active");
+      document.body.style.overflow =
+        "";
+    }
+    function handlePremiumOverlayClick(event) {
+      if (
+        event.target &&
+        event.target.id === "premiumOverlay"
+      ) {
+        closePremiumPopup();
+      }
+    }
+    function openPremiumPurchase() {
+      const overlay =
+        document.getElementById("premiumOverlay");
+      if (!overlay) {
+        return;
+      }
+      overlay.classList.add("active");
+      document.body.style.overflow =
+        "hidden";
+      const landing =
+        document.getElementById(
+          "premiumLanding"
+        );
+      const purchase =
+        document.getElementById(
+          "premiumPurchase"
+        );
+      if (landing) {
+        landing.style.display =
+          "none";
+      }
+      if (purchase) {
+        purchase.style.display =
+          "block";
+      }
+    }
+    function showPremiumLanding() {
+      const landing =
+        document.getElementById(
+          "premiumLanding"
+        );
+      const purchase =
+        document.getElementById(
+          "premiumPurchase"
+        );
+      if (landing) {
+        landing.style.display =
+          "block";
+      }
+      if (purchase) {
+        purchase.style.display =
+          "none";
+      }
+    }
+    /*
+      =========================================================
+      PREMIUM PAYMENT
+      =========================================================
+    */
+    async function startPremiumPayment() {
+      const nameInput =
+        document.getElementById(
+          "premiumName"
+        );
+      const emailInput =
+        document.getElementById(
+          "premiumEmail"
+        );
+      const payButton =
+        document.getElementById(
+          "premiumPayBtn"
+        );
+      const statusBox =
+        document.getElementById(
+          "paymentStatus"
+        );
+      const name =
+        nameInput
+          ? nameInput.value.trim()
+          : "";
+      const email =
+        emailInput
+          ? emailInput.value.trim()
+          : "";
+      if (!name) {
+        showPaymentStatus(
+          "Masukkan nama terlebih dahulu.",
+          "error"
+        );
+        if (nameInput) {
+          nameInput.focus();
+        }
+        return;
+      }
+      if (
+        email &&
+        !isValidEmail(email)
+      ) {
+        showPaymentStatus(
+          "Format email belum benar.",
+          "error"
+        );
+        if (emailInput) {
+          emailInput.focus();
+        }
+        return;
+      }
+      if (payButton) {
+        payButton.disabled =
+          true;
+        payButton.textContent =
+          "⏳ Membuat pembayaran...";
+      }
+      showPaymentStatus(
+        "Menghubungkan ke Midtrans...",
+        "loading"
+      );
+      try {
+        const response =
+          await fetch(
+            PAYMENT_API_URL +
+            "/api/payment/create",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type":
+                  "application/json",
+                "Accept":
+                  "application/json"
+              },
+              body: JSON.stringify({
+                packageId:
+                  "premium_monthly",
+                name:
+                  name,
+                email:
+                  email
+              })
+            }
+          );
+        const result =
+          await response.json();
+        if (
+          !response.ok ||
+          !result ||
+          result.status !== "success" ||
+          !result.token
+        ) {
+          throw new Error(
+            result &&
+            result.message
+              ? result.message
+              : "Gagal membuat transaksi."
+          );
+        }
+        showPaymentStatus(
+          "Transaksi berhasil dibuat. Membuka halaman pembayaran...",
+          "success"
+        );
+        if (
+          !window.snap ||
+          typeof window.snap.pay !==
+          "function"
+        ) {
+          throw new Error(
+            "Midtrans Snap belum siap. Silakan refresh halaman."
+          );
+        }
+        window.snap.pay(
+          result.token,
+          {
+            onSuccess:
+              function(paymentResult) {
+                console.log(
+                  "IDXNOVA payment success:",
+                  paymentResult
+                );
+                showPaymentStatus(
+                  "Pembayaran berhasil. Status pembayaran sedang diproses oleh IDXNOVA.",
+                  "success"
+                );
+                if (payButton) {
+                  payButton.disabled =
+                    false;
+                  payButton.textContent =
+                    "✓ Pembayaran Berhasil";
+                }
+              },
+            onPending:
+              function(paymentResult) {
+                console.log(
+                  "IDXNOVA payment pending:",
+                  paymentResult
+                );
+                showPaymentStatus(
+                  "Pembayaran masih menunggu penyelesaian.",
+                  "loading"
+                );
+                if (payButton) {
+                  payButton.disabled =
+                    false;
+                  payButton.textContent =
+                    "🔐 Lanjutkan Pembayaran";
+                }
+              },
+            onError:
+              function(paymentResult) {
+                console.error(
+                  "IDXNOVA payment error:",
+                  paymentResult
+                );
+                showPaymentStatus(
+                  "Pembayaran gagal atau terjadi kesalahan.",
+                  "error"
+                );
+                if (payButton) {
+                  payButton.disabled =
+                    false;
+                  payButton.textContent =
+                    "🔐 Coba Lagi";
+                }
+              },
+            onClose:
+              function() {
+                console.log(
+                  "IDXNOVA payment popup closed"
+                );
+                showPaymentStatus(
+                  "Halaman pembayaran ditutup. Kamu dapat mencoba lagi kapan saja.",
+                  "loading"
+                );
+                if (payButton) {
+                  payButton.disabled =
+                    false;
+                  payButton.textContent =
+                    "🔐 Lanjutkan Pembayaran";
+                }
+              }
+          }
+        );
+      } catch (error) {
+        console.error(
+          "IDXNOVA Payment Error:",
+          error
+        );
+        showPaymentStatus(
+          error.message ||
+          "Terjadi kesalahan saat membuat pembayaran.",
+          "error"
+        );
+        if (payButton) {
+          payButton.disabled =
+            false;
+          payButton.textContent =
+            "🔐 Coba Lagi";
+        }
+      }
+    }
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+        email
+      );
+    }
+    function showPaymentStatus(
+      message,
+      type
+    ) {
+      const statusBox =
+        document.getElementById(
+          "paymentStatus"
+        );
+      if (!statusBox) {
+        return;
+      }
+      statusBox.textContent =
+        message;
+      statusBox.classList.add(
+        "active"
+      );
+      if (type === "error") {
+        statusBox.style.color =
+          "#fca5a5";
+        statusBox.style.background =
+          "rgba(239,68,68,.10)";
+        statusBox.style.border =
+          "1px solid rgba(239,68,68,.15)";
+      } else if (
+        type === "success"
+      ) {
+        statusBox.style.color =
+          "#6ee7b7";
+        statusBox.style.background =
+          "rgba(16,185,129,.10)";
+        statusBox.style.border =
+          "1px solid rgba(16,185,129,.15)";
+      } else {
+        statusBox.style.color =
+          "rgba(255,255,255,.70)";
+        statusBox.style.background =
+          "rgba(255,255,255,.05)";
+        statusBox.style.border =
+          "1px solid rgba(255,255,255,.07)";
+      }
+    }
+    /*
+      =========================================================
       SET TEXT
+      =========================================================
     */
     function setText(id, value) {
-
       const element =
         document.getElementById(id);
-
       if (element) {
-
         element.textContent =
           value;
-
       }
-
     }
-
-
     /*
+      =========================================================
       FORMAT HARGA
+      =========================================================
     */
     function formatPrice(price) {
-
       const number =
         Number(price);
-
       if (
         !Number.isFinite(number)
       ) {
-
         return "-";
-
       }
-
-
       return "Rp" +
         number.toLocaleString(
           "id-ID"
         );
-
     }
-
-
     /*
+      =========================================================
       FORMAT CHANGE
+      =========================================================
     */
     function getChange(stock) {
-
       const value =
         Number(stock.change);
-
       return Number.isFinite(value)
         ? value
         : 0;
-
     }
-
-
     /*
+      =========================================================
       BUKA DETAIL SAHAM
+      =========================================================
     */
     function openStock(ticker) {
-
       if (!ticker) {
-
         return;
-
       }
-
-
       window.location.href =
         "stock.html?ticker=" +
         encodeURIComponent(ticker);
-
     }
-
-
     /*
+      =========================================================
       SEARCH HOME
+      =========================================================
     */
     function searchStock() {
-
       const input =
         document.getElementById(
           "stockSearch"
         );
-
-
       if (!input) {
-
         return;
-
       }
-
-
       const keyword =
         input.value
           .trim()
           .toUpperCase();
-
-
       if (!keyword) {
-
         window.location.href =
           "search.html";
-
         return;
-
       }
-
-
       const found =
         HOME_STOCKS.find(
           function(stock) {
-
             const ticker =
               String(
                 stock.ticker || ""
               ).toUpperCase();
-
-
             return ticker === keyword;
-
           }
         );
-
-
       if (found) {
-
         openStock(
           found.ticker
         );
-
         return;
-
       }
-
-
       window.location.href =
         "search.html?q=" +
         encodeURIComponent(keyword);
-
     }
-
-
     /*
+      =========================================================
       QUICK SEARCH
+      =========================================================
     */
     function quickSearch(ticker) {
-
       const input =
         document.getElementById(
           "stockSearch"
         );
-
-
       if (input) {
-
         input.value =
           ticker;
-
       }
-
-
       searchStock();
-
     }
-
-
     /*
+      =========================================================
       MARKET OVERVIEW
+      =========================================================
     */
     function renderMarketOverview(stocks) {
-
       if (
         !Array.isArray(stocks) ||
         stocks.length === 0
       ) {
-
         return;
-
       }
-
-
       const validStocks =
         stocks.filter(
           function(stock) {
-
             return stock &&
               stock.ticker;
-
           }
         );
-
-
       if (
         validStocks.length === 0
       ) {
-
         return;
-
       }
-
-
       const changes =
         validStocks.map(
           function(stock) {
-
             return getChange(stock);
-
           }
         );
-
-
       const averageChange =
         changes.reduce(
           function(total, change) {
-
             return total + change;
-
           },
           0
         ) / changes.length;
-
-
       const topGainer =
         validStocks.reduce(
           function(best, stock) {
-
             return getChange(stock) >
               getChange(best)
               ? stock
               : best;
-
           }
         );
-
-
       const topLoser =
         validStocks.reduce(
           function(worst, stock) {
-
             return getChange(stock) <
               getChange(worst)
               ? stock
               : worst;
-
           }
         );
-
-
-      /*
-        MARKET LEADER
-        SEMENTARA BERDASARKAN
-        PERUBAHAN HARGA TERTINGGI
-      */
       const marketLeader =
         topGainer;
-
-
       setText(
         "marketAverage",
         validStocks.length
           .toLocaleString("id-ID") +
         " Saham"
       );
-
-
       const averageElement =
         document.getElementById(
           "marketAverageChange"
         );
-
-
       if (averageElement) {
-
         averageElement.textContent =
           (averageChange >= 0
             ? "▲ +"
@@ -1002,90 +1591,59 @@
             averageChange
           ).toFixed(2) +
           "%";
-
-
         averageElement.className =
           averageChange >= 0
             ? "positive"
             : "negative";
-
       }
-
-
       setText(
         "topGainer",
         topGainer.ticker
       );
-
-
       const topGainerElement =
         document.getElementById(
           "topGainerChange"
         );
-
-
       if (topGainerElement) {
-
         const change =
           getChange(topGainer);
-
-
         topGainerElement.textContent =
           (change >= 0
             ? "▲ +"
             : "▼ ") +
           Math.abs(change).toFixed(2) +
           "%";
-
-
         topGainerElement.className =
           change >= 0
             ? "positive"
             : "negative";
-
       }
-
-
       setText(
         "topLoser",
         topLoser.ticker
       );
-
-
       const topLoserElement =
         document.getElementById(
           "topLoserChange"
         );
-
-
       if (topLoserElement) {
-
         const change =
           getChange(topLoser);
-
-
         topLoserElement.textContent =
           (change >= 0
             ? "▲ +"
             : "▼ ") +
           Math.abs(change).toFixed(2) +
           "%";
-
-
         topLoserElement.className =
           change >= 0
             ? "positive"
             : "negative";
-
       }
-
-
       setText(
         "topScore",
         marketLeader.ticker
       );
-
-
       setText(
         "topScoreValue",
         "▲ +" +
@@ -1094,116 +1652,74 @@
         ).toFixed(2) +
         "%"
       );
-
-
       const gainerCard =
         document.getElementById(
           "topGainerCard"
         );
-
-
       if (gainerCard) {
-
         gainerCard.onclick =
           function() {
-
             openStock(
               topGainer.ticker
             );
-
           };
-
       }
-
-
       const loserCard =
         document.getElementById(
           "topLoserCard"
         );
-
-
       if (loserCard) {
-
         loserCard.onclick =
           function() {
-
             openStock(
               topLoser.ticker
             );
-
           };
-
       }
-
-
       const leaderCard =
         document.getElementById(
           "topScoreCard"
         );
-
-
       if (leaderCard) {
-
         leaderCard.onclick =
           function() {
-
             openStock(
               marketLeader.ticker
             );
-
           };
-
       }
-
     }
-
-
     /*
+      =========================================================
       MARKET SENTIMENT
+      =========================================================
     */
     function renderMarketSentiment(stocks) {
-
       if (
         !Array.isArray(stocks) ||
         stocks.length === 0
       ) {
-
         return;
-
       }
-
-
       const validStocks =
         stocks.filter(
           function(stock) {
-
             return stock &&
               stock.ticker;
-
           }
         );
-
-
       const positiveStocks =
         validStocks.filter(
           function(stock) {
-
             return getChange(stock) > 0;
-
           }
         ).length;
-
-
       const negativeStocks =
         validStocks.filter(
           function(stock) {
-
             return getChange(stock) < 0;
-
           }
         ).length;
-
-
       const score =
         Math.round(
           (
@@ -1211,344 +1727,219 @@
             validStocks.length
           ) * 100
         );
-
-
       const averageChange =
         validStocks.reduce(
           function(total, stock) {
-
             return total +
               getChange(stock);
-
           },
           0
         ) / validStocks.length;
-
-
       const sentimentScore =
         document.getElementById(
           "sentimentScore"
         );
-
-
       if (sentimentScore) {
-
         sentimentScore.innerHTML =
           score +
           "<span>/100</span>";
-
       }
-
-
       const sentimentBar =
         document.getElementById(
           "sentimentBar"
         );
-
-
       if (sentimentBar) {
-
         sentimentBar.style.width =
           Math.min(
             100,
             Math.max(0, score)
           ) + "%";
-
       }
-
-
       let sentiment =
         "Netral";
-
-
       if (score >= 60) {
-
         sentiment =
           "Positif";
-
       } else if (score <= 40) {
-
         sentiment =
           "Negatif";
-
       } else if (score > 50) {
-
         sentiment =
           "Netral Positif";
-
       } else if (score < 50) {
-
         sentiment =
           "Netral Negatif";
-
       }
-
-
       setText(
         "sentimentText",
         sentiment
       );
-
-
       let trend =
         "Neutral";
-
-
       if (
         averageChange > 0.5
       ) {
-
         trend =
           "Bullish";
-
       } else if (
         averageChange < -0.5
       ) {
-
         trend =
           "Bearish";
-
       }
-
-
       setText(
         "marketTrend",
         trend
       );
-
-
       let risk =
         "Moderate";
-
-
       if (
         score >= 70 &&
         positiveStocks >
         negativeStocks
       ) {
-
         risk =
           "Low - Moderate";
-
       } else if (
         score <= 30 ||
         negativeStocks >
         positiveStocks * 1.5
       ) {
-
         risk =
           "Moderate - High";
-
       }
-
-
       setText(
         "marketRisk",
         risk
       );
-
     }
-
-
     /*
+      =========================================================
       FEATURED STOCKS
-      TOP 4 PERUBAHAN TERBESAR
+      =========================================================
     */
     function renderFeaturedStocks(stocks) {
-
       const container =
         document.getElementById(
           "featuredStocks"
         );
-
-
       const emptyState =
         document.getElementById(
           "featuredEmpty"
         );
-
-
       if (!container) {
-
         return;
-
       }
-
-
       const featured =
         stocks
           .filter(
             function(stock) {
-
               return stock &&
                 stock.ticker;
-
             }
           )
           .slice()
           .sort(
             function(a, b) {
-
               return getChange(b) -
                 getChange(a);
-
             }
           )
           .slice(0, 4);
-
-
       container.innerHTML =
         "";
-
-
       featured.forEach(
         function(stock) {
-
           const card =
             document.createElement(
               "article"
             );
-
-
           card.className =
             "stock-card";
-
-
           card.style.cursor =
             "pointer";
-
-
           const change =
             getChange(stock);
-
-
           const changeSymbol =
             change >= 0
               ? "▲ +"
               : "▼ ";
-
-
           const changeClass =
             change >= 0
               ? "positive"
               : "negative";
-
-
           const stockName =
             stock.name ||
             stock.StockName ||
             "-";
-
-
           card.innerHTML = `
-
             <div class="stock-header">
-
               <div>
-
                 <h3>
                   ${stock.ticker}
                 </h3>
-
                 <p>
                   ${stockName}
                 </p>
-
               </div>
-
               <span class="${changeClass}">
-
                 ${changeSymbol}${Math.abs(change).toFixed(2)}%
-
               </span>
-
             </div>
-
-
             <div class="stock-price">
-
               ${formatPrice(stock.price)}
-
             </div>
-
-
             <div class="stock-footer">
-
               <span>
                 LIVE MARKET DATA
               </span>
-
               <strong>
                 ${stock.date || "LATEST"}
               </strong>
-
             </div>
-
           `;
-
-
           card.addEventListener(
             "click",
             function() {
-
               openStock(
                 stock.ticker
               );
-
             }
           );
-
-
           container.appendChild(card);
-
         }
       );
-
-
       if (emptyState) {
-
         emptyState.style.display =
           featured.length === 0
             ? "block"
             : "none";
-
       }
-
-
       setText(
         "featuredLabel",
         featured.length +
         " LIVE PICKS"
       );
-
     }
-
-
     /*
+      =========================================================
       LOAD DATA API
+      =========================================================
     */
     async function loadHomeData() {
-
       setText(
         "marketStatus",
         "LOADING..."
       );
-
-
       setText(
         "featuredLabel",
         "LOADING..."
       );
-
-
       setText(
         "dataMode",
         "LOADING"
       );
-
-
       try {
-
         const response =
           await fetch(
             API_URL,
@@ -1561,199 +1952,148 @@
               }
             }
           );
-
-
         if (!response.ok) {
-
           throw new Error(
             "API HTTP " +
             response.status
           );
-
         }
-
-
         const result =
           await response.json();
-
-
         if (
           !result ||
           result.status !== "success" ||
           !Array.isArray(result.data)
         ) {
-
           throw new Error(
             "Format data API tidak valid"
           );
-
         }
-
-
         HOME_STOCKS =
           result.data;
-
-
         if (
           HOME_STOCKS.length === 0
         ) {
-
           throw new Error(
             "Data saham kosong"
           );
-
         }
-
-
         setText(
           "marketStatus",
           HOME_STOCKS.length
             .toLocaleString("id-ID") +
           " SAHAM LIVE"
         );
-
-
         setText(
           "dataMode",
           "LIVE"
         );
-
-
         setText(
           "dataNote",
           "Data dimuat melalui IDXNOVA API."
         );
-
-
         renderMarketOverview(
           HOME_STOCKS
         );
-
-
         renderMarketSentiment(
           HOME_STOCKS
         );
-
-
         renderFeaturedStocks(
           HOME_STOCKS
         );
-
-
         console.log(
           "IDXNOVA API connected:",
           HOME_STOCKS.length,
           "stocks"
         );
-
       } catch (error) {
-
         console.error(
           "IDXNOVA API Error:",
           error
         );
-
-
         HOME_STOCKS =
           [];
-
-
         setText(
           "marketStatus",
           "API ERROR"
         );
-
-
         setText(
           "featuredLabel",
           "API ERROR"
         );
-
-
         setText(
           "dataMode",
           "ERROR"
         );
-
-
         setText(
           "dataNote",
           "IDXNOVA API sedang tidak dapat dihubungi."
         );
-
-
         setText(
           "sentimentText",
           "API Unavailable"
         );
-
-
         setText(
           "marketRisk",
           "Unavailable"
         );
-
-
         setText(
           "marketTrend",
           "Unavailable"
         );
-
-
         const emptyState =
           document.getElementById(
             "featuredEmpty"
           );
-
-
         if (emptyState) {
-
           emptyState.style.display =
             "block";
-
         }
-
       }
-
     }
-
-
     /*
+      =========================================================
       ENTER UNTUK SEARCH
+      =========================================================
     */
     const searchInput =
       document.getElementById(
         "stockSearch"
       );
-
-
     if (searchInput) {
-
       searchInput.addEventListener(
         "keydown",
         function(event) {
-
           if (
             event.key === "Enter"
           ) {
-
             searchStock();
-
           }
-
         }
       );
-
     }
-
-
     /*
+      =========================================================
+      AUTO PREMIUM POPUP
+      =========================================================
+    */
+    window.addEventListener(
+      "load",
+      function() {
+        setTimeout(
+          function() {
+            openPremiumPopup();
+          },
+          900
+        );
+      }
+    );
+    /*
+      =========================================================
       START IDXNOVA
+      =========================================================
     */
     loadHomeData();
-
   </script>
-
 </body>
-
 </html>
